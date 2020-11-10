@@ -1,0 +1,125 @@
+//
+// This shader propagates adding (or removing) a light in a single slice of a volume texture.
+// (Has to be invoked per-slice to propagate through whole volume).
+//
+
+#include "/Engine/Private/Common.ush"
+#include "RaymarcherCommon.usf"
+#include "WindowedSampling.usf"
+
+// The Light Volume we're modifying in this shader.
+RWTexture3D<float> ALightVolume;
+
+// Write buffer where light propagated this wave is saved for next slice.
+RWTexture2D<float> WriteBuffer;
+
+// Read buffer where light propagated until previous slice is saved.
+// The read buffer uses a set border color (the light outside the volume is not occluded by anything ->
+// sampling outside means full original light.)
+Texture2D ReadBuffer;
+SamplerState ReadBufferSampler;
+
+
+// Offset from current pixel position into the read buffer - depending on where the light is
+// in relation to the propagation axis. (e.g. will be (0,0) if the light is propagating exactly along the axis)
+float2 PrevPixelOffset;
+
+// Offset in the volume where to sample the occluding samples. To get shadowing at this position, we 
+// want to sample a certain distance against the light direction.
+float3 UVWOffset;
+
+// Current layer in this propagation axis.
+int Loop;
+
+// The shader code is common for all axes and always 2D in X and Y space
+// If going along X - threadgroup X = Volume Y dimension, threadgroup Y = Volume Z dimension
+// If going along Y - threadgroup X = Volume X dimension, threadgroup Y = Volume Z dimension
+// If going along Z - threadgroup X = Volume X dimension, threadgroup Y = Volume Y dimension (the simple case)
+// -> the Permutation Matrix is used to get 3D coordinates from 2D coordinates and Loop
+float3x3 PermutationMatrix;
+
+// The Volume we're propagating light through.
+Texture3D Volume;
+// The volume's sampler (has a fixed border color of 0 because sampling outside should not occlude light)
+SamplerState VolumeSampler;
+
+// Transfer function applied to the volume samples.
+Texture2D TransferFunc;
+SamplerState TransferFuncSampler;
+
+// Clipping plane parameters.
+float3 LocalClippingCenter;
+float3 LocalClippingDirection;
+
+// Intensity domain applied to the samples to be able to filter out low-noise.
+float4 WindowingParameters;
+
+// Step sizes - these are neccessary, as we need to account for the distance travelled through the volume
+// to get actual opacity.
+float StepSize;
+
+// +1 if we're adding a light, -1 if we're removing a light.
+int bAdded;
+
+
+[numthreads(16, 16, 1)]
+void MainComputeShader(uint2 PixelLoc : SV_DispatchThreadID)
+{
+    int3 pos = mul(int3(PixelLoc.x, PixelLoc.y, Loop), PermutationMatrix);
+
+    float texSizeX, texSizeY;
+    WriteBuffer.GetDimensions(texSizeX, texSizeY);
+
+    uint sizeX, sizeY, sizeZ;
+    ALightVolume.GetDimensions(sizeX, sizeY, sizeZ);
+    uint3 uResolution = uint3(sizeX, sizeY, sizeZ);
+        
+    // Sample the volume intensity at previous voxel.
+    float3 SampleUVW = GetUVW(pos, uResolution) + UVWOffset;
+
+    // Sample light from read buffer at the corresponding UV coordinates.
+    float2 PreviousUV = ((PixelLoc + float2(0.5, 0.5)) / float2(texSizeX, texSizeY)) + PrevPixelOffset;
+    float PreviousLightAlpha = ReadBuffer.SampleLevel(ReadBufferSampler, PreviousUV, 0);
+
+    float DistanceToCuttingPlane = dot(SampleUVW - LocalClippingCenter, LocalClippingDirection);
+
+    // Calculate the distance of the current voxel from the cutting plane in voxel space.
+    float3 CuttingPlaneIntersectPoint = SampleUVW + LocalClippingDirection * DistanceToCuttingPlane;
+    float3 CuttingPlaneOffset = SampleUVW - CuttingPlaneIntersectPoint;
+    // Offset to cutting plane in voxel space.
+    float3 VoxelCuttingPlaneOffset = CuttingPlaneOffset * uResolution;
+    // Distance from cutting plane to voxel center in voxel space.
+    float VoxelDistance = length(VoxelCuttingPlaneOffset);
+
+    // Weight the alpha in the voxel by an
+    // aproximation of the part of the cube that's not cut away - this prevents noticeable clipping plane artifacts
+    // (even though it's not even close to being mathematically correct and the artifacts are still slightly visible).
+
+    // Use signum of the DistanceToCuttingPlane, because the weight of a voxel, that's barely
+    // NOT cut away should increase with the distance to the cutting plane, but the weight
+    // of a voxel cut away will decrease with the distance to the cutting plane.
+    // If the distance of the center of the voxel to the cutting plane is 0, then exactly half is cut away.
+    float AlphaWeight = clamp(0.5 + (ONE_OVER_SQRT_3 * VoxelDistance * sign(DistanceToCuttingPlane)), 0, 1);
+    
+    // Initialize current sample.
+    float CurrentSample = 0.0;
+    // Only sample if previous sampling spot isn't completely cut-away by the cutting plane.
+    if (AlphaWeight > 0.0 && all(SampleUVW == saturate(SampleUVW)))
+    {
+        CurrentSample = SampleWindowedVolumeStep(SampleUVW, StepSize, Volume, VolumeSampler, TransferFunc, TransferFuncSampler, WindowingParameters).a;
+        CurrentSample *= AlphaWeight;
+    }
+    
+    // Extinct previous light by the opacity between this and previous sample.
+    float CurrentLightAlpha = PreviousLightAlpha * (1 - CurrentSample);
+
+	// The read/write buffers have always positive values (the alpha of current light being propagated)
+    WriteBuffer[PixelLoc] = CurrentLightAlpha; 
+    
+    // Ignore changes smaller than 0.001 to avoid writes with almost no effect.
+    if (abs(CurrentLightAlpha) > 1e-3)
+    {
+        // If we're removing a light, multiply alpha by -1. (but read/write buffers stay positive)
+        ALightVolume[pos] = ALightVolume[pos] + (CurrentLightAlpha * bAdded);
+    }
+}

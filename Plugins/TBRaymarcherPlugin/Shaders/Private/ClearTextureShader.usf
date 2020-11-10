@@ -1,0 +1,11 @@
+#include "/Engine/Private/Common.ush"
+
+RWTexture2D<float> ClearTextureRW;
+
+float ClearValue;
+
+[numthreads(16, 16, 1)]
+void MainComputeShader(uint2 ThreadId : SV_DispatchThreadID)
+{
+    ClearTextureRW[int2(ThreadId.x, ThreadId.y)] = ClearValue;
+}
