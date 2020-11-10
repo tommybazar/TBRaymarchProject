@@ -3,6 +3,9 @@
 # Volume Rendering (Raymarching) Plugin for Unreal Engine
 Allows volume rendering of .MHD data with Unreal Engine.
 
+# Video showcase / deep-dive tutorials
+Part1 - Showcase & Intro : https://youtu.be/-HDVXehPolM
+
 # Features
  * Volume raymarching for arbitrary `UVolumeTexture` textures
  * .mhd and .raw file import into volume textures.
