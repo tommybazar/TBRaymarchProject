@@ -520,7 +520,7 @@ bool ARaymarchVolume::LoadNewFileIntoVolumeNormalized(FString FileName, bool bPe
 {
 	UMHDAsset* NewInfo;
 	UVolumeTexture* NewTexture;
-	UMHDAsset::CreateTextureFromMhdFileNormalized(FileName, NewInfo, NewTexture, bPersistent, OutFolder);
+	UMHDAsset::CreateAssetFromMhdFileNormalized(FileName, NewInfo, NewTexture, bPersistent, OutFolder);
 	if (NewInfo)
 	{
 		return SetMHDAsset(NewInfo);

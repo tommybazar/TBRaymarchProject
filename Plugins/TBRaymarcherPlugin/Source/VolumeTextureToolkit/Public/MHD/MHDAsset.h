@@ -174,7 +174,7 @@ public:
 	/// Loads the provided .MHD file into a Volume texture and UMHDAsset. Both will be put into the OutFolder (relative to Content)
 	/// and returned in the out parameters. Normalizes the MHD to the whole range of G8 or G16 (if 16bits or more).
 	UFUNCTION(BlueprintCallable, Category = "MHD Asset")
-	static void CreateTextureFromMhdFileNormalized(const FString Filename, UMHDAsset*& OutMHDAsset,
+	static void CreateAssetFromMhdFileNormalized(const FString Filename, UMHDAsset*& OutMHDAsset,
 		UVolumeTexture*& OutVolumeTexture, bool bIsPersistent, const FString OutFolder = "");
 
 	/// Loads the provided .MHD file into a Volume texture and UMHDAsset into a R_32_Float texture. This will preserve the values

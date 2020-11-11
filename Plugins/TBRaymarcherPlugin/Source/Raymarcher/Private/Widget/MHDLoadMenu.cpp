@@ -55,7 +55,7 @@ void UMHDLoadMenu::OnLoadNormalizedClicked()
 			FString Filename = FileNames[0];
 			UMHDAsset* OutAsset;
 			UVolumeTexture* OutTexture;
-			UMHDAsset::CreateTextureFromMhdFileNormalized(Filename, OutAsset, OutTexture, false);
+			UMHDAsset::CreateAssetFromMhdFileNormalized(Filename, OutAsset, OutTexture, false);
 
 			if (OutAsset)
 			{

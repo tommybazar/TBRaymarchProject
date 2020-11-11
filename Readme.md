@@ -99,7 +99,7 @@ value of 0 in the texture corresponds to `ImageInfo.MinValue` within the UMHDAss
 This is not necessary if you don't mind your loaded assets not being persistent, then you can load the MHD as a R32Float and keep the original values.
 I'm currently investigating how to get around this limitation by making my own `UVolumeTexture`-like asset instead of using the `UVolumeTexture` assets directly.
 
-See `CreateTextureFromMhdFileNormalized` and `CreateTextureFromMhdFileR32F` functions respectively for both of these loading types. There is also a `CreateTextureFromMhdFileNoConversion`
+See `CreateAssetFromMhdFileNormalized` and `CreateAssetFromMhdFileR32F` functions respectively for both of these loading types. There is also a `CreateTextureFromMhdFileNoConversion`
 which will not convert the raw data at all, so there is no guarantee the loaded texture will work with our materials.
 
 We also support drag'n'drop MHD asset import. If you drag a file with .mhd extension into the content browser, a `UMHDAsset` and a corresponding `UVolumeTexture` will

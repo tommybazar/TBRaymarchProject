@@ -218,7 +218,7 @@ UMHDAsset* UMHDAsset::CreateAndLoadMHDAsset(
 	return OutMHDAsset;
 }
 
-void UMHDAsset::CreateTextureFromMhdFileNormalized(const FString Filename, UMHDAsset*& OutMHDAsset,
+void UMHDAsset::CreateAssetFromMhdFileNormalized(const FString Filename, UMHDAsset*& OutMHDAsset,
 		UVolumeTexture*& OutVolumeTexture, bool bIsPersistent, const FString OutFolder)
 {
 	FString FilePath;
