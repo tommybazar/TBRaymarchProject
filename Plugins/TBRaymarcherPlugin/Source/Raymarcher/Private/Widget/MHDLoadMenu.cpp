@@ -103,7 +103,7 @@ void UMHDLoadMenu::OnLoadF32Clicked()
 			FString Filename = FileNames[0];
 			UMHDAsset* OutAsset;
 			UVolumeTexture* OutTexture;
-			UMHDAsset::CreateTextureFromMhdFileR32F(Filename, OutAsset, OutTexture);
+			UMHDAsset::CreateAssetFromMhdFileR32F(Filename, OutAsset, OutTexture);
 
 			if (OutAsset)
 			{

@@ -182,34 +182,6 @@ int64 FVolumeInfo::GetTotalVoxels()
 	return Dimensions.X * Dimensions.Y * Dimensions.Z;
 }
 
-#if WITH_EDITOR
-void UMHDAsset::PostEditChangeChainProperty(struct FPropertyChangedChainEvent& PropertyChangedEvent)
-{
-	Super::PostEditChangeChainProperty(PropertyChangedEvent);
-
-	const FName MemberPropertyName =
-		(PropertyChangedEvent.MemberProperty != nullptr) ? PropertyChangedEvent.MemberProperty->GetFName() : NAME_None;
-
-	// If the curve property changed, broadcast the delegate.
-	if (MemberPropertyName != GET_MEMBER_NAME_CHECKED(UMHDAsset, TransferFuncCurve))
-	{
-		OnImageInfoChanged.Broadcast();
-	}
-}
-
-void UMHDAsset::PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent)
-{
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-	const FName MemberPropertyName =
-		(PropertyChangedEvent.MemberProperty != nullptr) ? PropertyChangedEvent.MemberProperty->GetFName() : NAME_None;
-
-	// If the curve property changed, broadcast the delegate.
-	if (MemberPropertyName == GET_MEMBER_NAME_CHECKED(UMHDAsset, TransferFuncCurve))
-	{
-		OnCurveChanged.Broadcast(TransferFuncCurve);
-	}
-}
-
 UMHDAsset* UMHDAsset::CreateAndLoadMHDAsset(
 	const FString InFullMHDFileName, bool bIsPersistent, FString SaveFolder, const FString SaveName)
 {
@@ -246,8 +218,8 @@ UMHDAsset* UMHDAsset::CreateAndLoadMHDAsset(
 	return OutMHDAsset;
 }
 
-void UMHDAsset::CreateTextureFromMhdFileNormalized(const FString Filename, UMHDAsset*& OutMHDAsset, UVolumeTexture*& OutVolumeTexture,
-	bool bIsPersistent, const FString OutFolder)
+void UMHDAsset::CreateTextureFromMhdFileNormalized(const FString Filename, UMHDAsset*& OutMHDAsset,
+		UVolumeTexture*& OutVolumeTexture, bool bIsPersistent, const FString OutFolder)
 {
 	FString FilePath;
 	FString FileNamePart;
@@ -307,7 +279,7 @@ void UMHDAsset::CreateTextureFromMhdFileNormalized(const FString Filename, UMHDA
 	delete[] ConvertedArray;
 }
 
-void UMHDAsset::CreateTextureFromMhdFileR32F(const FString Filename, UMHDAsset*& OutMHDAsset, UVolumeTexture*& OutVolumeTexture)
+void UMHDAsset::CreateAssetFromMhdFileR32F(const FString Filename, UMHDAsset*& OutMHDAsset, UVolumeTexture*& OutVolumeTexture)
 {
 	FString FilePath;
 	FString FileNamePart;
@@ -359,7 +331,7 @@ void UMHDAsset::CreateTextureFromMhdFileR32F(const FString Filename, UMHDAsset*&
 	delete[] ConvertedArray;
 }
 
-void UMHDAsset::CreateTextureFromMhdFileNoConversion(
+void UMHDAsset::CreateAssetFromMhdFileNoConversion(
 	const FString Filename, const FString OutFolder, UMHDAsset*& OutMHDAsset, UVolumeTexture*& OutVolumeTexture)
 {
 	FString FilePath;
@@ -430,4 +402,32 @@ void UMHDAsset::CreateTextureFromMhdFileNoConversion(
 	delete[] LoadedArray;
 }
 
+
+#if WITH_EDITOR
+void UMHDAsset::PostEditChangeChainProperty(struct FPropertyChangedChainEvent& PropertyChangedEvent)
+{
+	Super::PostEditChangeChainProperty(PropertyChangedEvent);
+
+	const FName MemberPropertyName =
+		(PropertyChangedEvent.MemberProperty != nullptr) ? PropertyChangedEvent.MemberProperty->GetFName() : NAME_None;
+
+	// If the curve property changed, broadcast the delegate.
+	if (MemberPropertyName != GET_MEMBER_NAME_CHECKED(UMHDAsset, TransferFuncCurve))
+	{
+		OnImageInfoChanged.Broadcast();
+	}
+}
+
+void UMHDAsset::PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent)
+{
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+	const FName MemberPropertyName =
+		(PropertyChangedEvent.MemberProperty != nullptr) ? PropertyChangedEvent.MemberProperty->GetFName() : NAME_None;
+
+	// If the curve property changed, broadcast the delegate.
+	if (MemberPropertyName == GET_MEMBER_NAME_CHECKED(UMHDAsset, TransferFuncCurve))
+	{
+		OnCurveChanged.Broadcast(TransferFuncCurve);
+	}
+}
 #endif

@@ -4,12 +4,12 @@
 
 #include "Actor/RaymarchVolume.h"
 
-#include "RenderTargetPool.h"
 #include "Rendering/RaymarchMaterialParameters.h"
 #include "TextureUtilities.h"
 #include "Util/RaymarchUtils.h"
+#include "MHD/MHDAsset.h"
 
-#include <Windows/WindowsPlatformTime.h>
+#include "GenericPlatform/GenericPlatformTime.h"
 
 DEFINE_LOG_CATEGORY(LogRaymarchVolume)
 
@@ -505,7 +505,7 @@ bool ARaymarchVolume::LoadNewFileIntoVolumeTransientR32F(FString FileName)
 {
 	UMHDAsset* NewInfo;
 	UVolumeTexture* NewTexture;
-	NewInfo->CreateTextureFromMhdFileR32F(FileName, NewInfo, NewTexture);
+	UMHDAsset::CreateAssetFromMhdFileR32F(FileName, NewInfo, NewTexture);
 	if (NewInfo)
 	{
 		return SetMHDAsset(NewInfo);
@@ -520,7 +520,7 @@ bool ARaymarchVolume::LoadNewFileIntoVolumeNormalized(FString FileName, bool bPe
 {
 	UMHDAsset* NewInfo;
 	UVolumeTexture* NewTexture;
-	NewInfo->CreateTextureFromMhdFileNormalized(FileName, NewInfo, NewTexture, bPersistent, OutFolder);
+	UMHDAsset::CreateTextureFromMhdFileNormalized(FileName, NewInfo, NewTexture, bPersistent, OutFolder);
 	if (NewInfo)
 	{
 		return SetMHDAsset(NewInfo);

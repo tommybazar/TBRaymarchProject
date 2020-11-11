@@ -29,7 +29,11 @@ FDirLightParameters ARaymarchLight::GetCurrentParameters() const
 	return FDirLightParameters(this->GetActorForwardVector(), LightIntensity);
 }
 
+#if WITH_EDITOR
+
 bool ARaymarchLight::ShouldTickIfViewportsOnly() const
 {
 	return true;
 }
+
+#endif

@@ -169,17 +169,3 @@ void UTransferFuncMenu::SetVolume(ARaymarchVolume* NewRaymarchVolume)
 		OnNewVolumeLoaded();
 	}
 }
-
-#if WITH_EDITOR
-void UTransferFuncMenu::OnDesignerChanged(const FDesignerChangedEventArgs& EventArgs)
-{
-	Initialize();
-	Super::OnDesignerChanged(EventArgs);
-}
-
-void UTransferFuncMenu::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
-{
-	Initialize();
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-}
-#endif

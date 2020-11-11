@@ -18,7 +18,7 @@ class RAYMARCHER_API ARaymarchLight : public AActor
 public:
 	ARaymarchLight();
 
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	FDirLightParameters GetCurrentParameters() const;
 
@@ -30,9 +30,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UStaticMeshComponent* StaticMeshComponent;
 
-	#if WITH_EDITOR 
-		// Override ShouldTickIfViewportsOnly to return true, so this also ticks in editor viewports.
+#if WITH_EDITOR
+	// Override ShouldTickIfViewportsOnly to return true, so this also ticks in editor viewports.
 	virtual bool ShouldTickIfViewportsOnly() const override;
 
-	#endif
+#endif
 };

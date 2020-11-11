@@ -166,20 +166,6 @@ public:
 	UFUNCTION(BlueprintPure)
 	FString ToString() const;
 
-#if WITH_EDITOR
-	/// Called when the Transfer function curve is changed (as in, a different asset is selected).
-	FCurveAssetChangedDelegate OnCurveChanged;
-
-	/// Called when the inside of the volume info change.
-	FVolumeInfoChangedDelegate OnImageInfoChanged;
-
-	/// Called when inner structs get changed. Used to notify active volumes about stuff changing inside the ImageInfo struct.
-	void PostEditChangeChainProperty(struct FPropertyChangedChainEvent& PropertyChangedEvent) override;
-
-	/// Called when a property is changed.
-	void PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent) override;
-#endif
-
 	/// Creates a UMHDAsset asset. If bIsTransient is false, SaveFolder and SaveName specify the desired location of the
 	/// persistent asset.
 	static UMHDAsset* CreateAndLoadMHDAsset(
@@ -196,11 +182,26 @@ public:
 	/// This could be circumvented by packing the 32float into 8bit RGBA and then unpacking it in shaders.
 	/// #TODO Or by extending a texture type that CAN serialize a bloody float array...
 	UFUNCTION(BlueprintCallable, Category = "MHD Asset")
-	static void CreateTextureFromMhdFileR32F(const FString Filename, UMHDAsset*& OutMHDAsset, UVolumeTexture*& OutVolumeTexture);
+	static void CreateAssetFromMhdFileR32F(const FString Filename, UMHDAsset*& OutMHDAsset, UVolumeTexture*& OutVolumeTexture);
 
 	/// Loads the provided .MHD file into a Volume texture and UMHDAsset into a texture. The data isn't converted in any way
 	/// and you'll probably have to rewrite the shaders to work with anything that isn't U8 or U16 out of the box.
 	UFUNCTION(BlueprintCallable, Category = "MHD Asset")
-	static void CreateTextureFromMhdFileNoConversion(
+	static void CreateAssetFromMhdFileNoConversion(
 		const FString Filename, const FString OutFolder, UMHDAsset*& OutMHDAsset, UVolumeTexture*& OutVolumeTexture);
+
+#if WITH_EDITOR
+	/// Called when the Transfer function curve is changed (as in, a different asset is selected).
+	FCurveAssetChangedDelegate OnCurveChanged;
+
+	/// Called when the inside of the volume info change.
+	FVolumeInfoChangedDelegate OnImageInfoChanged;
+
+	/// Called when inner structs get changed. Used to notify active volumes about stuff changing inside the ImageInfo struct.
+	void PostEditChangeChainProperty(struct FPropertyChangedChainEvent& PropertyChangedEvent) override;
+
+	/// Called when a property is changed.
+	void PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent) override;
+#endif
+
 };

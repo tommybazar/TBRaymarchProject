@@ -88,9 +88,4 @@ public:
 	/// Sets a new volume to be affected by this menu.
 	UFUNCTION(BlueprintCallable)
 	void SetVolume(ARaymarchVolume* NewRaymarchVolume);
-
-#if WITH_EDITOR
-	void OnDesignerChanged(const FDesignerChangedEventArgs& EventArgs);
-	void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent);
-#endif
 };

@@ -7,10 +7,12 @@ Allows volume rendering of .MHD data with Unreal Engine.
 Part1 - Showcase & Intro : https://youtu.be/-HDVXehPolM
 
 # Features
+ * Works out of the box with binary UE 4.25
  * Volume raymarching for arbitrary `UVolumeTexture` textures
  * .mhd and .raw file import into volume textures.
  * Volume illumination implemented in compute shaders using concepts from [Efficient Volume Illumination with Multiple Light Sources through Selective Light Updates](https://ieeexplore.ieee.org/document/7156382) (2015) by Sundén and Ropinski
  * Uses color curves for transfer function definition
+ * Fully integrated and functional within UE editor viewport.
  * Windowing support (google DICOM Window center / Window Width or watch my youtube description for an explanation)
  * Basic menus for manipulating the volume
  * Basic VR support and example map (coming very soon - mid-November 2020).
@@ -20,7 +22,7 @@ Part1 - Showcase & Intro : https://youtu.be/-HDVXehPolM
  * We use a very simple (but fast) raymarching and illumination algorithm with no specular, refraction or scattering
  * Algorithm is already a bit dated and implementation leaves a lot to be desired as for efficiency. It is however, good enough for real-time applications with several lights and large (256^3 or more) volumes.
  * Currently do not support persistent 32bit grayscale textures, but plan on investigating that possibility soon(ish).
- * My NDA with my current employer doesn't allow me to publish the DICOM loading part (as I wrote that code under contract), which would truly make this a one-stop-shop for medical imaging in Unreal. 
+ * My NDA with my current employer doesn't allow me to publish the DICOM loading part (as I wrote that code under contract), which would truly make this a one-stop-shop for medical visualization in Unreal. 
  All I can say is, it's not that complicated to implement a DICOM parser using ITK or Imebra SDKs (took me about 2 days, if I remember correctly) and If you drop me a message on the forums, I can give you some hints. 
  Once you parse the DICOM tags out of the file and read the raw binary data, the rest is exactly the same as working with .MHD files. 
 
@@ -34,7 +36,7 @@ Or if someone already has a working, UE-friendly license-free DICOM reader, let 
  an example map for VR (mid-November 2020).
 
 # Using this plugin in your own project
-If you want to use the functinality in your own project, you will need to
+If you want to use this functionality in your own project, you will need to
  * Copy/clone this repo
  * Copy the TBRaymarcherPlugin from the Plugins directory into your project.
  * Edit your Build configuration of your project to reference the module by adapting your `Module.Build.cs` similar to the following:
@@ -50,7 +52,7 @@ If you want to use the functinality in your own project, you will need to
 
 # Getting started
 1. Copy the plugin into your project or just compile and run the main project after cloning this repo.
-2. Open the TBRaymarcherShowcase map, you should see a raymarched volume in front of you.
+2. Open the TBRaymarcherPlugin/Maps/TBRaymarcherShowcase map, you should see a raymarched volume in front of you.
 3. By going into the `RaymarchVolume` category of settings on the RaymarchVolume, you can change various settings, I explain these in detail in my YT tutorial.
 4. When you "Play" the level, a basic UI will be spawned (check the level blueprint to see how it's spawned) and you can play with the transfer functions and load a different volume from disk.
 5. (mid-November 2020) If you have a VR headset, check out the TBRaymarcherVRShowcase, you can grab and move the volume, clipping plane and lights with the grip button. Right hand also has a widget interactor on it to work with VR menus. This is just quickly hacked together and should probably not be used as a basis for an actual VR app, unless you want to feel some pain down the road.
@@ -249,8 +251,8 @@ Vulkan crashes on startup immediately and since UE support for it isn't mature y
 # Credits
 Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks (original raymarching code).
 
-I'd also like to appreciate my alma mater: Technical University of Munich, chair of Biomedical Computing, where I created most of the original code as my master's thesis, before performing a massive clean-up, reorganization and improvements throughout the last year.
-Our old project can be found at [my supervisor's github](https://github.com/TheHugeManatee/UE4_VolumeRaymarching). Check out his other UE plugins.
+I'd also like to appreciate my alma mater: Technical University of Munich, chair of Computer Aided Medical Procedures, where I created most of the original code as my master's thesis, before performing a massive clean-up, reorganization and improvements throughout the last year.
+Our old project can be found at [my supervisor's github](https://github.com/TheHugeManatee/UE4_VolumeRaymarching). Feel free to check out his other UE plugins.
 
 ## Example MHDAsset files
 In `TBRaymarcherPlugin/Content/DefaultResources/` are MHDAssets and volume textures created by importing data from Subset0 of [LUNA2016 grand challenge](https://luna16.grand-challenge.org/download/).
