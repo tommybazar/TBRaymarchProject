@@ -246,7 +246,7 @@ Furthermore, changes to the MHDAsset's Transfer Function `UCurveLinearColor` wil
 
 Lastly, lights and clipping planes assigned to the `URaymarchedVolume` will update in-editor just as they would in-game.
 
-This is all achieved through delegates and PostEditChangeProperty() overrides, more interested users are encouraged to peruse the source codes at their leasure.
+This is all achieved through delegates and PostEditChangeProperty() overrides, more interested users are encouraged to peruse the source codes at their leisure.
 
 ### Widgets
 We provide basic widgets (located in 'TBRaymarcherPlugin/Content/Blueprints/Widgets' that can be used to modify the Raymarched Volume at runtime. These are explained in my youtube tutorial videos, 
