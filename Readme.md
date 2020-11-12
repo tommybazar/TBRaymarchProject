@@ -262,7 +262,10 @@ Vulkan crashes on startup immediately and since UE support for it isn't mature y
 # Credits
 Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks (original raymarching code).
 
-I'd also like to appreciate my alma mater: Technical University of Munich, chair of Computer Aided Medical Procedures, where I created most of the original code as my master's thesis, before performing a massive clean-up, reorganization and improvements throughout the last year.
+I'd also like to appreciate my alma mater: [Technical University of Munich](https://www.tum.de/en), [Chair of Computer Aided Medical Procedures](http://campar.in.tum.de/WebHome), where I created most of the original code as my master's thesis, before performing a massive clean-up, reorganization and improvements throughout the last year.
+
+Check out their study programmes and apply, tuition is free for everybody, they have great connections to research and industry and it is one of the leading universities in Europe, as far as Computer Science is concerned.
+
 Our old project can be found at [my supervisor's github](https://github.com/TheHugeManatee/UE4_VolumeRaymarching). Feel free to check out his other UE plugins.
 
 ## Example MHDAsset files
