@@ -3,6 +3,17 @@
 # Volume Rendering (Raymarching) Plugin for Unreal Engine
 Allows volume rendering of .MHD data with Unreal Engine.
 
+
+![
+](https://github.com/tommybazar/TBRaymarchProject/blob/master/Documents/Render1.png)
+
+
+![
+](https://github.com/tommybazar/TBRaymarchProject/blob/master/Documents/Render2.png)
+
+Both of these renders are using the same CT scan, only difference is windowing and used transfer function.
+
+
 # Video showcase / deep-dive tutorials
 Part1 - Showcase & Intro : https://youtu.be/-HDVXehPolM
 
