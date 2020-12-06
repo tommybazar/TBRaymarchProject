@@ -46,7 +46,7 @@ bool UMHDAsset::ParseFromString(const FString FileString)
 		{
 			inStream >> ReadWord;
 		}
-		// Should be at the "=" after ElementSpacing now.
+		// Should be at the "=" after ElementSpacing/ElementSize now.
 		if (inStream.good())
 		{
 			// Get rid of equal sign.
