@@ -42,7 +42,7 @@ bool UMHDAsset::ParseFromString(const FString FileString)
 		// Go back to beginning
 		inStream = std::istringstream(MyStdString);
 		// Skip until we get to spacing.
-		while (inStream.good() && ReadWord != "ElementSpacing")
+		while (inStream.good() && ReadWord != "ElementSpacing" && ReadWord != "ElementSize")
 		{
 			inStream >> ReadWord;
 		}
