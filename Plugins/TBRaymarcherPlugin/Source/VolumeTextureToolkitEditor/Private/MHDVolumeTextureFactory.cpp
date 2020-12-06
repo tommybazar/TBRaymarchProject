@@ -77,6 +77,7 @@ UObject* UMHDVolumeTextureFactory::FactoryCreateFile(UClass* InClass, UObject* I
 				MHDAsset->ImageInfo.BytesPerVoxel = 2;
 				PixelFormat = PF_G16;
 			}
+			MHDAsset->ImageInfo.bIsNormalized = true;
 		}
 		else
 		{
@@ -111,6 +112,7 @@ UObject* UMHDVolumeTextureFactory::FactoryCreateFile(UClass* InClass, UObject* I
 					PixelFormat = PF_R32_FLOAT;
 					FileNamePart = "Transient_" + FileNamePart;
 				}
+				MHDAsset->ImageInfo.bIsNormalized = false;
 			}
 		}
 	}

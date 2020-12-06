@@ -31,6 +31,8 @@ public class Raymarcher: ModuleRules
                 "RHI",
                 "AssetRegistry",
                 "VolumeTextureToolkit",
+				"HeadMountedDisplay",
+				"InputCore"
 				// ... add other public dependencies that you statically link with here ...
 			}
             );
