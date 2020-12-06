@@ -4,12 +4,11 @@
 
 #include "Actor/RaymarchVolume.h"
 
+#include "GenericPlatform/GenericPlatformTime.h"
+#include "MHD/MHDAsset.h"
 #include "Rendering/RaymarchMaterialParameters.h"
 #include "TextureUtilities.h"
 #include "Util/RaymarchUtils.h"
-#include "MHD/MHDAsset.h"
-
-#include "GenericPlatform/GenericPlatformTime.h"
 
 DEFINE_LOG_CATEGORY(LogRaymarchVolume)
 
@@ -310,7 +309,7 @@ void ARaymarchVolume::Tick(float DeltaTime)
 	{
 		if (bRequestedRecompute)
 		{
-			// If we're requesting recompute or parameters changed, 
+			// If we're requesting recompute or parameters changed,
 			ResetAllLights();
 		}
 		else
@@ -399,21 +398,25 @@ bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
 	}
 
 #if WITH_EDITOR
-	if (InMHDAsset != OldMHDAsset)
+	if (!GetWorld() || !GetWorld()->IsGameWorld())
 	{
-		// If we're in editor and we already have an asset loaded before, unbind the delegate
-		// from it's color curve change broadcast and also the OnCurve and OnVolumeInfo changed broadcasts.
-		if (OldMHDAsset)
+		if (InMHDAsset != OldMHDAsset)
 		{
-			OldMHDAsset->TransferFuncCurve->OnUpdateGradient.Remove(CurveGradientUpdateDelegateHandle);
-			OldMHDAsset->OnCurveChanged.Remove(CurveChangedInMHDDelegateHandle);
-			OldMHDAsset->OnImageInfoChanged.Remove(MHDAssetUpdatedDelegateHandle);
-		}
-		if (InMHDAsset)
-		{
-			CurveChangedInMHDDelegateHandle = InMHDAsset->OnCurveChanged.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
-			MHDAssetUpdatedDelegateHandle =
-				InMHDAsset->OnImageInfoChanged.AddUObject(this, &ARaymarchVolume::OnImageInfoChangedInEditro);
+			// If we're in editor and we already have an asset loaded before, unbind the delegate
+			// from it's color curve change broadcast and also the OnCurve and OnVolumeInfo changed broadcasts.
+			if (OldMHDAsset)
+			{
+				OldMHDAsset->TransferFuncCurve->OnUpdateGradient.Remove(CurveGradientUpdateDelegateHandle);
+				OldMHDAsset->OnCurveChanged.Remove(CurveChangedInMHDDelegateHandle);
+				OldMHDAsset->OnImageInfoChanged.Remove(MHDAssetUpdatedDelegateHandle);
+			}
+			if (InMHDAsset)
+			{
+				CurveChangedInMHDDelegateHandle =
+					InMHDAsset->OnCurveChanged.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
+				MHDAssetUpdatedDelegateHandle =
+					InMHDAsset->OnImageInfoChanged.AddUObject(this, &ARaymarchVolume::OnImageInfoChangedInEditro);
+			}
 		}
 	}
 #endif
@@ -429,7 +432,7 @@ bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
 
 #if WITH_EDITOR
 		// Bind a listener to the delegate notifying about color curve changes
-		if (InMHDAsset != OldMHDAsset)
+		if ((!GetWorld() || !GetWorld()->IsGameWorld()) &&  InMHDAsset != OldMHDAsset)
 		{
 			CurveGradientUpdateDelegateHandle =
 				CurrentTFCurve->OnUpdateGradient.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
