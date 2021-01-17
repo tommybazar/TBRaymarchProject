@@ -761,23 +761,11 @@ void ARaymarchVolume::FreeRaymarchResources()
 	}
 	RaymarchResources.LightVolumeTextureRef = nullptr;
 
-	for (int i = 0; i < 3; i++)
+	for (OneAxisReadWriteBufferResources& Buffer : RaymarchResources.XYZReadWriteBuffers)
 	{
-		for (int j = 0; j < 4; j++)
-		{
-			if (RaymarchResources.XYZReadWriteBuffers->UAVs[j])
-			{
-				RaymarchResources.XYZReadWriteBuffers->UAVs[j].SafeRelease();
-			}
-			RaymarchResources.XYZReadWriteBuffers->UAVs[j] = nullptr;
-
-			if (RaymarchResources.XYZReadWriteBuffers->Buffers[j])
-			{
-				RaymarchResources.XYZReadWriteBuffers->Buffers[j].SafeRelease();
-			}
-			RaymarchResources.XYZReadWriteBuffers->Buffers[j] = nullptr;
-		}
+		URaymarchUtils::ReleaseOneAxisReadWriteBufferResources(Buffer);
 	}
+
 	RaymarchResources.bIsInitialized = false;
 }
 

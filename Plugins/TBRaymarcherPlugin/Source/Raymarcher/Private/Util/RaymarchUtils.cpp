@@ -184,6 +184,27 @@ void URaymarchUtils::CreateBufferTextures(FIntPoint Size, EPixelFormat PixelForm
 	}
 }
 
+void URaymarchUtils::ReleaseOneAxisReadWriteBufferResources(OneAxisReadWriteBufferResources& Buffer)
+{
+	for (FUnorderedAccessViewRHIRef& UAV : Buffer.UAVs)
+	{
+		if (UAV)
+		{
+			UAV.SafeRelease();
+		}
+		UAV = nullptr;
+	}
+
+	for (FTexture2DRHIRef& TextureRef : Buffer.Buffers)
+	{
+		if (TextureRef)
+		{
+			TextureRef.SafeRelease();
+		}
+		TextureRef = nullptr;
+	}
+}
+
 void URaymarchUtils::GetVolumeTextureDimensions(UVolumeTexture* Texture, FIntVector& Dimensions)
 {
 	if (Texture)

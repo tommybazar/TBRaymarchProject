@@ -91,6 +91,8 @@ public:
 	static RAYMARCHER_API void CreateBufferTextures(
 		FIntPoint Size, EPixelFormat PixelFormat, OneAxisReadWriteBufferResources& RWBuffers);
 
+	static RAYMARCHER_API void ReleaseOneAxisReadWriteBufferResources(OneAxisReadWriteBufferResources& Buffer);
+
 	// UFUNCTION(BlueprintCallable, Category = "Raymarcher")
 	// static RAYMARCHER_API void UpdateVolumeTextureSource(UVolumeTexture* Texture);
 
