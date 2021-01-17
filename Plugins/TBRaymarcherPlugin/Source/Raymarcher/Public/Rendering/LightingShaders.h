@@ -95,7 +95,7 @@ protected:
 //
 
 // Parent shader to any shader working with a raymarched volume.
-// Contains Volume, Transfer Function, TF intensity domain, Clipping Parameters and StepSize.
+// Contains Volume, Transfer Function, Windowing parameters, Clipping Parameters and StepSize.
 // StepSize is needed so that we know how far through the volume we went in each step
 // so we can properly calculate the opacity.
 class FRaymarchVolumeShader : public FGlobalShader

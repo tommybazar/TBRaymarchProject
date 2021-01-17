@@ -13,7 +13,7 @@ float GetTransferFuncPosition(float Value, float WindowCenter, float WindowWidth
     return (Value - WindowCenter + (WindowWidth / 2.0)) / WindowWidth;
 }
 
-// Samples a Data volume, transforms it to fit the TF Intensity domain and then transforms it by the TF. Corrects the opacity to account for StepSize (in Unreal units).
+// Samples a Data volume, transforms it to fit the Windowing parameters and then transforms it by the TF. Corrects the opacity to account for StepSize (in Unreal units).
 float4 SampleWindowedVolumeStep(float3 CurPos, float StepSize, Texture3D Volume, SamplerState VolumeSampler, Texture2D TF, SamplerState TFSampler, float4 WindowingParams)
 {
     float DataValue = Volume.SampleLevel(VolumeSampler, CurPos, 0).r;

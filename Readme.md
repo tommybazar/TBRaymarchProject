@@ -165,7 +165,8 @@ As you can see in `WindowedRaymarchMaterials.usf`, we include common functions f
 
 The latter 2 files contains functions that are used both in material shaders and in compute shaders computing the illumination. Using the same functions assures consistency between opacity perceived when looking at the volume and the strength of shadows cast by the volume.  
 
-A notable function here is the `SampleWindowedVolumeStep()`function. This samples the volume at the given UVW position. Then it transforms the value according to the provided intensity domain. The intensity domain is provided as a range within [0, 1]. This is used to filter away very high or very low frequencies.
+A notable function here is the `SampleWindowedVolumeStep()`function. This samples the volume at the given UVW position. Then it transforms the value according to the provided Windowing parameters. These are identical with the windowing parameters found in the DICOM standard - Window Center, Window Width.
+In short, these specify a "Window" of values that are interesting to us. A value of [WindowCenter - WindowWidth/2] will map to 0 (bottom of transfer function) and a value of [WindowCenter + WindowWidth/2] will map to a value of 1 (top of transfer function).
  Afterwards, the Transfer function texture is sampled at a position corresponding to the sampled intensity. The alpha of the color sampled from the Transfer Function is then modified by an extinction formula to accomodate for the size of the raymarching step. (Longer step means more opacity, same as in `CorrectForStepSize()` function) 
 
 

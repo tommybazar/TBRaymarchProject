@@ -51,7 +51,7 @@ SamplerState TransferFuncSampler;
 float3 LocalClippingCenter;
 float3 LocalClippingDirection;
 
-// Intensity domain applied to the samples to be able to filter out low-noise.
+// Windowing parameters to be able to display intensities of interest.
 float4 WindowingParameters;
 
 // Step sizes - these are neccessary, as we need to account for the distance travelled through the volume

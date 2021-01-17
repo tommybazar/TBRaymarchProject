@@ -30,7 +30,7 @@ void AccumulateWindowedRaymarchStep(inout float4 AccumulatedLightEnergy, float3 
 // Performs lit raymarch for the current pixel. The lighting information is taken from a precomputed light volume.
 float4 PerformWindowedLitRaymarch(Texture3D DataVolume, // Data Volume 
                               SamplerState DataVolumeSampler,
-                              Texture2D TF, // Transfer func and intensity domain modifier
+                              Texture2D TF, // Transfer function texture.
                               Texture3D LightVolume, // Light Volume  
                               float3 CurPos, float Thickness, // CurPos = Entry Position, Thickness is thickness of cube along the ray. Both in UVW space.
                               float StepCount, // How many steps we should take. Actual number of steps taken is StepCount * Thickness.
