@@ -13,9 +13,9 @@ FString UVolumeTextureToolkit::MakePackageName(FString AssetName, FString Folder
 {
 	if (FolderName.IsEmpty())
 	{
-		FolderName = "Generated";
+		FolderName = "GeneratedTextures";
 	}
-	return "/Game/" + FolderName + "/" + AssetName;
+	return "/Game" / FolderName / AssetName;
 }
 
 void UVolumeTextureToolkit::SetVolumeTextureDetails(UVolumeTexture*& VolumeTexture, EPixelFormat PixelFormat, FIntVector Dimensions)
@@ -221,8 +221,7 @@ bool UVolumeTextureToolkit::CreateVolumeTextureTransient(UVolumeTexture*& OutTex
 
 	SetVolumeTextureDetails(VolumeTexture, PixelFormat, Dimensions);
 	CreateVolumeTextureMip(VolumeTexture, PixelFormat, Dimensions, BulkData);
-	CreateVolumeTextureEditorData(VolumeTexture, PixelFormat, Dimensions, BulkData, false);
-
+	
 	// Update resource, mark that the folder needs to be rescan and notify editor
 	// about asset creation.
 	if (ShouldUpdateResource)
@@ -313,6 +312,7 @@ uint8* UVolumeTextureToolkit::NormalizeArrayByFormat(
 
 float* UVolumeTextureToolkit::ConvertArrayToFloat(uint8* InArray, uint64 VoxelCount, const FString FormatName)
 {
+	// #TODO maybe figure out a nice way to get the format->C++ type instead of this if/else monstrosity
 	if (FormatName.Equals("MET_CHAR"))
 	{
 		return ConvertArrayToFloatTemplated<int8>(InArray, VoxelCount);
@@ -383,7 +383,7 @@ void UVolumeTextureToolkit::LoadRawIntoVolumeTextureAsset(FString RawFileName, U
 
 ETextureSourceFormat UVolumeTextureToolkit::PixelFormatToSourceFormat(EPixelFormat PixelFormat)
 {
-	// THIS IS UNTESTED FOR FORMATS OTHER THAN G8 AND R16G16B16A16_SNORM!
+	// THIS IS UNTESTED FOR FORMATS OTHER THAN G8, G16 AND R16G16B16A16_SNORM!
 	switch (PixelFormat)
 	{
 		case PF_G8:

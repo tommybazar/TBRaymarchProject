@@ -15,17 +15,17 @@ IMPLEMENT_UNREGISTERED_TEMPLATE_TYPE_LAYOUT(, FRaymarchVolumeShader);
 IMPLEMENT_UNREGISTERED_TEMPLATE_TYPE_LAYOUT(, FLightPropagationShader);
 IMPLEMENT_UNREGISTERED_TEMPLATE_TYPE_LAYOUT(, FDirLightPropagationShader);
 
-IMPLEMENT_GLOBAL_SHADER(FClearVolumeTextureShaderCS, "/Plugin/TBRaymarcherPlugin/Private/ClearVolumeTextureShader.usf",
+IMPLEMENT_GLOBAL_SHADER(FClearVolumeTextureShaderCS, "/Raymarcher/Private/ClearVolumeTextureShader.usf",
 	"MainComputeShader", SF_Compute);
 
 IMPLEMENT_GLOBAL_SHADER(
-	FAddDirLightShaderCS, "/Plugin/TBRaymarcherPlugin/Private/AddDirLightShader.usf", "MainComputeShader", SF_Compute);
+	FAddDirLightShaderCS, "/Raymarcher/Private/AddDirLightShader.usf", "MainComputeShader", SF_Compute);
 
 IMPLEMENT_GLOBAL_SHADER(
-	FChangeDirLightShader, "/Plugin/TBRaymarcherPlugin/Private/ChangeDirLightShader.usf", "MainComputeShader", SF_Compute);
+	FChangeDirLightShader, "/Raymarcher/Private/ChangeDirLightShader.usf", "MainComputeShader", SF_Compute);
 
 IMPLEMENT_GLOBAL_SHADER(
-	FClearFloatRWTextureCS, "/Plugin/TBRaymarcherPlugin/Private/ClearTextureShader.usf", "MainComputeShader", SF_Compute);
+	FClearFloatRWTextureCS, "/Raymarcher/Private/ClearTextureShader.usf", "MainComputeShader", SF_Compute);
 
 // For making statistics about GPU use - Adding Lights.
 DECLARE_FLOAT_COUNTER_STAT(TEXT("AddingLights"), STAT_GPU_AddingLights, STATGROUP_GPU);

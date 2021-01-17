@@ -9,9 +9,12 @@
 void FRaymarcherModule::StartupModule()
 {
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
-	FString PluginShaderDir = FPaths::Combine(FPaths::ProjectPluginsDir(), TEXT("TBRaymarcherPlugin"));
-	PluginShaderDir = FPaths::Combine(PluginShaderDir, TEXT("Shaders"));
-	AddShaderSourceDirectoryMapping(TEXT("/Plugin/TBRaymarcherPlugin"), PluginShaderDir);
+
+	FString PluginShaderDir = FPaths::Combine(
+		FPaths::ProjectPluginsDir(), TEXT("TBRaymarcherPlugin"), TEXT("Source"), TEXT("Raymarcher"), TEXT("Shaders"));
+	// This creates an alias "Raymarcher" for the folder of our shaders, which can be used when calling IMPLEMENT_GLOBAL_SHADER to
+	// find our shaders.
+	AddShaderSourceDirectoryMapping(TEXT("/Raymarcher"), PluginShaderDir);
 }
 
 void FRaymarcherModule::ShutdownModule()
@@ -21,5 +24,5 @@ void FRaymarcherModule::ShutdownModule()
 }
 
 #undef LOCTEXT_NAMESPACE
-	
+
 IMPLEMENT_MODULE(FRaymarcherModule, Raymarcher)

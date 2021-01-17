@@ -176,8 +176,7 @@ public:
 	static ETextureSourceFormat PixelFormatToSourceFormat(EPixelFormat PixelFormat);
 
 	/** Performs full setup of a volume texture depending on the provided parameters. Just a convenience function that calls
-		SetVolumeTextureDetails, CreateVolumeTextureMip and CreateVolumeTextureEditorData. In this order.
-	*/
+		SetVolumeTextureDetails, CreateVolumeTextureMip and CreateVolumeTextureEditorData. In this order. */
 	static void SetupVolumeTexture(
 		UVolumeTexture*& OutVolumeTexture, EPixelFormat PixelFormat, FIntVector Dimensions, uint8* InSourceArray, bool Persistent);
 };

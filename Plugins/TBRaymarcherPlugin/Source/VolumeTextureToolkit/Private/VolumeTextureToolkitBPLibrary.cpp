@@ -3,16 +3,16 @@
 // and Ryan Brucks (original raymarching code).
 
 #include "VolumeTextureToolkitBPLibrary.h"
-#include "VolumeTextureToolkit.h"
+#include "TextureUtilities.h"
 
 UVolumeTextureToolkitBPLibrary::UVolumeTextureToolkitBPLibrary(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-
 }
 
-float UVolumeTextureToolkitBPLibrary::VolumeTextureToolkitSampleFunction(float Param)
+bool UVolumeTextureToolkitBPLibrary::CreateVolumeTextureAsset(UVolumeTexture*& OutTexture, FString AssetName, FString FolderName,
+	EPixelFormat PixelFormat, FIntVector Dimensions, bool bUAVTargettable /*= false*/)
 {
-	return -1;
+	return UVolumeTextureToolkit::CreateVolumeTextureAsset(OutTexture, AssetName, FolderName, PixelFormat, Dimensions, nullptr, true, true);
 }
 

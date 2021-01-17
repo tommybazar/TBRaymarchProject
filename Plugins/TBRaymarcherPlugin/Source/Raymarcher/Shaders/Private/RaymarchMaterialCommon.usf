@@ -4,6 +4,11 @@
 // be recompiled. Shaders using this file have to be recompiled manually! (unless I find a way
 // to tell the shadercompiler to always recompile the raymarch shaders on startup)
 
+// Notice we're using FMaterialPixelParameters and Primitive, which are not defined by us anywhere. 
+// Since this file is only used in materials, we know that these structs are defined and provided to us 
+// by the magical shader compiler environment. Lurk through the generated HLSL file to see other nice 
+// structs that can be stolen like this.
+
 #pragma once
 
 #include "RaymarcherCommon.usf"
@@ -26,6 +31,8 @@ float4 PerformRaymarchCubeSetup(FMaterialPixelParameters MaterialParameters)
 
     // Get actual depth in local space, account for mesh bounds (by default, we use a centered 1x1x1 cube mesh, so this is unnecessary)
     LocalSceneDepth = length(WorldDepthVec);
+    
+    // We use unit cubes now, uncomment this if you want to use non-unit meshes for some reason.
     // LocalSceneDepth /= (GetPrimitiveData(MaterialParameters.PrimitiveId).LocalObjectBoundsMax.x * 2);
 
     // Account for difference between camera center vector and camera-to-pixel depth
@@ -35,13 +42,13 @@ float4 PerformRaymarchCubeSetup(FMaterialPixelParameters MaterialParameters)
     float3 LocalCamPos = mul(float4(ResolvedView.WorldCameraOrigin, 1.00000000), (GetPrimitiveData(MaterialParameters.PrimitiveId).WorldToLocal)).xyz;
     float3 LocalCamVec = -normalize(mul(MaterialParameters.CameraVector, GetPrimitiveData(MaterialParameters.PrimitiveId).WorldToLocal));
 
-    // Transform camera pos from local to UVW coords (from +-0.5 to [0 - 1]). Again, The LocalObjectBoundsMax only have an effect if using a non-default cube mesh.
+    // Transform camera pos from local to UVW coords (from +-0.5 to [0 - 1]).
     LocalCamPos += 0.5;
     float3 InverseRayDirVec = 1 / LocalCamVec;
 
-    // Because now we're in texture space where our box is at [0, 1] in each axis, it's easy to get intersections.
-    // LowIntersections will have the distance of the ray in X,Y,Z before it hits the respective axis.
-    // HighIntersections will have the distance of the ray in X,Y,Z before it reaches 1 in the respective axis.
+    // Because now we're in texture space where our box is at [0, 1] on each axis, it's easy to get intersections.
+    // LowIntersections will have the distance of the ray in X,Y,Z when it hits 0 on the respective axis.
+    // HighIntersections will have the distance of the ray in X,Y,Z when it reaches 1 on the respective axis.
     float3 LowIntersections = (0 - LocalCamPos) * InverseRayDirVec;
     float3 HighIntersections = (1 - LocalCamPos) * InverseRayDirVec;
 
@@ -73,6 +80,7 @@ float4 PerformRaymarchCubeSetup(FMaterialPixelParameters MaterialParameters)
 
 // Performs raymarch cube setup for this pixel. Returns the position of entry to the cube in rgb channels 
 // and thickness of the cube in alpha. All values returned are in UVW space.
+// Can scale the cube to act as if it was smaller/larger than your actual mesh.
 float4 PerformExperimentalRaymarchCubeSetup(FMaterialPixelParameters MaterialParameters, out float4 EntryPos, out float3 ExitPos, in float Scaling)
 {
     // Get scene depth at this pixel.
@@ -138,7 +146,8 @@ float4 PerformExperimentalRaymarchCubeSetup(FMaterialPixelParameters MaterialPar
 // Performs raymarch cube setup for this pixel. Returns the position of entry to the cube in rgb channels 
 // and thickness of the cube in alpha. All values returned are in UVW space. 
 // This setup is for performing the setup from a shader that's NOT run on the cube itself, it takes the
-// cube's transform as a parameter.
+// cube's transform as a parameter. So you could theoretically just have a full-screen quad and give input an
+// arbitrary transform and this will make it appear that the cube is at that transform.
 float4 PerformOffsetRaymarchCubeSetup(float4x4 CubeTransformW2L, FMaterialPixelParameters MaterialParameters)
 {
     // Get scene depth at this pixel.
@@ -194,9 +203,6 @@ float4 PerformOffsetRaymarchCubeSetup(float4x4 CubeTransformW2L, FMaterialPixelP
     
     return float4(EntryPos, BoxThickness);
 }
-
-
-
 
 // Gets color from a uint label value.
 // Switches on G8 will be faster than reading a full color volume. Also we need to export the labels eventually and color might not be the best way to do that.
@@ -325,9 +331,6 @@ void AccumulateOneRaymarchLabelStep(inout float4 AccumulatedLightEnergy, float3 
 
 
 //// Gets the Distance Field light multiplier (even though it's named GetDFShadow, the return value is actualy the opposite - the amount of light preserved)
-//// Notice we're using FMaterialPixelParameters and Primitive, which are not defined by us. 
-//// Since this file is only used in materials, we know that these structs are defined and provided to us 
-//// by the magical shader compiler environment. Lurk through the generated HLSL file to see other nice structs that can be stolen like this.
 //float GetDFShadow(float3 CurPos, int DFSteps, float LightTangent, float3 LightVectorWS, FMaterialPixelParameters MaterialParameters)
 //{
 //    float3 DFPos = (CurPos - 0.5);

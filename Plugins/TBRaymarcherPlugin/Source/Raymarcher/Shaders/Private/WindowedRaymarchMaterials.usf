@@ -17,10 +17,6 @@ void AccumulateWindowedRaymarchStep(inout float4 AccumulatedLightEnergy, float3 
                                  Texture2D TF, Texture3D LightVolume, float StepSize,
                                  float4 WindowingParams)
 {
-    // Sample intensity from the volume and get corresponding color-opacity from transfer function.
-    //int3 VolumeDims = GetVolumeLoadingDimensions(DataVolume);
-    //int3 LoadingSpot = int3(round(VolumeDims * saturate(CurPos)));
-
     float4 ColorSample = SampleWindowedVolumeStep(CurPos, StepSize, DataVolume, DataVolumeSampler,
                                                TF, Material.Clamp_WorldGroupSettings, WindowingParams);
     
@@ -36,12 +32,22 @@ float4 PerformWindowedLitRaymarch(Texture3D DataVolume, // Data Volume
                               SamplerState DataVolumeSampler,
                               Texture2D TF, // Transfer func and intensity domain modifier
                               Texture3D LightVolume, // Light Volume  
-                              float3 CurPos, float MaxSteps, float StepSize, float FinalStep, // Position of ray entry to cube, number of steps, size of a step and a 0-1 value of how big the final step is compared to regular steps 
+                              float3 CurPos, float Thickness, // CurPos = Entry Position, Thickness is thickness of cube along the ray. Both in UVW space.
+                              float StepCount, // How many steps we should take. Actual number of steps taken is StepCount * Thickness.
                               float3 ClippingCenter, float3 ClippingDirection, // Clipping plane position and direction of clipped away region
                               float4 WindowingParams,
-                              FMaterialPixelParameters MaterialParameters)                      // Material Parameters
+                              FMaterialPixelParameters MaterialParameters) // Material Parameters provided by UE.
 {
-// Get camera vector in local space and multiply it by step size.
+    // StepSize in UVW is inverse to StepCount.
+    float StepSize = 1/StepCount;
+    // Actual number of steps to take to march through the full thickness of the cube at the ray position.
+    float FloatActualSteps = StepCount * Thickness;
+    // Number of full steps to take.
+    int MaxSteps = floor(FloatActualSteps);
+    // Size of the last (not a full-sized) step.
+    float FinalStep = frac(FloatActualSteps);
+    
+    // Get camera vector in local space and multiply it by step size.
     float3 LocalCamVec = -normalize(mul(MaterialParameters.CameraVector, GetPrimitiveData(MaterialParameters.PrimitiveId).WorldToLocal)) * StepSize;
     // Get step size in world units to be consistent with compute shaders' opacity calculations.
     float StepSizeWorld = length(mul(LocalCamVec, GetPrimitiveData(MaterialParameters.PrimitiveId).LocalToWorld));
@@ -87,12 +93,22 @@ float4 PerformWindowedLitRaymarch(Texture3D DataVolume, // Data Volume
 
 // Performs lit raymarch for the current pixel. The lighting information is taken from a precomputed light volume.
 float4 PerformWindowedIntensityRaymarch(Texture3D DataVolume, // Data Volume 
-                              float3 CurPos, float MaxSteps, float StepSize, float FinalStep, // Position of ray entry to cube, number of steps, size of a step and a 0-1 value of how big the final step is compared to regular steps 
+                              float3 CurPos, float Thickness, // Position of ray entry to cube and thickness in UVW coords.
+                              float StepCount, // Number of steps to take if Thickness is 1. 
                               float3 ClippingCenter, float3 ClippingDirection, // Clipping plane position and direction of clipped away region
                               float4 WindowingParams,
                               FMaterialPixelParameters MaterialParameters)                      // Material Parameters
 {
-// Get camera vector in local space and multiply it by step size.
+    // StepSize in UVW is inverse to StepCount.
+    float StepSize = 1 / StepCount;
+    // Actual number of steps to take to march through the full thickness of the cube at the ray position.
+    float FloatActualSteps = StepCount * Thickness;
+    // Number of full steps to take.
+    int MaxSteps = floor(FloatActualSteps);
+    // Size of the last (not a full-sized) step.
+    float FinalStep = frac(FloatActualSteps);
+    
+    // Get camera vector in local space and multiply it by step size.
     float3 LocalCamVec = -normalize(mul(MaterialParameters.CameraVector, GetPrimitiveData(MaterialParameters.PrimitiveId).WorldToLocal)) * StepSize;
     float4 LightEnergy = 0;
     // Jitter Entry position to avoid artifacts.
