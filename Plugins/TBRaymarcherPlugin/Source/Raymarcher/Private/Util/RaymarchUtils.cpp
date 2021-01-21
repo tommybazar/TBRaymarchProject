@@ -30,7 +30,8 @@
 // }
 
 void URaymarchUtils::AddDirLightToSingleVolume(const FBasicRaymarchRenderingResources& Resources,
-	const FDirLightParameters& LightParameters, const bool Added, const FRaymarchWorldParameters WorldParameters, bool& LightAdded)
+	const FDirLightParameters& LightParameters, const bool Added, const FRaymarchWorldParameters WorldParameters, bool& LightAdded,
+	bool bGPUSync)
 {
 	if (!Resources.DataVolumeTextureRef || !Resources.DataVolumeTextureRef->Resource || !Resources.TFTextureRef->Resource ||
 		!Resources.LightVolumeTextureRef->Resource || !Resources.DataVolumeTextureRef->Resource->TextureRHI ||
@@ -44,16 +45,27 @@ void URaymarchUtils::AddDirLightToSingleVolume(const FBasicRaymarchRenderingReso
 		LightAdded = true;
 	}
 
-	// Call the actual rendering code on RenderThread.
-	ENQUEUE_RENDER_COMMAND(CaptureCommand)
-	([=](FRHICommandListImmediate& RHICmdList) {
-		AddDirLightToSingleLightVolume_RenderThread(RHICmdList, Resources, LightParameters, Added, WorldParameters);
-	});
+	if (bGPUSync)
+	{
+		// Call the actual rendering code on RenderThread.
+		ENQUEUE_RENDER_COMMAND(CaptureCommand)
+		([=](FRHICommandListImmediate& RHICmdList) {
+			AddDirLightToSingleLightVolume_GPUSync_RenderThread(RHICmdList, Resources, LightParameters, Added, WorldParameters);
+		});
+	}
+	else
+	{
+		// Call the actual rendering code on RenderThread.
+		ENQUEUE_RENDER_COMMAND(CaptureCommand)
+		([=](FRHICommandListImmediate& RHICmdList) {
+			AddDirLightToSingleLightVolume_RenderThread(RHICmdList, Resources, LightParameters, Added, WorldParameters);
+		});
+	}
 }
 
 void URaymarchUtils::ChangeDirLightInSingleVolume(FBasicRaymarchRenderingResources& Resources,
 	const FDirLightParameters OldLightParameters, const FDirLightParameters NewLightParameters,
-	const FRaymarchWorldParameters WorldParameters, bool& LightAdded)
+	const FRaymarchWorldParameters WorldParameters, bool& LightAdded, bool bGpuSync)
 {
 	if (!Resources.DataVolumeTextureRef || !Resources.DataVolumeTextureRef->Resource || !Resources.TFTextureRef->Resource ||
 		!Resources.LightVolumeTextureRef->Resource || !Resources.DataVolumeTextureRef->Resource->TextureRHI ||
@@ -67,7 +79,7 @@ void URaymarchUtils::ChangeDirLightInSingleVolume(FBasicRaymarchRenderingResourc
 		LightAdded = true;
 	}
 
-	// Call the actual rendering code on RenderThread. We capture by value so that if 
+	// Call the actual rendering code on RenderThread. We capture by value so that if
 	ENQUEUE_RENDER_COMMAND(CaptureCommand)
 	([=](FRHICommandListImmediate& RHICmdList) {
 		ChangeDirLightInSingleLightVolume_RenderThread(
@@ -178,8 +190,8 @@ void URaymarchUtils::CreateBufferTextures(FIntPoint Size, EPixelFormat PixelForm
 	FRHIResourceCreateInfo CreateInfo(FClearValueBinding::Transparent);
 	for (int i = 0; i < 4; i++)
 	{
-		RWBuffers.Buffers[i] =
-			RHICreateTexture2D(Size.X, Size.Y, PixelFormat, 1, 1, TexCreate_ShaderResource | TexCreate_UAV, CreateInfo);
+		RWBuffers.Buffers[i] = RHICreateTexture2D(Size.X, Size.Y, PixelFormat, 1, 1,
+			TexCreate_ShaderResource | TexCreate_UAV, CreateInfo);
 		RWBuffers.UAVs[i] = RHICreateUnorderedAccessView(RWBuffers.Buffers[i]);
 	}
 }

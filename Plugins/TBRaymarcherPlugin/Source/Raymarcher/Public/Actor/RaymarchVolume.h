@@ -47,6 +47,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool SetMHDAsset(UMHDAsset* InMHDAsset);
 
+	UPROPERTY(EditAnywhere)
+	bool bFastShader = true;
+
 protected:
 	/** Initializes the Raymarch Resources to work with the provided Data Volume Texture.**/
 	void InitializeRaymarchResources(UVolumeTexture* LoadedTexture);

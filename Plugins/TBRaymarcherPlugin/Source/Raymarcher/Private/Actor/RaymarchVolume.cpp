@@ -307,6 +307,10 @@ void ARaymarchVolume::Tick(float DeltaTime)
 	// (No point in recalculating a light volume that's not currently being used anyways).
 	if (bLitRaymarch)
 	{
+		// For testing shader speed. REMOVE WHEN DONE TESTING! (otherwise this gets recalculated all the time for no reason).
+		ResetAllLights();
+		return;
+
 		if (bRequestedRecompute)
 		{
 			// If we're requesting recompute or parameters changed,
@@ -362,7 +366,7 @@ void ARaymarchVolume::ResetAllLights()
 		bool bLightAddWasSuccessful = false;
 
 		URaymarchUtils::AddDirLightToSingleVolume(
-			RaymarchResources, Light->GetCurrentParameters(), true, WorldParameters, bResetWasSuccessful);
+			RaymarchResources, Light->GetCurrentParameters(), true, WorldParameters, bResetWasSuccessful, bFastShader);
 
 		if (!bResetWasSuccessful)
 		{

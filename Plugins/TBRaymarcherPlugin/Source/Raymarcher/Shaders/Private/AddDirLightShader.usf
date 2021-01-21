@@ -73,13 +73,13 @@ void MainComputeShader(uint2 PixelLoc : SV_DispatchThreadID)
     uint sizeX, sizeY, sizeZ;
     ALightVolume.GetDimensions(sizeX, sizeY, sizeZ);
     uint3 uResolution = uint3(sizeX, sizeY, sizeZ);
-        
-    // Sample the volume intensity at previous voxel.
-    float3 SampleUVW = GetUVW(pos, uResolution) + UVWOffset;
 
     // Sample light from read buffer at the corresponding UV coordinates.
     float2 PreviousUV = ((PixelLoc + float2(0.5, 0.5)) / float2(texSizeX, texSizeY)) + PrevPixelOffset;
     float PreviousLightAlpha = ReadBuffer.SampleLevel(ReadBufferSampler, PreviousUV, 0);
+   
+    // Sample the volume intensity at previous voxel.
+    float3 SampleUVW = GetUVW(pos, uResolution) + UVWOffset;
 
     float DistanceToCuttingPlane = dot(SampleUVW - LocalClippingCenter, LocalClippingDirection);
 

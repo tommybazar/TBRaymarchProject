@@ -32,13 +32,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Raymarcher")
 	static RAYMARCHER_API void AddDirLightToSingleVolume(const FBasicRaymarchRenderingResources& Resources,
 		const FDirLightParameters& LightParameters, const bool Added, const FRaymarchWorldParameters WorldParameters,
-		bool& LightAdded);
+		bool& LightAdded, bool bGPUSync = false);
 
 	/** Changes a light in the light volume.	 */
 	UFUNCTION(BlueprintCallable, Category = "Raymarcher")
 	static RAYMARCHER_API void ChangeDirLightInSingleVolume(FBasicRaymarchRenderingResources& Resources,
 		const FDirLightParameters OldLightParameters, const FDirLightParameters NewLightParameters,
-		const FRaymarchWorldParameters WorldParameters, bool& LightAdded);
+		const FRaymarchWorldParameters WorldParameters, bool& LightAdded, bool bGPUSync = false);
 
 	/** Clears a light volume. */
 	UFUNCTION(BlueprintCallable, Category = "Raymarcher")

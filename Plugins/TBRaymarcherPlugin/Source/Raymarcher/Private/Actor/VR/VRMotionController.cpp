@@ -23,6 +23,7 @@ AVRMotionController::AVRMotionController()
 
 	WidgetInteractor = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("WidgetInteractor"));
 	WidgetInteractor->SetupAttachment(RootComponent);
+	WidgetInteractor->OnHoveredWidgetChanged.AddDynamic(this, &AVRMotionController::OnWidgetInteractorHoverChanged);
 
 	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Collision"));
 	CollisionComponent->SetupAttachment(ControllerSkeletalMeshComponent);
@@ -84,6 +85,7 @@ void AVRMotionController::OnGripReleased()
 
 void AVRMotionController::OnTriggerAxis(float Axis)
 {
+	// Update animation
 }
 
 void AVRMotionController::OnTriggerPressed()
@@ -96,6 +98,7 @@ void AVRMotionController::OnTriggerPressed()
 
 void AVRMotionController::OnGripAxis(float Axis)
 {
+	// Update animation.
 }
 
 void AVRMotionController::OnOverlapBegin(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor,
@@ -113,8 +116,14 @@ void AVRMotionController::OnOverlapEnd(
 	}
 }
 
+void AVRMotionController::OnWidgetInteractorHoverChanged(UWidgetComponent* Old, UWidgetComponent* New)
+{
+
+}
+
 void AVRMotionController::OnActorHovered()
 {
+	
 }
 
 void AVRMotionController::BeginPlay()
