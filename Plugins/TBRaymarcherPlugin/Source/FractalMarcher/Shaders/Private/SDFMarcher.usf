@@ -1,0 +1,145 @@
+
+#pragma once
+
+
+// Performs a Signed-Distance-Function raymarch through a volume that has a precomputed SDF.
+// This has the advantage of taking really large steps in empty space, as we know the distance 
+// to the nearest object, so we can take a step as big as that distance and not hit anything.
+float4 PerformPrecomputedSDFRaymarch(Texture3D DataVolume, // Data Volume 
+                          SamplerState DataVolumeSampler,
+                          Texture2D TF, // Transfer function
+                          Texture3D LightVolume, // Light Volume maybe eventually.
+                          float3 CurPos, float MaxSteps, // Position of ray entry to cube, number of steps 
+                          float3 ClippingCenter, float3 ClippingDirection, // Clipping plane position and direction of clipped away region
+                          FMaterialPixelParameters MaterialParameters)                      // Material Parameters
+{
+    return float4(0, 0, 0, 0);
+}
+
+/// Calculates MandelBulb SDF estimate on the specified position. 
+/// @arg Extent - This is the extent of the world coordinates we're concerned about. If the SDF returns more than this, the set is too far from this spot to ever be hit (within our volume bounds).
+/// @arg Power  - The power used for calculating the Mandelbulb.
+/// @arg Iterations - Max number of iterations to try and calculate the SDF.
+float Mandelbulb_SDF(float3 Position, const float Bailout, const float Power, const int Iterations)
+{
+    float3 z = Position;
+    float dr = 1.0;
+    float r = 0.0;
+    float check;
+    for (int i = 0; i < Iterations; i++)
+    {
+        // if (r > check)
+        r = length(z);
+        if (r > Bailout)
+            break;
+		
+		// convert to polar coordinates
+        float theta = acos(z.z / r);
+        float phi = atan2(z.y, z.x);
+        dr = pow(r, Power - 1.0) * Power * dr + 1.0;
+		
+		// scale and rotate the point
+        float zr = pow(r, Power);
+        theta = theta * Power;
+        phi = phi * Power;
+		
+		// convert back to cartesian coordinates
+        z = zr * float3(sin(theta) * cos(phi), sin(phi) * sin(theta), cos(theta));
+        z += Position;
+    }
+    return 0.5 * log(r) * r / dr;
+}
+
+float3 GetActualPosition(float3 InUVW, float3 VolumeCenter, float Extent)
+{
+    // UVWs are from 0 to 1, transfomr them to (-0.5 to 0.5), multiply by extent and add the center.
+    return VolumeCenter + ((InUVW - float3(0.5, 0.5, 0.5)) * Extent);
+}
+
+float4 PerformMandelbulbRaymarch(float3 VolumeCenter,       // Center of the unit-cube will correspond to these coordinates when calculating the fractal
+                                 float Extent,              // Cube will extend this far.
+                                 float Power,               // Transfer function
+                                 float MaxSteps,            // Max raymarcher steps before exiting.
+                                 float MaxIterations,       // Max iterations for calculating the mandelbulb SDF.
+                                 float DerivationDistance,  // The distance at which to calculate normals when we hit the mandelbulb set. 
+                                 float3 CurPos,             // Entry position into the set.
+                                 float Thickness,           // Thickness of cube at the current pixel. Used to correctly depth-sort with the scene.
+                                 float Bailout,             // Bailout parameter
+                                 float HighPrecisionEps,    // We'll consider we "hit" the mandelbulb if we get within this distance from it.
+                                 float LowPrecisionEps,     // If we don't hit the bulb, but are very very close, still return a hit -> prevents holes in fractal
+                                 // float3 ClippingCenter, float3 ClippingDirection, // Clipping plane position and direction of clipped away region
+                                 FMaterialPixelParameters MaterialParameters)
+{
+    // Get camera vector in local space and multiply it by Extent to get correct step size.
+    float3 LocalCamVec = -normalize(mul(MaterialParameters.CameraVector, GetPrimitiveData(MaterialParameters.PrimitiveId).WorldToLocal));
+    // With larger extents, we want derivation distance to be smaller.
+    DerivationDistance = DerivationDistance * Extent;
+    
+    float DistanceMarched = 0;
+    // Jitter Entry position to avoid artifacts.
+    // JitterEntryPos(CurPos, LocalCamVec, MaterialParameters);
+    
+    float3 Normal = float3(0, 0, 0);
+    float DistanceToMandelbulb = 0;
+    
+    for (int RaymarchStep = 0; RaymarchStep < MaxSteps; RaymarchStep++)
+    {
+        // No way to march more than sqrt(3) in a cube and not get out!
+        if (DistanceMarched > sqrt(3))
+        {
+            return float4(0, 0, 0, 0);
+        }
+        
+        DistanceToMandelbulb  = Mandelbulb_SDF(GetActualPosition(CurPos, VolumeCenter, Extent), Bailout, Power, MaxIterations);
+    
+        if (DistanceToMandelbulb < HighPrecisionEps)
+        {
+            // Get distance from camera.            
+            float3 LocalCamPos = mul(float4(ResolvedView.WorldCameraOrigin, 1.00000000), (GetPrimitiveData(MaterialParameters.PrimitiveId).WorldToLocal)).xyz;
+            float CameraDistance = distance(LocalCamPos, CurPos - float3(0.5, 0.5, 0.5));
+            
+            // The further away our camera is, the further away we do derivations -> less antialiasing at a distance and more quality up-close.
+            DerivationDistance *= CameraDistance;
+            // We "hit" the bulb.
+            // Find normals by sampling SDF at 3 points that are each offset by a bit in the one axis direction.;
+            float3 DerivationPointX = CurPos - float3(DerivationDistance, 0, 0);
+            float3 DerivationPointY = CurPos - float3(0, DerivationDistance, 0);
+            float3 DerivationPointZ = CurPos - float3(0, 0, DerivationDistance);
+                        
+            Normal.x = Mandelbulb_SDF(GetActualPosition(DerivationPointX, VolumeCenter, Extent), Extent, Power, MaxIterations);
+            Normal.y = Mandelbulb_SDF(GetActualPosition(DerivationPointY, VolumeCenter, Extent), Extent, Power, MaxIterations);
+            Normal.z = Mandelbulb_SDF(GetActualPosition(DerivationPointZ, VolumeCenter, Extent), Extent, Power, MaxIterations);
+
+            Normal = normalize(Normal);
+            // And return
+            return float4(Normal, 1.0);
+            
+            float StepRatio = (float) RaymarchStep / (float) MaxSteps;
+            float NormalizedStepRatio = StepRatio * MaxSteps / 100;
+            
+            return float4(1 - NormalizedStepRatio, 1 - NormalizedStepRatio, 1 - NormalizedStepRatio, 1.0);
+        }
+        
+        CurPos += DistanceToMandelbulb * LocalCamVec;
+        
+        // We marched out of the UVW space -> total miss.         
+        if (any(saturate(CurPos) != CurPos))
+        {
+            return float4(0, 0, 0, 0);
+        }
+        
+        // For checking scene-depth.
+        DistanceMarched += DistanceToMandelbulb * length(LocalCamVec);
+    }
+    
+    // We hit the low-precision, so it's pretty close -> return black to not have holes in our bulb!
+    // It will look nice and hazy instead.
+    if (DistanceToMandelbulb < LowPrecisionEps)
+    {
+        // Since we walked all the steps, return zeroes.
+        return float4(0.5,0.5,0.5,1);
+    }
+    
+    // Total miss.
+    return float4(0, 0, 0, 0);
+}
