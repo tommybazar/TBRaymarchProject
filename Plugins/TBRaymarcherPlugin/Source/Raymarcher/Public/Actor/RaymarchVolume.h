@@ -99,7 +99,6 @@ public:
 	UMHDAsset* MHDAsset = nullptr;
 
 	/** Only kept so that we can compare to it when a user changes the MHDAsset. See SetMHDAsset().*/
-	UPROPERTY()
 	UMHDAsset* OldMHDAsset = nullptr;
 
 	/** The base material for volumetric rendering.*/
