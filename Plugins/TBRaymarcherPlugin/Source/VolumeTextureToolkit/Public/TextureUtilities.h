@@ -179,4 +179,9 @@ public:
 		SetVolumeTextureDetails, CreateVolumeTextureMip and CreateVolumeTextureEditorData. In this order. */
 	static void SetupVolumeTexture(
 		UVolumeTexture*& OutVolumeTexture, EPixelFormat PixelFormat, FIntVector Dimensions, uint8* InSourceArray, bool Persistent);
+
+
+	/** Clears a Volume Texture. */
+	UFUNCTION(BlueprintCallable, Category = " Volume Texture Utilities")
+	static void ClearVolumeTexture(UVolumeTexture* VolumeTexture, float ClearValue);
 };

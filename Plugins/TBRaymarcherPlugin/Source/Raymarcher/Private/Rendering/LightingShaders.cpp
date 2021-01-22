@@ -7,7 +7,7 @@
 #include "AssetRegistryModule.h"
 #include "RenderCore/Public/RenderUtils.h"
 #include "Renderer/Public/VolumeRendering.h"
-#include "TextureUtilities.h"
+#include <Util/UtilityShaders.h>
 
 #if !UE_BUILD_SHIPPING
 #pragma optimize("", off)
@@ -19,16 +19,11 @@ IMPLEMENT_UNREGISTERED_TEMPLATE_TYPE_LAYOUT(, FRaymarchVolumeShader);
 IMPLEMENT_UNREGISTERED_TEMPLATE_TYPE_LAYOUT(, FLightPropagationShader);
 IMPLEMENT_UNREGISTERED_TEMPLATE_TYPE_LAYOUT(, FDirLightPropagationShader);
 
-IMPLEMENT_GLOBAL_SHADER(
-	FClearVolumeTextureShaderCS, "/Raymarcher/Private/ClearVolumeTextureShader.usf", "MainComputeShader", SF_Compute);
-
 IMPLEMENT_GLOBAL_SHADER(FAddDirLightShaderCS, "/Raymarcher/Private/AddDirLightShader.usf", "MainComputeShader", SF_Compute);
 
 IMPLEMENT_GLOBAL_SHADER(FAddDirLightShader_GPUSync_CS, "/Raymarcher/Private/AddDirLightShader_GPUSync.usf", "MainComputeShader", SF_Compute);
 
 IMPLEMENT_GLOBAL_SHADER(FChangeDirLightShader, "/Raymarcher/Private/ChangeDirLightShader.usf", "MainComputeShader", SF_Compute);
-
-IMPLEMENT_GLOBAL_SHADER(FClearFloatRWTextureCS, "/Raymarcher/Private/ClearTextureShader.usf", "MainComputeShader", SF_Compute);
 
 // For making statistics about GPU use - Adding Lights.
 DECLARE_FLOAT_COUNTER_STAT(TEXT("AddingLights"), STAT_GPU_AddingLights, STATGROUP_GPU);
@@ -37,10 +32,6 @@ DECLARE_GPU_STAT_NAMED(GPUAddingLights, TEXT("AddingLightsToVolume"));
 // For making statistics about GPU use - Changing Lights.
 DECLARE_FLOAT_COUNTER_STAT(TEXT("ChangingLights"), STAT_GPU_ChangingLights, STATGROUP_GPU);
 DECLARE_GPU_STAT_NAMED(GPUChangingLights, TEXT("ChangingLightsInVolume"));
-
-// For making statistics about GPU use - Clearing Lights.
-DECLARE_FLOAT_COUNTER_STAT(TEXT("ClearingLights"), STAT_GPU_ClearingLights, STATGROUP_GPU);
-DECLARE_GPU_STAT_NAMED(GPUClearingLights, TEXT("ClearingLightsInVolume"));
 
 #define NUM_THREADS_PER_GROUP_DIMENSION 16	  // This has to be the same as in the compute shader's spec [X, X, 1]
 // #TODO profile with different dimensions.
@@ -79,26 +70,6 @@ OneAxisReadWriteBufferResources& GetBuffers(const FMajorAxes Axes, const unsigne
 	FCubeFace face = Axes.FaceWeight[index].first;
 	unsigned axis = (uint8) face / 2;
 	return InParams.XYZReadWriteBuffers[axis];
-}
-
-/// Clears a FloatTexture accesible as a UAV.
-void ClearFloatTextureRW(
-	FRHICommandListImmediate& RHICmdList, FRHIUnorderedAccessView* TextureRW, FIntPoint TextureSize, float Value)
-{
-	TShaderMapRef<FClearFloatRWTextureCS> ShaderRef(GetGlobalShaderMap(ERHIFeatureLevel::SM5));
-	FRHIComputeShader* ComputeShader = ShaderRef.GetComputeShader();
-	RHICmdList.SetComputeShader(ComputeShader);
-
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::ERWNoBarrier, EResourceTransitionPipeline::EComputeToCompute, TextureRW);
-
-	ShaderRef->SetParameters(RHICmdList, TextureRW, Value);
-	uint32 GroupSizeX = FMath::DivideAndRoundUp(TextureSize.X, NUM_THREADS_PER_GROUP_DIMENSION);
-	uint32 GroupSizeY = FMath::DivideAndRoundUp(TextureSize.Y, NUM_THREADS_PER_GROUP_DIMENSION);
-
-	RHICmdList.DispatchComputeShader(GroupSizeX, GroupSizeY, 1);
-	//  DispatchComputeShader(RHICmdList, ShaderRef, GroupSizeX, GroupSizeY, 1);
-	ShaderRef->UnbindUAV(RHICmdList);
 }
 
 ///  Returns the UV offset to the previous layer. This is the position in the previous layer that is in the direction of the light.
@@ -347,8 +318,10 @@ void AddDirLightToSingleLightVolume_GPUSync_RenderThread(FRHICommandListImmediat
 
 		float LightAlpha = GetLightAlpha(LocalLightParams, LocalMajorAxes, i);
 
-		ClearFloatTextureRW(RHICmdList, Buffers.UAVs[0], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
-		ClearFloatTextureRW(RHICmdList, Buffers.UAVs[1], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
+		Clear2DTexture_RenderThread(
+			RHICmdList, Buffers.UAVs[0], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
+		Clear2DTexture_RenderThread(
+			RHICmdList, Buffers.UAVs[1], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
 	}
 
 	// Find and set compute shader
@@ -469,8 +442,8 @@ void AddDirLightToSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICm
 
 		float LightAlpha = GetLightAlpha(LocalLightParams, LocalMajorAxes, i);
 
-		ClearFloatTextureRW(RHICmdList, Buffers.UAVs[0], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
-		ClearFloatTextureRW(RHICmdList, Buffers.UAVs[1], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
+		Clear2DTexture_RenderThread(RHICmdList, Buffers.UAVs[0], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
+		Clear2DTexture_RenderThread(RHICmdList, Buffers.UAVs[1], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
 	}
 
 	// Find and set compute shader
@@ -607,14 +580,14 @@ void ChangeDirLightInSingleLightVolume_RenderThread(FRHICommandListImmediate& RH
 		float AddedLightAlpha = GetLightAlpha(AddedLocalLightParams, AddedLocalMajorAxes, i);
 
 		// Clear R/W buffers for Removed Light
-		ClearFloatTextureRW(
+		Clear2DTexture_RenderThread(
 			RHICmdList, Buffers.UAVs[0], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), RemovedLightAlpha);
-		ClearFloatTextureRW(
+		Clear2DTexture_RenderThread(
 			RHICmdList, Buffers.UAVs[1], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), RemovedLightAlpha);
 		// Clear R/W buffers for Added Light
-		ClearFloatTextureRW(
+		Clear2DTexture_RenderThread(
 			RHICmdList, Buffers.UAVs[2], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), AddedLightAlpha);
-		ClearFloatTextureRW(
+		Clear2DTexture_RenderThread(
 			RHICmdList, Buffers.UAVs[3], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), AddedLightAlpha);
 	}
 
@@ -722,48 +695,6 @@ void ChangeDirLightInSingleLightVolume_RenderThread(FRHICommandListImmediate& RH
 	RHICmdList.TransitionResource(
 		EResourceTransitionAccess::EReadable, EResourceTransitionPipeline::EComputeToGfx, Resources.LightVolumeUAVRef);
 }
-
-void ClearVolumeTexture_RenderThread(FRHICommandListImmediate& RHICmdList, FRHITexture3D* VolumeResourceRef, float ClearValues)
-{
-	// For GPU profiling.
-	SCOPED_DRAW_EVENTF(RHICmdList, ClearVolumeTexture_RenderThread, TEXT("Clearing lights"));
-	SCOPED_GPU_STAT(RHICmdList, GPUClearingLights);
-
-	TShaderMapRef<FClearVolumeTextureShaderCS> ComputeShader(GetGlobalShaderMap(ERHIFeatureLevel::SM5));
-	FRHIComputeShader* ShaderRHI = ComputeShader.GetComputeShader();
-	RHICmdList.SetComputeShader(ShaderRHI);
-
-	// RHICmdList.TransitionResource(EResourceTransitionAccess::ERWNoBarrier,
-	// LightVolumeResource);
-	FUnorderedAccessViewRHIRef VolumeUAVRef = RHICreateUnorderedAccessView(VolumeResourceRef);
-
-	// Don't need barriers on these - we only ever read/write to the same pixel from one thread ->
-	// no race conditions But we definitely need to transition the resource to Compute-shader
-	// accessible, otherwise the renderer might touch our textures while we're writing them.
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::ERWNoBarrier, EResourceTransitionPipeline::EGfxToCompute, VolumeUAVRef);
-
-	ComputeShader->SetParameters(RHICmdList, VolumeUAVRef, ClearValues, VolumeResourceRef->GetSizeZ());
-
-	uint32 GroupSizeX = FMath::DivideAndRoundUp((int32) VolumeResourceRef->GetSizeX(), NUM_THREADS_PER_GROUP_DIMENSION);
-	uint32 GroupSizeY = FMath::DivideAndRoundUp((int32) VolumeResourceRef->GetSizeY(), NUM_THREADS_PER_GROUP_DIMENSION);
-
-	RHICmdList.DispatchComputeShader(GroupSizeX, GroupSizeY, 1);
-	ComputeShader->UnbindUAV(RHICmdList);
-	RHICmdList.TransitionResource(EResourceTransitionAccess::EReadable, EResourceTransitionPipeline::EComputeToGfx, VolumeUAVRef);
-}
-
-/*
-  double end = FPlatformTime::Seconds();
-  FString text = "Time elapsed before shader & copy creation = ";
-  text += FString::SanitizeFloat(end - start, 6);
-  GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, text);*/
-
-// start = FPlatformTime::Seconds();
-
-// text = "Time elapsed in shader & copy = ";
-// text += FString::SanitizeFloat(start - end, 6);
-// GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, text);
 
 FRaymarchVolumeShader::~FRaymarchVolumeShader()
 {

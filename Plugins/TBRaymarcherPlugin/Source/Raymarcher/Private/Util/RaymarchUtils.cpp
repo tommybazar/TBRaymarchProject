@@ -87,34 +87,13 @@ void URaymarchUtils::ChangeDirLightInSingleVolume(FBasicRaymarchRenderingResourc
 	});
 }
 
-void URaymarchUtils::ClearVolumeTexture(UVolumeTexture* VolumeTexture, float ClearValue)
-{
-	if (!VolumeTexture || !VolumeTexture->Resource || !VolumeTexture->Resource->TextureRHI)
-	{
-		return;
-	}
-
-	FRHITexture3D* VolumeTextureResource = VolumeTexture->Resource->TextureRHI->GetTexture3D();
-
-	// Call the actual rendering code on RenderThread.
-	ENQUEUE_RENDER_COMMAND(CaptureCommand)
-	([VolumeTextureResource, ClearValue](
-		 FRHICommandListImmediate& RHICmdList) { ClearVolumeTexture_RenderThread(RHICmdList, VolumeTextureResource, ClearValue); });
-}
-
 void URaymarchUtils::ClearResourceLightVolumes(const FBasicRaymarchRenderingResources Resources, float ClearValue)
 {
 	if (!Resources.LightVolumeTextureRef)
 	{
 		return;
 	}
-
-	FRHITexture3D* ALightVolumeResource = Resources.LightVolumeTextureRef->Resource->TextureRHI->GetTexture3D();
-
-	// Call the actual rendering code on RenderThread.
-	ENQUEUE_RENDER_COMMAND(CaptureCommand)
-	([ALightVolumeResource, ClearValue](
-		 FRHICommandListImmediate& RHICmdList) { ClearVolumeTexture_RenderThread(RHICmdList, ALightVolumeResource, ClearValue); });
+	UVolumeTextureToolkit::ClearVolumeTexture(Resources.LightVolumeTextureRef, 0.0f);
 }
 
 RAYMARCHER_API void URaymarchUtils::MakeDefaultTFTexture(UTexture2D*& OutTexture)

@@ -40,10 +40,6 @@ public:
 		const FDirLightParameters OldLightParameters, const FDirLightParameters NewLightParameters,
 		const FRaymarchWorldParameters WorldParameters, bool& LightAdded, bool bGPUSync = false);
 
-	/** Clears a light volume. */
-	UFUNCTION(BlueprintCallable, Category = "Raymarcher")
-	static RAYMARCHER_API void ClearVolumeTexture(UVolumeTexture* VolumeTexture, float ClearValue);
-
 	/** Clears a light volume in provided raymarch resources. */
 	UFUNCTION(BlueprintCallable, Category = "Raymarcher")
 	static RAYMARCHER_API void ClearResourceLightVolumes(FBasicRaymarchRenderingResources Resources, float ClearValue);

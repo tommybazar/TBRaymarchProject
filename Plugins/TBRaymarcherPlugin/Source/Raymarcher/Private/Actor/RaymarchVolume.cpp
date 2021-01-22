@@ -353,7 +353,7 @@ void ARaymarchVolume::ResetAllLights()
 	}
 
 	// Clear Light volume to zero.
-	URaymarchUtils::ClearVolumeTexture(RaymarchResources.LightVolumeTextureRef, 0);
+	UVolumeTextureToolkit::ClearVolumeTexture(RaymarchResources.LightVolumeTextureRef, 0);
 
 	// Add all lights.
 	bool bResetWasSuccessful = true;

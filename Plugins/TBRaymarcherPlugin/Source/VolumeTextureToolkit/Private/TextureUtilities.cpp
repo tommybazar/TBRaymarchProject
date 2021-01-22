@@ -6,6 +6,7 @@
 
 #include "AssetRegistryModule.h"
 #include "ComputeVolumeTexture.h"
+#include "Util/UtilityShaders.h"
 
 DEFINE_LOG_CATEGORY(LogTextureUtils);
 
@@ -419,4 +420,19 @@ void UVolumeTextureToolkit::SetupVolumeTexture(
 	// Actually create the texture MIP.
 	CreateVolumeTextureMip(OutVolumeTexture, PixelFormat, Dimensions, ConvertedArray);
 	CreateVolumeTextureEditorData(OutVolumeTexture, PixelFormat, Dimensions, ConvertedArray, Persistent);
+}
+
+void UVolumeTextureToolkit::ClearVolumeTexture(UVolumeTexture* VolumeTexture, float ClearValue)
+{
+	if (!VolumeTexture || !VolumeTexture->Resource || !VolumeTexture->Resource->TextureRHI)
+	{
+		return;
+	}
+
+	FRHITexture3D* VolumeTextureResource = VolumeTexture->Resource->TextureRHI->GetTexture3D();
+
+	// Call the actual rendering code on RenderThread.
+	ENQUEUE_RENDER_COMMAND(CaptureCommand)
+	([VolumeTextureResource, ClearValue](
+		 FRHICommandListImmediate& RHICmdList) { ClearVolumeTexture_RenderThread(RHICmdList, VolumeTextureResource, ClearValue); });
 }
