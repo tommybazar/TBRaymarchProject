@@ -3,6 +3,8 @@
 # Volume Rendering (Raymarching) Plugin for Unreal Engine
 Allows volume rendering of .MHD data with Unreal Engine.
 
+## Updated for UE 4.26 - for 4.25 version, checkout the "4.25" branch.
+
 
 ![
 ](https://github.com/tommybazar/TBRaymarchProject/blob/master/Documents/Render1.png)

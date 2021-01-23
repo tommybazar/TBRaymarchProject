@@ -1,13 +1,14 @@
 {
   "FileVersion": 3,
   "Version": 1,
-  "VersionName": "0.9",
+  "VersionName": "0.9.1",
+  "EngineVersion": "4.26",
   "FriendlyName": "Tommy Bazar's Raymarcher Plugin",
   "Description": "A plugin for raymarching volumetric data",
   "Category": "Volumetrics",
   "CreatedBy": "Tommy Bazar",
-  "CreatedByURL": "",
-  "DocsURL": "",
+  "CreatedByURL": "github.com/tommybazar",
+  "DocsURL": "github.com/tommybazar/TBRaymarchProject",
   "MarketplaceURL": "",
   "SupportURL": "",
   "EnabledByDefault": true,
@@ -24,8 +25,7 @@
     {
       "Name": "FractalMarcher",
       "Type": "Runtime",
-      "LoadingPhase": "PostConfigInit",
-      "AdditionalDependencies": [ "ProceduralMeshComponent" ]
+      "LoadingPhase": "PostConfigInit"
     },
     {
       "Name": "VolumeTextureToolkit",
@@ -38,5 +38,4 @@
       "LoadingPhase": "Default"
     }
   ]
-
 }
