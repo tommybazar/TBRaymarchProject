@@ -10,8 +10,6 @@
 
 #include "FractalVolume.generated.h"
 
-class UComputeVolumeTexture;
-
 DECLARE_LOG_CATEGORY_EXTERN(LogFractalMarchVolume, Log, All);
 
 UCLASS()

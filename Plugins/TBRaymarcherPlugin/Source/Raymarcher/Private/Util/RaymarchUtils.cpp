@@ -20,6 +20,7 @@
 #include "VolumeTextureToolkit/Public/TextureUtilities.h"
 
 #include <cstdio>
+#include <Engine/TextureRenderTargetVolume.h>
 
 #define LOCTEXT_NAMESPACE "RaymarchPlugin"
 
@@ -34,8 +35,8 @@ void URaymarchUtils::AddDirLightToSingleVolume(const FBasicRaymarchRenderingReso
 	bool bGPUSync)
 {
 	if (!Resources.DataVolumeTextureRef || !Resources.DataVolumeTextureRef->Resource || !Resources.TFTextureRef->Resource ||
-		!Resources.LightVolumeTextureRef->Resource || !Resources.DataVolumeTextureRef->Resource->TextureRHI ||
-		!Resources.TFTextureRef->Resource->TextureRHI || !Resources.LightVolumeTextureRef->Resource->TextureRHI)
+		!Resources.LightVolumeRenderTarget->Resource || !Resources.DataVolumeTextureRef->Resource->TextureRHI ||
+		!Resources.TFTextureRef->Resource->TextureRHI || !Resources.LightVolumeRenderTarget->Resource->TextureRHI)
 	{	 //|| !Resources.ALightVolumeUAVRef) {
 		LightAdded = false;
 		return;
@@ -68,8 +69,8 @@ void URaymarchUtils::ChangeDirLightInSingleVolume(FBasicRaymarchRenderingResourc
 	const FRaymarchWorldParameters WorldParameters, bool& LightAdded, bool bGpuSync)
 {
 	if (!Resources.DataVolumeTextureRef || !Resources.DataVolumeTextureRef->Resource || !Resources.TFTextureRef->Resource ||
-		!Resources.LightVolumeTextureRef->Resource || !Resources.DataVolumeTextureRef->Resource->TextureRHI ||
-		!Resources.TFTextureRef->Resource->TextureRHI || !Resources.LightVolumeTextureRef->Resource->TextureRHI)
+		!Resources.LightVolumeRenderTarget->Resource || !Resources.DataVolumeTextureRef->Resource->TextureRHI ||
+		!Resources.TFTextureRef->Resource->TextureRHI || !Resources.LightVolumeRenderTarget->Resource->TextureRHI)
 	{
 		LightAdded = false;
 		return;
@@ -89,11 +90,11 @@ void URaymarchUtils::ChangeDirLightInSingleVolume(FBasicRaymarchRenderingResourc
 
 void URaymarchUtils::ClearResourceLightVolumes(const FBasicRaymarchRenderingResources Resources, float ClearValue)
 {
-	if (!Resources.LightVolumeTextureRef)
+	if (!Resources.LightVolumeRenderTarget)
 	{
 		return;
 	}
-	UVolumeTextureToolkit::ClearVolumeTexture(Resources.LightVolumeTextureRef, 0.0f);
+	UVolumeTextureToolkit::ClearVolumeTexture(Resources.LightVolumeRenderTarget, 0.0f);
 }
 
 RAYMARCHER_API void URaymarchUtils::MakeDefaultTFTexture(UTexture2D*& OutTexture)

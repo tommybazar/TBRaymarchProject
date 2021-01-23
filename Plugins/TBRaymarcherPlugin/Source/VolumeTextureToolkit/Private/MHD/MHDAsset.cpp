@@ -195,7 +195,7 @@ UMHDAsset* UMHDAsset::CreateAndLoadMHDAsset(
 		}
 		// Create persistent package if we want the MHD info to be saveable.
 		FString MHDPackageName = SaveFolder + "MHD_" + SaveName;
-		UPackage* MHDPackage = CreatePackage(nullptr, *MHDPackageName);
+		UPackage* MHDPackage = CreatePackage(*MHDPackageName);
 		MHDPackage->FullyLoad();
 
 		OutMHDAsset = NewObject<UMHDAsset>(MHDPackage, UMHDAsset::StaticClass(), FName("MHD_" + SaveName), RF_Standalone | RF_Public);
@@ -260,7 +260,7 @@ void UMHDAsset::CreateAssetFromMhdFileNormalized(const FString Filename, UMHDAss
 	if (bIsPersistent)
 	{
 		FString DataPackageName = OutFolder + "Data_" + FileNamePart;
-		DataPackage = CreatePackage(nullptr, *DataPackageName);
+		DataPackage = CreatePackage(*DataPackageName);
 		DataPackage->FullyLoad();
 	}
 
@@ -383,7 +383,7 @@ void UMHDAsset::CreateAssetFromMhdFileNoConversion(
 	{
 		// Create a package for the Volume texture.
 		FString DataPackageName = OutFolder + "Data_" + FileNamePart;
-		UPackage* DataPackage = CreatePackage(nullptr, *DataPackageName);
+		UPackage* DataPackage = CreatePackage(*DataPackageName);
 		DataPackage->FullyLoad();
 
 		// Create the Volume texture.

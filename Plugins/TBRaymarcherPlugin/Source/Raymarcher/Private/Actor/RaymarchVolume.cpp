@@ -10,6 +10,8 @@
 #include "TextureUtilities.h"
 #include "Util/RaymarchUtils.h"
 
+#include <Engine/TextureRenderTargetVolume.h>
+
 DEFINE_LOG_CATEGORY(LogRaymarchVolume)
 
 // Uncomment for easier debugging
@@ -353,7 +355,7 @@ void ARaymarchVolume::ResetAllLights()
 	}
 
 	// Clear Light volume to zero.
-	UVolumeTextureToolkit::ClearVolumeTexture(RaymarchResources.LightVolumeTextureRef, 0);
+	UVolumeTextureToolkit::ClearVolumeTexture(RaymarchResources.LightVolumeRenderTarget, 0);
 
 	// Add all lights.
 	bool bResetWasSuccessful = true;
@@ -436,7 +438,7 @@ bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
 
 #if WITH_EDITOR
 		// Bind a listener to the delegate notifying about color curve changes
-		if ((!GetWorld() || !GetWorld()->IsGameWorld()) &&  InMHDAsset != OldMHDAsset)
+		if ((!GetWorld() || !GetWorld()->IsGameWorld()) && InMHDAsset != OldMHDAsset)
 		{
 			CurveGradientUpdateDelegateHandle =
 				CurrentTFCurve->OnUpdateGradient.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
@@ -588,7 +590,7 @@ void ARaymarchVolume::SetMaterialVolumeParameters()
 	if (LitRaymarchMaterial)
 	{
 		LitRaymarchMaterial->SetTextureParameterValue(RaymarchParams::DataVolume, RaymarchResources.DataVolumeTextureRef);
-		LitRaymarchMaterial->SetTextureParameterValue(RaymarchParams::LightVolume, RaymarchResources.LightVolumeTextureRef);
+		LitRaymarchMaterial->SetTextureParameterValue(RaymarchParams::LightVolume, RaymarchResources.LightVolumeRenderTarget);
 	}
 }
 
@@ -735,23 +737,22 @@ void ARaymarchVolume::InitializeRaymarchResources(UVolumeTexture* Volume)
 	// TEXT("LightVolumeTexture"));
 	// 	});
 
-	UVolumeTextureToolkit::CreateVolumeTextureTransient(
-		RaymarchResources.LightVolumeTextureRef, PixelFormat, FIntVector(X, Y, Z), nullptr, true, true);
+	RaymarchResources.LightVolumeRenderTarget = NewObject<UTextureRenderTargetVolume>(this, "Light Volume Render Target");
+	RaymarchResources.LightVolumeRenderTarget->bCanCreateUAV = true;
+	RaymarchResources.LightVolumeRenderTarget->Init(X, Y, Z, PixelFormat);
 
-	// Flush rendering commands so that all textures are definitely initialized with resources.
+	// Flush rendering commands so that all textures are definitely initialized with resources and we can create a UAV ref.
 	FlushRenderingCommands();
 
-	if (!RaymarchResources.LightVolumeTextureRef || !RaymarchResources.LightVolumeTextureRef->Resource ||
-		!RaymarchResources.LightVolumeTextureRef->Resource->TextureRHI)
+	if (!RaymarchResources.LightVolumeRenderTarget || !RaymarchResources.LightVolumeRenderTarget->Resource ||
+		!RaymarchResources.LightVolumeRenderTarget->Resource->TextureRHI)
 	{
 		// Return if anything was not initialized.
 		return;
 	}
 
-	// Create UAV for light volume to be targettable in Compute Shader.
-	check(RaymarchResources.LightVolumeTextureRef->Resource->TextureRHI);
 	RaymarchResources.LightVolumeUAVRef =
-		RHICreateUnorderedAccessView(RaymarchResources.LightVolumeTextureRef->Resource->TextureRHI);
+		RHICreateUnorderedAccessView(RaymarchResources.LightVolumeRenderTarget->Resource->TextureRHI);
 
 	RaymarchResources.bIsInitialized = true;
 }
@@ -759,11 +760,11 @@ void ARaymarchVolume::InitializeRaymarchResources(UVolumeTexture* Volume)
 void ARaymarchVolume::FreeRaymarchResources()
 {
 	RaymarchResources.DataVolumeTextureRef = nullptr;
-	if (RaymarchResources.LightVolumeTextureRef)
+	if (RaymarchResources.LightVolumeRenderTarget)
 	{
-		RaymarchResources.LightVolumeTextureRef->MarkPendingKill();
+		RaymarchResources.LightVolumeRenderTarget->MarkPendingKill();
 	}
-	RaymarchResources.LightVolumeTextureRef = nullptr;
+	RaymarchResources.LightVolumeRenderTarget = nullptr;
 
 	for (OneAxisReadWriteBufferResources& Buffer : RaymarchResources.XYZReadWriteBuffers)
 	{

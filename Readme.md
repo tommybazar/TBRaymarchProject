@@ -18,7 +18,7 @@ Both of these renders are using the same CT scan, only difference is windowing a
 Part1 - Showcase & Intro : https://youtu.be/-HDVXehPolM
 
 # Features
- * Works out of the box with binary UE 4.25
+ * Works out of the box with binary UE 4.26 (there is also a branch for 4.25)
  * Volume raymarching for arbitrary `UVolumeTexture` textures
  * .mhd and .raw file import into volume textures.
  * Volume illumination implemented in compute shaders using concepts from [Efficient Volume Illumination with Multiple Light Sources through Selective Light Updates](https://ieeexplore.ieee.org/document/7156382) (2015) by Sundén and Ropinski
@@ -87,15 +87,11 @@ for loading .raw files into volumes, convenience functions for creating VolumeTe
 to process data when it is imported etc.
 I tried to be very generous with comments, so check out `TextureUtilities.h`/`.cpp` and see for yourself.
 
-### UComputeVolumeTexture
+### RenderTargetVolume
 
-Located in `/VolumeTextureToolkit/ComputeVolumeTexture.h`. 
-
-Created as a descendant from `UVolumeTexture`, it has exaclty the same functionality as `UVolumeTexture` with the key difference that it can be used as a UAV in compute shaders.
-This allows our light volume to be read/write in compute shaders, without the need for a Read+Write buffer. 
-
-A `UComputeVolumeTexture` can be created by calling `UVolumeTextureToolkit::CreateVolumeTextureAsset` or `UVolumeTextureToolkit::CreateVolumeTextureTransient` with bUavTargettable set to `true`.
-I guess there's no point in exposing this to blueprints, as anyone writing their custom compute shaders will be using C++/HLSL anyways.
+In 4.26, Epic introduced RenderTargetVolume, which removes the need for our custom ComputeVolumeTexture, which was used in 4.25. 
+Check out the 4.25 branch for the old way (which might give you ideas on how to extend the UTexture class in general, if you wanted to create your own 
+exotic texture classes).
 
 ### MHD loading
 All functionality discussed in this section can be found in `VolumeTextureToolkit/Public/MHD/MHDAsset.h`
@@ -258,8 +254,7 @@ a volume assigned, otherwise they won't do anything.
 Currently only Windows DX11 is supported and tested. DX12 has some synchronization issues that can result in textures being corrupted after startup.
 Vulkan crashes on startup immediately and since UE support for it isn't mature yet, I'm not fixing it. If you're an expert who really wants to use Vulkan, feel free to submit a pull-request after you find the reason for crashes.
 
-**Because Unreal blueprints and maps don't support transferring to older engine version, we can only guarantee this works in 4.25. I will migrate the master branch to 4.26 after it is released and keep a 4.25 branch around for people who don't want to migrate just yet.<br/>
-
+**Because we started using features introduced in 4.26, older versions of UE will not support this plugin. There is, however a 4.25 branch in this repo which works with that version. This branch won't be updated into the future.' 
 # Credits
 Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks (original raymarching code).
 

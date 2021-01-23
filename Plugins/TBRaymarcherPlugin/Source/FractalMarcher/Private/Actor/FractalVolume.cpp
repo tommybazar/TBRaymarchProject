@@ -166,8 +166,8 @@ void AFractalVolume::InitializeFractalMarchResources()
 
 
 
-	UVolumeTextureToolkit::CreateVolumeTextureTransient(
-		MandelbulbResources.MandelbulbVolume, PixelFormat, MandelbulbDimensions, nullptr, true, true);
+// 	UVolumeTextureToolkit::CreateVolumeTextureTransient(
+// 		MandelbulbResources.MandelbulbVolume, PixelFormat, MandelbulbDimensions, nullptr, true, true);
 
 	MandelbulbVolume = MandelbulbResources.MandelbulbVolume;
 

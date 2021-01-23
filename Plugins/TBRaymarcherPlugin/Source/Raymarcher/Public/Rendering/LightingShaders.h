@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include "ComputeVolumeTexture.h"
 #include "CoreMinimal.h"
 #include "Engine.h"
 #include "Engine/TextureRenderTarget2D.h"
