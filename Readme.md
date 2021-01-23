@@ -28,7 +28,7 @@ Part1 - Showcase & Intro : https://youtu.be/-HDVXehPolM
  * Fully integrated and functional within UE editor viewport.
  * Windowing support (google DICOM Window center / Window Width or watch my youtube description for an explanation)
  * Basic menus for manipulating the volume
- * Basic VR support and example map (coming very soon - mid-November 2020).
+ * Basic VR support and example map.
 
 # Limitations
  * Raymarched volume doesn't cast or receive shadows info to/from the scene, it only self-shadows
