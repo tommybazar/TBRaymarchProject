@@ -7,13 +7,13 @@
 #include "AssetRegistryModule.h"
 #include "RenderCore/Public/RenderUtils.h"
 #include "Renderer/Public/VolumeRendering.h"
-#include <Util/UtilityShaders.h>
+
 #include <Engine/TextureRenderTargetVolume.h>
+#include <Util/UtilityShaders.h>
 
 #if !UE_BUILD_SHIPPING
 #pragma optimize("", off)
 #endif
-
 
 #define LOCTEXT_NAMESPACE "RaymarchPlugin"
 
@@ -23,7 +23,8 @@ IMPLEMENT_UNREGISTERED_TEMPLATE_TYPE_LAYOUT(, FDirLightPropagationShader);
 
 IMPLEMENT_GLOBAL_SHADER(FAddDirLightShaderCS, "/Raymarcher/Private/AddDirLightShader.usf", "MainComputeShader", SF_Compute);
 
-IMPLEMENT_GLOBAL_SHADER(FAddDirLightShader_GPUSync_CS, "/Raymarcher/Private/AddDirLightShader_GPUSync.usf", "MainComputeShader", SF_Compute);
+IMPLEMENT_GLOBAL_SHADER(
+	FAddDirLightShader_GPUSync_CS, "/Raymarcher/Private/AddDirLightShader_GPUSync.usf", "MainComputeShader", SF_Compute);
 
 IMPLEMENT_GLOBAL_SHADER(FChangeDirLightShader, "/Raymarcher/Private/ChangeDirLightShader.usf", "MainComputeShader", SF_Compute);
 
@@ -273,9 +274,11 @@ void GetLoopStartStopIndexes(
 void TransitionBufferResources(
 	FRHICommandListImmediate& RHICmdList, FRHITexture* NewlyReadableTexture, FRHIUnorderedAccessView* NewlyWriteableUAV)
 {
-	RHICmdList.TransitionResource(EResourceTransitionAccess::EReadable, NewlyReadableTexture);
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::EWritable, EResourceTransitionPipeline::EComputeToCompute, NewlyWriteableUAV);
+	// 	RHICmdList.Transition(FRHITransitionInfo(NewlyReadableTexture, ERHIAccess::UAVGraphics, ERHIAccess::UAVCompute));
+	//
+	// 	RHICmdList.TransitionResource(EResourceTransitionAccess::EReadable, NewlyReadableTexture);
+	// 	RHICmdList.TransitionResource(
+	// 		EResourceTransitionAccess::EWritable, EResourceTransitionPipeline::EComputeToCompute, NewlyWriteableUAV);
 }
 // A GPU-synced version of a light adding shader.
 void AddDirLightToSingleLightVolume_GPUSync_RenderThread(FRHICommandListImmediate& RHICmdList,
@@ -331,11 +334,11 @@ void AddDirLightToSingleLightVolume_GPUSync_RenderThread(FRHICommandListImmediat
 	FRHIComputeShader* ShaderRHI = ComputeShader.GetComputeShader();
 	RHICmdList.SetComputeShader(ShaderRHI);
 
-// 	// Don't need barriers on these - we only ever read/write to the same pixel from one thread ->
-// 	// no race conditions But we definitely need to transition the resource to Compute-shader
-// 	// accessible, otherwise the renderer might touch our textures while we're writing there.
-// 	RHICmdList.TransitionResource(
-// 		EResourceTransitionAccess::ERWNoBarrier, EResourceTransitionPipeline::EGfxToCompute, Resources.LightVolumeUAVRef);
+	// 	// Don't need barriers on these - we only ever read/write to the same pixel from one thread ->
+	// 	// no race conditions But we definitely need to transition the resource to Compute-shader
+	// 	// accessible, otherwise the renderer might touch our textures while we're writing there.
+	// 	RHICmdList.TransitionResource(
+	// 		EResourceTransitionAccess::ERWNoBarrier, EResourceTransitionPipeline::EGfxToCompute, Resources.LightVolumeUAVRef);
 
 	// Set parameters, resources, LightAdded and ALightVolume
 	ComputeShader->SetRaymarchParameters(
@@ -362,8 +365,8 @@ void AddDirLightToSingleLightVolume_GPUSync_RenderThread(FRHICommandListImmediat
 			GetUVOffset(LocalMajorAxes.FaceWeight[i].first, -LocalLightParams.LightDirection, TransposedDimensions);
 		FMatrix PermutationMatrix = GetPermutationMatrix(LocalMajorAxes, i);
 
-		FIntVector LightVolumeSize = FIntVector(Resources.LightVolumeRenderTarget->SizeX,
-			Resources.LightVolumeRenderTarget->SizeY, Resources.LightVolumeRenderTarget->SizeZ);
+		FIntVector LightVolumeSize = FIntVector(Resources.LightVolumeRenderTarget->SizeX, Resources.LightVolumeRenderTarget->SizeY,
+			Resources.LightVolumeRenderTarget->SizeZ);
 
 		FVector UVWOffset;
 		float StepSize;
@@ -381,7 +384,7 @@ void AddDirLightToSingleLightVolume_GPUSync_RenderThread(FRHICommandListImmediat
 		ComputeShader->SetPermutationMatrix(RHICmdList, ShaderRHI, PermutationMatrix);
 		ComputeShader->SetUVOffset(RHICmdList, ShaderRHI, UVOffset);
 		ComputeShader->SetUVWOffset(RHICmdList, ShaderRHI, UVWOffset);
-		ComputeShader->SetReadWriteBuffer(RHICmdList, ShaderRHI, Buffers.Buffers[0], Buffers.UAVs[0]);
+		ComputeShader->SetReadWriteBuffer(RHICmdList, ShaderRHI, Buffers.Buffers[i], Buffers.UAVs[i]);
 
 		int Start, Stop, AxisDirection;
 		GetLoopStartStopIndexes(Start, Stop, AxisDirection, LocalMajorAxes, i, TransposedDimensions.Z);
@@ -399,8 +402,7 @@ void AddDirLightToSingleLightVolume_GPUSync_RenderThread(FRHICommandListImmediat
 	ComputeShader->UnbindResources(RHICmdList, ShaderRHI);
 
 	// Transition resources back to the renderer.
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::ERWBarrier, EResourceTransitionPipeline::EComputeToCompute, Resources.LightVolumeUAVRef);
+	RHICmdList.Transition(FRHITransitionInfo(Resources.LightVolumeUAVRef, ERHIAccess::UAVCompute, ERHIAccess::UAVGraphics));
 }
 
 void AddDirLightToSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICmdList, FBasicRaymarchRenderingResources Resources,
@@ -444,8 +446,10 @@ void AddDirLightToSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICm
 
 		float LightAlpha = GetLightAlpha(LocalLightParams, LocalMajorAxes, i);
 
-		Clear2DTexture_RenderThread(RHICmdList, Buffers.UAVs[0], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
-		Clear2DTexture_RenderThread(RHICmdList, Buffers.UAVs[1], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
+		Clear2DTexture_RenderThread(
+			RHICmdList, Buffers.UAVs[0], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
+		Clear2DTexture_RenderThread(
+			RHICmdList, Buffers.UAVs[1], FIntPoint(TransposedDimensions.X, TransposedDimensions.Y), LightAlpha);
 	}
 
 	// Find and set compute shader
@@ -453,11 +457,9 @@ void AddDirLightToSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICm
 	FRHIComputeShader* ShaderRHI = ComputeShader.GetComputeShader();
 	RHICmdList.SetComputeShader(ShaderRHI);
 
-	// Don't need barriers on these - we only ever read/write to the same pixel from one thread ->
-	// no race conditions But we definitely need to transition the resource to Compute-shader
-	// accessible, otherwise the renderer might touch our textures while we're writing there.
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::ERWNoBarrier, EResourceTransitionPipeline::EGfxToCompute, Resources.LightVolumeUAVRef);
+	// Transition the resource to Compute-shader.
+	// Otherwise the renderer might touch our textures while we're writing to them.
+	RHICmdList.Transition(FRHITransitionInfo(Resources.LightVolumeUAVRef, ERHIAccess::UAVGraphics, ERHIAccess::UAVCompute));
 
 	// Set parameters, resources, LightAdded and ALightVolume
 	ComputeShader->SetRaymarchParameters(
@@ -487,8 +489,8 @@ void AddDirLightToSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICm
 			GetUVOffset(LocalMajorAxes.FaceWeight[i].first, -LocalLightParams.LightDirection, TransposedDimensions);
 		FMatrix PermutationMatrix = GetPermutationMatrix(LocalMajorAxes, i);
 
-		FIntVector LightVolumeSize = FIntVector(Resources.LightVolumeRenderTarget->SizeX,
-			Resources.LightVolumeRenderTarget->SizeY, Resources.LightVolumeRenderTarget->SizeZ);
+		FIntVector LightVolumeSize = FIntVector(Resources.LightVolumeRenderTarget->SizeX, Resources.LightVolumeRenderTarget->SizeY,
+			Resources.LightVolumeRenderTarget->SizeZ);
 
 		FVector UVWOffset;
 		float StepSize;
@@ -532,8 +534,7 @@ void AddDirLightToSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICm
 	ComputeShader->UnbindResources(RHICmdList, ShaderRHI);
 
 	// Transition resources back to the renderer.
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::EReadable, EResourceTransitionPipeline::EComputeToGfx, Resources.LightVolumeUAVRef);
+	RHICmdList.Transition(FRHITransitionInfo(Resources.LightVolumeUAVRef, ERHIAccess::UAVCompute, ERHIAccess::UAVGraphics));
 }
 
 void ChangeDirLightInSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICmdList,
@@ -604,8 +605,7 @@ void ChangeDirLightInSingleLightVolume_RenderThread(FRHICommandListImmediate& RH
 	// Don't need barriers on these - we only ever read/write to the same pixel from one thread ->
 	// no race conditions But we definitely need to transition the resource to Compute-shader
 	// accessible, otherwise the renderer might touch our textures while we're writing them.
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::ERWNoBarrier, EResourceTransitionPipeline::EGfxToCompute, Resources.LightVolumeUAVRef);
+	RHICmdList.Transition(FRHITransitionInfo(Resources.LightVolumeUAVRef, ERHIAccess::UAVGraphics, ERHIAccess::UAVCompute));
 
 	ComputeShader->SetRaymarchParameters(
 		RHICmdList, ShaderRHI, LocalClippingParameters, Resources.WindowingParameters.ToLinearColor());
@@ -694,8 +694,7 @@ void ChangeDirLightInSingleLightVolume_RenderThread(FRHICommandListImmediate& RH
 	ComputeShader->UnbindResources(RHICmdList, ShaderRHI);
 
 	// Transition resources back to the renderer.
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::EReadable, EResourceTransitionPipeline::EComputeToGfx, Resources.LightVolumeUAVRef);
+	RHICmdList.Transition(FRHITransitionInfo(Resources.LightVolumeUAVRef, ERHIAccess::UAVCompute, ERHIAccess::UAVGraphics));
 }
 
 FRaymarchVolumeShader::~FRaymarchVolumeShader()

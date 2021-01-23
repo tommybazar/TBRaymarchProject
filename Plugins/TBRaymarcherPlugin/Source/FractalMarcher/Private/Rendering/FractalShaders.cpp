@@ -54,8 +54,8 @@ void CalculateMandelbulbSDF_RenderThread(FRHICommandListImmediate& RHICmdList, F
 	// Don't need barriers on these - we only ever read/write to the same pixel from one thread ->
 	// no race conditions But we definitely need to transition the resource to Compute-shader
 	// accessible, otherwise the renderer might touch our textures while we're writing there.
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::ERWNoBarrier, EResourceTransitionPipeline::EGfxToCompute, Parameters.MandelbulbVolumeUAVRef);
+
+	RHICmdList.Transition(FRHITransitionInfo(Parameters.MandelbulbVolumeUAVRef, ERHIAccess::UAVGraphics, ERHIAccess::UAVCompute));
 
 	// Set parameters, resources, LightAdded and ALightVolume
 	ComputeShader->SetMandelbulbSDFParameters(RHICmdList, ShaderRHI, Parameters);
@@ -67,8 +67,7 @@ void CalculateMandelbulbSDF_RenderThread(FRHICommandListImmediate& RHICmdList, F
 	RHICmdList.DispatchComputeShader(GroupSizeX, GroupSizeY, GroupSizeZ);
 
 	// Transition resources back to the renderer.
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::EReadable, EResourceTransitionPipeline::EComputeToGfx, Parameters.MandelbulbVolumeUAVRef);
+	RHICmdList.Transition(FRHITransitionInfo(Parameters.MandelbulbVolumeUAVRef, ERHIAccess::UAVCompute, ERHIAccess::UAVGraphics));
 }
 
 #undef LOCTEXT_NAMESPACE

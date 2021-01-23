@@ -309,9 +309,9 @@ void ARaymarchVolume::Tick(float DeltaTime)
 	// (No point in recalculating a light volume that's not currently being used anyways).
 	if (bLitRaymarch)
 	{
-		// For testing shader speed. REMOVE WHEN DONE TESTING! (otherwise this gets recalculated all the time for no reason).
-		ResetAllLights();
-		return;
+// 		// For testing light calculation shader speed. Comment out when done testing! (otherwise this gets recalculated all the time for no reason).
+// 		ResetAllLights();
+// 		return;
 
 		if (bRequestedRecompute)
 		{

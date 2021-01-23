@@ -29,8 +29,7 @@ void ClearVolumeTexture_RenderThread(FRHICommandListImmediate& RHICmdList, FRHIT
 	// Don't need barriers on these - we only ever read/write to the same pixel from one thread ->
 	// no race conditions But we definitely need to transition the resource to Compute-shader
 	// accessible, otherwise the renderer might touch our textures while we're writing them.
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::ERWNoBarrier, EResourceTransitionPipeline::EGfxToCompute, VolumeUAVRef);
+	RHICmdList.Transition(FRHITransitionInfo(VolumeUAVRef, ERHIAccess::UAVGraphics, ERHIAccess::UAVCompute));
 
 	ComputeShader->SetParameters(RHICmdList, VolumeUAVRef, ClearValues, VolumeResourceRef->GetSizeZ());
 
@@ -39,25 +38,26 @@ void ClearVolumeTexture_RenderThread(FRHICommandListImmediate& RHICmdList, FRHIT
 
 	RHICmdList.DispatchComputeShader(GroupSizeX, GroupSizeY, 1);
 	ComputeShader->UnbindUAV(RHICmdList);
-	RHICmdList.TransitionResource(EResourceTransitionAccess::EReadable, EResourceTransitionPipeline::EComputeToGfx, VolumeUAVRef);
+	RHICmdList.Transition(FRHITransitionInfo(VolumeUAVRef, ERHIAccess::UAVCompute, ERHIAccess::UAVGraphics));
 }
 
 /// Clears a FloatTexture accesible as a UAV.
 void Clear2DTexture_RenderThread(
-	FRHICommandListImmediate& RHICmdList, FRHIUnorderedAccessView* TextureRW, FIntPoint TextureSize, float Value)
+	FRHICommandListImmediate& RHICmdList, FRHIUnorderedAccessView* TextureUAVRef, FIntPoint TextureSize, float Value)
 {
 	TShaderMapRef<FClearFloatRWTextureCS> ShaderRef(GetGlobalShaderMap(ERHIFeatureLevel::SM5));
 	FRHIComputeShader* ComputeShader = ShaderRef.GetComputeShader();
 	RHICmdList.SetComputeShader(ComputeShader);
 
-	RHICmdList.TransitionResource(
-		EResourceTransitionAccess::ERWNoBarrier, EResourceTransitionPipeline::EComputeToCompute, TextureRW);
+	RHICmdList.Transition(FRHITransitionInfo(TextureUAVRef, ERHIAccess::Unknown, ERHIAccess::UAVCompute));
 
-	ShaderRef->SetParameters(RHICmdList, TextureRW, Value);
+	ShaderRef->SetParameters(RHICmdList, TextureUAVRef, Value);
 	uint32 GroupSizeX = FMath::DivideAndRoundUp(TextureSize.X, NUM_THREADS_PER_GROUP_DIMENSION);
 	uint32 GroupSizeY = FMath::DivideAndRoundUp(TextureSize.Y, NUM_THREADS_PER_GROUP_DIMENSION);
 
 	RHICmdList.DispatchComputeShader(GroupSizeX, GroupSizeY, 1);
 	//  DispatchComputeShader(RHICmdList, ShaderRef, GroupSizeX, GroupSizeY, 1);
 	ShaderRef->UnbindUAV(RHICmdList);
+
+	RHICmdList.Transition(FRHITransitionInfo(TextureUAVRef, ERHIAccess::UAVCompute, ERHIAccess::UAVGraphics));
 }
