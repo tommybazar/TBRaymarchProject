@@ -25,6 +25,8 @@
 
 #include "RaymarchTypes.generated.h"
 
+class UTextureRenderTargetVolume;
+
 // USTRUCT for Directional light parameters.
 USTRUCT(BlueprintType)
 struct FDirLightParameters
@@ -112,7 +114,7 @@ struct FBasicRaymarchRenderingResources
 
 	/// Pointer to the illumination volume texture.
 	UPROPERTY(BlueprintReadOnly, Transient, Category = "Basic Raymarch Rendering Resources")
-	UVolumeTexture* LightVolumeTextureRef;
+	UTextureRenderTargetVolume* LightVolumeRenderTarget;
 
 	/// If true, Light Volume texture will be created with it's side scaled down by 1/2 (-> 1/8 total voxels!)
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Basic Raymarch Rendering Resources")

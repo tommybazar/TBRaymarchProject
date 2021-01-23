@@ -20,6 +20,8 @@
 #include "SceneUtils.h"
 #include "UObject/ObjectMacros.h"
 
+class UTextureRenderTargetVolume;
+
 DECLARE_LOG_CATEGORY_EXTERN(LogTextureUtils, All, All);
 class VOLUMETEXTURETOOLKIT_API UVolumeTextureToolkit
 {
@@ -41,7 +43,7 @@ public:
 	*/
 	static bool CreateVolumeTextureAsset(UVolumeTexture*& OutTexture, FString AssetName, FString FolderName,
 		EPixelFormat PixelFormat, FIntVector Dimensions, uint8* BulkData = nullptr, bool IsPersistent = false,
-		bool ShouldUpdateResource = true, bool bUAVTargettable = false);
+		bool ShouldUpdateResource = true);
 
 	/** Updates the provided Volume Texture asset to have the provided format,
 	 * dimensions and pixel data*/
@@ -59,7 +61,7 @@ public:
 
 	/** Creates a transient Volume Texture (no asset name, cannot be saved)*/
 	static bool CreateVolumeTextureTransient(UVolumeTexture*& OutTexture, EPixelFormat PixelFormat, FIntVector Dimensions,
-		uint8* BulkData = nullptr, bool ShouldUpdateResource = true, bool bUAVTargettable = false);
+		uint8* BulkData = nullptr, bool ShouldUpdateResource = true);
 
 	/** Loads a RAW file into a newly allocated uint8* array. Loads the given number
 	 * of bytes.*/
@@ -179,4 +181,9 @@ public:
 		SetVolumeTextureDetails, CreateVolumeTextureMip and CreateVolumeTextureEditorData. In this order. */
 	static void SetupVolumeTexture(
 		UVolumeTexture*& OutVolumeTexture, EPixelFormat PixelFormat, FIntVector Dimensions, uint8* InSourceArray, bool Persistent);
+
+
+	/** Clears a Volume Texture. */
+	UFUNCTION(BlueprintCallable, Category = " Volume Texture Utilities")
+	static void ClearVolumeTexture(UTextureRenderTargetVolume* RTVolume, float ClearValue);
 };

@@ -1,0 +1,16 @@
+#include "/Engine/Private/Common.ush"
+
+RWTexture3D<float> Volume;
+
+int ZSize;
+
+float ClearValue;
+
+[numthreads(16, 16, 1)]
+void MainComputeShader(uint3 ThreadId : SV_DispatchThreadID)
+{
+    for (int i = 0; i <= ZSize; i++)
+    {
+        Volume[int3(ThreadId.x, ThreadId.y, i)] = ClearValue;
+    }
+}

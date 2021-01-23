@@ -5,24 +5,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
-#include "Rendering/RaymarchTypes.h"
-
 #include "Engine.h"
 #include "Engine/TextureRenderTarget2D.h"
 #include "Engine/VolumeTexture.h"
 #include "Engine/World.h"
 #include "GlobalShader.h"
 #include "Logging/MessageLog.h"
+#include "MHD/WindowingParameters.h"
 #include "PipelineStateCache.h"
 #include "RHIStaticStates.h"
+#include "Rendering/RaymarchTypes.h"
 #include "SceneInterface.h"
 #include "SceneUtils.h"
 #include "Shader.h"
 #include "ShaderParameterUtils.h"
 #include "ShaderParameters.h"
-#include "ComputeVolumeTexture.h"
-#include "MHD/WindowingParameters.h"
 
 /// Creates a SamplerState RHI with "Border" handling of outside-of-UV reads.
 /// The color read from outside the buffer is specified by the BorderColorInt.
@@ -37,58 +34,13 @@ FClippingPlaneParameters RAYMARCHER_API GetLocalClippingParameters(const FRaymar
 void AddDirLightToSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICmdList, FBasicRaymarchRenderingResources Resources,
 	const FDirLightParameters LightParameters, const bool Added, const FRaymarchWorldParameters WorldParameters);
 
+void AddDirLightToSingleLightVolume_GPUSync_RenderThread(FRHICommandListImmediate& RHICmdList,
+	FBasicRaymarchRenderingResources Resources, const FDirLightParameters LightParameters, const bool Added,
+	const FRaymarchWorldParameters WorldParameters);
+
 void ChangeDirLightInSingleLightVolume_RenderThread(FRHICommandListImmediate& RHICmdList,
 	FBasicRaymarchRenderingResources Resources, const FDirLightParameters OldLightParameters,
 	const FDirLightParameters NewLightParameters, const FRaymarchWorldParameters WorldParameters);
-
-void ClearVolumeTexture_RenderThread(FRHICommandListImmediate& RHICmdList, FRHITexture3D* ALightVolumeResource, float ClearValue);
-
-// Compute shader for clearing a single-channel 2D float RW texture
-class FClearFloatRWTextureCS : public FGlobalShader
-{
-	DECLARE_EXPORTED_SHADER_TYPE(FClearFloatRWTextureCS, Global, RAYMARCHER_API);
-
-public:
-	FClearFloatRWTextureCS() : FGlobalShader()
-	{
-	}
-	FClearFloatRWTextureCS(const ShaderMetaType::CompiledShaderInitializerType& Initializer) : FGlobalShader(Initializer)
-	{
-		ClearValue.Bind(Initializer.ParameterMap, TEXT("ClearValue"), SPF_Mandatory);
-		ClearTexture2DRW.Bind(Initializer.ParameterMap, TEXT("ClearTextureRW"), SPF_Mandatory);
-	}
-
-
-	void SetParameters(FRHICommandList& RHICmdList, FRHIUnorderedAccessView* TextureRW, float Value)
-	{
-		SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), ClearTexture2DRW, TextureRW);
-		SetShaderValue(RHICmdList, RHICmdList.GetBoundComputeShader(), ClearValue, Value);
-	}
-
-	void UnbindUAV(FRHICommandList& RHICmdList)
-	{
-		SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), ClearTexture2DRW, nullptr);
-	}
-
-	static bool ShouldCompilePermutation(const FGlobalShaderPermutationParameters& Parameters)
-	{
-		return IsFeatureLevelSupported(Parameters.Platform, ERHIFeatureLevel::SM5);
-	}
-
-	const FShaderParameter& GetClearColorParameter()
-	{
-		return ClearValue;
-	}
-
-	const FShaderResourceParameter& GetClearTextureRWParameter()
-	{
-		return ClearTexture2DRW;
-	}
-
-protected:
-	LAYOUT_FIELD(FShaderResourceParameter, ClearTexture2DRW);
-	LAYOUT_FIELD(FShaderParameter, ClearValue);
-};
 
 //
 // Shaders for illumination propagation follow.
@@ -122,8 +74,8 @@ public:
 		StepSize.Bind(Initializer.ParameterMap, TEXT("StepSize"), SPF_Mandatory);
 	}
 
-	void SetRaymarchResources(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI,
-		const FTexture3DRHIRef pVolume, const FTexture2DRHIRef pTransferFunc, FWindowingParameters WindowingParams)
+	void SetRaymarchResources(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const FTexture3DRHIRef pVolume,
+		const FTexture2DRHIRef pTransferFunc, FWindowingParameters WindowingParams)
 	{
 		// Set the zero color to fit the zero point of the windowing parameters (Center - Width/2)
 		// so that after sampling out of bounds, it gets changed to 0 on the Transfer Function in
@@ -137,8 +89,7 @@ public:
 		FSamplerStateRHIRef DataVolumeSamplerRef = RHICreateSamplerState(
 			FSamplerStateInitializerRHI(SF_Trilinear, AM_Border, AM_Border, AM_Border, 0, 1, 0, 0, BorderColorInt));
 
-		FSamplerStateRHIRef TFSamplerRef =
-			TStaticSamplerState<SF_Bilinear, AM_Clamp, AM_Clamp, AM_Clamp>::GetRHI();
+		FSamplerStateRHIRef TFSamplerRef = TStaticSamplerState<SF_Bilinear, AM_Clamp, AM_Clamp, AM_Clamp>::GetRHI();
 		SetTextureParameter(RHICmdList, ShaderRHI, Volume, VolumeSampler, DataVolumeSamplerRef, pVolume);
 		SetTextureParameter(RHICmdList, ShaderRHI, TransferFunc, TransferFuncSampler, TFSamplerRef, pTransferFunc);
 	}
@@ -200,14 +151,14 @@ public:
 
 	FLightPropagationShader(const ShaderMetaType::CompiledShaderInitializerType& Initializer) : FRaymarchVolumeShader(Initializer)
 	{
-		Loop.Bind(Initializer.ParameterMap, TEXT("Loop"), SPF_Mandatory);
+		Loop.Bind(Initializer.ParameterMap, TEXT("Loop"), SPF_Optional);
 		PermutationMatrix.Bind(Initializer.ParameterMap, TEXT("PermutationMatrix"), SPF_Mandatory);
 
 		// Read buffer and sampler.
-		ReadBuffer.Bind(Initializer.ParameterMap, TEXT("ReadBuffer"), SPF_Mandatory);
-		ReadBufferSampler.Bind(Initializer.ParameterMap, TEXT("ReadBufferSampler"), SPF_Mandatory);
+		ReadBuffer.Bind(Initializer.ParameterMap, TEXT("ReadBuffer"), SPF_Optional);
+		ReadBufferSampler.Bind(Initializer.ParameterMap, TEXT("ReadBufferSampler"), SPF_Optional);
 		// Write buffer.
-		WriteBuffer.Bind(Initializer.ParameterMap, TEXT("WriteBuffer"), SPF_Mandatory);
+		WriteBuffer.Bind(Initializer.ParameterMap, TEXT("WriteBuffer"), SPF_Optional);
 		// Actual light volume
 		ALightVolume.Bind(Initializer.ParameterMap, TEXT("ALightVolume"), SPF_Mandatory);
 	}
@@ -333,6 +284,49 @@ protected:
 	LAYOUT_FIELD(FShaderParameter, bAdded);
 };
 
+class FAddDirLightShader_GPUSync_CS : public FAddDirLightShaderCS
+{
+	INTERNAL_DECLARE_SHADER_TYPE_COMMON(FAddDirLightShader_GPUSync_CS, Global, RAYMARCHER_API);
+	DECLARE_EXPORTED_TYPE_LAYOUT(FAddDirLightShader_GPUSync_CS, RAYMARCHER_API, Virtual);
+
+public:
+	FAddDirLightShader_GPUSync_CS() : FAddDirLightShaderCS()
+	{
+	}
+
+	FAddDirLightShader_GPUSync_CS(const ShaderMetaType::CompiledShaderInitializerType& Initializer);
+
+	static bool ShouldCompilePermutation(const FGlobalShaderPermutationParameters& Parameters)
+	{
+		return IsFeatureLevelSupported(Parameters.Platform, ERHIFeatureLevel::SM5);
+	}
+
+	void SetReadWriteBuffer(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, FTexture2DRHIRef pTexture, FRHIUnorderedAccessView* pRWBuffer)
+	{
+		LightBuffer.SetTexture(RHICmdList, ShaderRHI, pTexture, pRWBuffer);
+	}
+
+	void SetLoopParameters(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, const int pStart, const int pStop,
+		const int pAxisDirection)
+	{
+		SetShaderValue(RHICmdList, ShaderRHI, Start, pStart);
+		SetShaderValue(RHICmdList, ShaderRHI, Stop, pStop);
+		SetShaderValue(RHICmdList, ShaderRHI, AxisDirection, pAxisDirection);
+	};
+
+	void SetOutsideLight(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, float OutsideLightIntensity)
+	{
+		SetShaderValue(RHICmdList, ShaderRHI, BufferBorderValue, OutsideLightIntensity);
+	};
+
+protected:
+	LAYOUT_FIELD(FShaderParameter, Start);
+	LAYOUT_FIELD(FShaderParameter, Stop);
+	LAYOUT_FIELD(FShaderParameter, AxisDirection);
+	LAYOUT_FIELD(FShaderParameter, BufferBorderValue);
+	LAYOUT_FIELD(FRWShaderParameter, LightBuffer);
+};
+
 // A shader implementing changing a light in one pass.
 // Works by subtracting the old light and adding the new one.
 // Notice the UE macro DECLARE_SHADER_TYPE, unlike the shaders above (which are abstract)
@@ -386,8 +380,8 @@ public:
 		SetShaderValue(RHICmdList, ShaderRHI, RemovedPrevPixelOffset, RemovedPixelOffset);
 	}
 
-	void SetUVWOffsets(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, FVector pAddedUVWOffset,
-		FVector pRemovedUVWOffset)
+	void SetUVWOffsets(
+		FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, FVector pAddedUVWOffset, FVector pRemovedUVWOffset)
 	{
 		SetShaderValue(RHICmdList, ShaderRHI, UVWOffset, pAddedUVWOffset);
 		SetShaderValue(RHICmdList, ShaderRHI, RemovedUVWOffset, pRemovedUVWOffset);
@@ -423,53 +417,4 @@ protected:
 	LAYOUT_FIELD(FShaderParameter, RemovedStepSize);
 	// Removed light UVW offset
 	LAYOUT_FIELD(FShaderParameter, RemovedUVWOffset);
-};
-
-// Compute Shader used for fast clearing of RW volume textures.
-class FClearVolumeTextureShaderCS : public FGlobalShader
-{
-	DECLARE_EXPORTED_SHADER_TYPE(FClearVolumeTextureShaderCS, Global, RAYMARCHER_API);
-
-public:
-	FClearVolumeTextureShaderCS() : FGlobalShader()
-	{
-	}
-
-	static bool ShouldCompilePermutation(const FGlobalShaderPermutationParameters& Parameters)
-	{
-		return IsFeatureLevelSupported(Parameters.Platform, ERHIFeatureLevel::SM5);
-	}
-
-	static void ModifyCompilationEnvironment(
-		const FGlobalShaderPermutationParameters& Parameters, FShaderCompilerEnvironment& OutEnvironment)
-	{
-		FGlobalShader::ModifyCompilationEnvironment(Parameters, OutEnvironment);
-	}
-
-	FClearVolumeTextureShaderCS(const ShaderMetaType::CompiledShaderInitializerType& Initializer) : FGlobalShader(Initializer)
-	{
-		Volume.Bind(Initializer.ParameterMap, TEXT("Volume"), SPF_Mandatory);
-		ClearValue.Bind(Initializer.ParameterMap, TEXT("ClearValue"), SPF_Mandatory);
-		ZSize.Bind(Initializer.ParameterMap, TEXT("ZSize"), SPF_Mandatory);
-	}
-
-	void SetParameters(
-		FRHICommandListImmediate& RHICmdList, FRHIUnorderedAccessView* VolumeRef, float clearColor, int ZSizeParam)
-	{
-		FRHIComputeShader* ShaderRHI = RHICmdList.GetBoundComputeShader();
-		SetUAVParameter(RHICmdList, ShaderRHI, Volume, VolumeRef);
-		SetShaderValue(RHICmdList, ShaderRHI, ClearValue, clearColor);
-		SetShaderValue(RHICmdList, ShaderRHI, ZSize, ZSizeParam);
-	}
-
-	void UnbindUAV(FRHICommandList& RHICmdList)
-	{
-		SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), Volume, nullptr);
-	}
-
-protected:
-	// Float values to be set to the alpha volume.
-	LAYOUT_FIELD(FShaderResourceParameter, Volume);
-	LAYOUT_FIELD(FShaderParameter, ClearValue);
-	LAYOUT_FIELD(FShaderParameter, ZSize);
 };

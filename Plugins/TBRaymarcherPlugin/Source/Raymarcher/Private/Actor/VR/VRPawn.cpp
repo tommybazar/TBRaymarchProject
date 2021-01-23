@@ -24,16 +24,21 @@ void AVRPawn::BeginPlay()
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	SpawnParams.Owner = this;
 
-	if (LeftControllerClass && RightControllerClass)
+	EVRPlatform VRPlatformType = EVRPlatform::Default;
+	FControllerPlatformClasses PlatformClasses;
+	
+	if (PerPlatformControllers.Contains(VRPlatformType))
 	{
-		RightController = GetWorld()->SpawnActor<AVRMotionController>(RightControllerClass, SpawnParams);
-		LeftController = GetWorld()->SpawnActor<AVRMotionController>(LeftControllerClass, SpawnParams);
+		PlatformClasses = PerPlatformControllers[VRPlatformType];
+	}
 
-		FAttachmentTransformRules Rules(
-			EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, false);
+	if (PlatformClasses.LeftControllerClass && PlatformClasses.RightControllerClass)
+	{
+		RightController = GetWorld()->SpawnActor<AVRMotionController>(PlatformClasses.RightControllerClass, SpawnParams);
+		LeftController = GetWorld()->SpawnActor<AVRMotionController>(PlatformClasses.LeftControllerClass, SpawnParams);
 
-		RightController->AttachToComponent(RootComponent, Rules);
-		LeftController->AttachToComponent(RootComponent, Rules);
+		RightController->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+		LeftController->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	
 		RightController->SetupInput(InputComponent);
 		LeftController->SetupInput(InputComponent);

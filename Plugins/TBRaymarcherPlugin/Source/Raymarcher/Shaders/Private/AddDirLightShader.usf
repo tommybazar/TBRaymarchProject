@@ -19,7 +19,6 @@ RWTexture2D<float> WriteBuffer;
 Texture2D ReadBuffer;
 SamplerState ReadBufferSampler;
 
-
 // Offset from current pixel position into the read buffer - depending on where the light is
 // in relation to the propagation axis. (e.g. will be (0,0) if the light is propagating exactly along the axis)
 float2 PrevPixelOffset;
@@ -61,7 +60,6 @@ float StepSize;
 // +1 if we're adding a light, -1 if we're removing a light.
 int bAdded;
 
-
 [numthreads(16, 16, 1)]
 void MainComputeShader(uint2 PixelLoc : SV_DispatchThreadID)
 {
@@ -73,13 +71,13 @@ void MainComputeShader(uint2 PixelLoc : SV_DispatchThreadID)
     uint sizeX, sizeY, sizeZ;
     ALightVolume.GetDimensions(sizeX, sizeY, sizeZ);
     uint3 uResolution = uint3(sizeX, sizeY, sizeZ);
-        
-    // Sample the volume intensity at previous voxel.
-    float3 SampleUVW = GetUVW(pos, uResolution) + UVWOffset;
 
     // Sample light from read buffer at the corresponding UV coordinates.
     float2 PreviousUV = ((PixelLoc + float2(0.5, 0.5)) / float2(texSizeX, texSizeY)) + PrevPixelOffset;
     float PreviousLightAlpha = ReadBuffer.SampleLevel(ReadBufferSampler, PreviousUV, 0);
+   
+    // Sample the volume intensity at previous voxel.
+    float3 SampleUVW = GetUVW(pos, uResolution) + UVWOffset;
 
     float DistanceToCuttingPlane = dot(SampleUVW - LocalClippingCenter, LocalClippingDirection);
 
@@ -117,7 +115,7 @@ void MainComputeShader(uint2 PixelLoc : SV_DispatchThreadID)
     WriteBuffer[PixelLoc] = CurrentLightAlpha; 
     
     // Ignore changes smaller than 0.001 to avoid writes with almost no effect.
-    if (abs(CurrentLightAlpha) > 1e-3)
+    if (abs(CurrentLightAlpha) > 1e-3) 
     {
         // If we're removing a light, multiply alpha by -1. (but read/write buffers stay positive)
         ALightVolume[pos] = ALightVolume[pos] + (CurrentLightAlpha * bAdded);

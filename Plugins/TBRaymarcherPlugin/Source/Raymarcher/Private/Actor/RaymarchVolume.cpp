@@ -10,6 +10,9 @@
 #include "TextureUtilities.h"
 #include "Util/RaymarchUtils.h"
 
+#include <Engine/TextureRenderTargetVolume.h>
+#include <Curves/CurveLinearColor.h>
+
 DEFINE_LOG_CATEGORY(LogRaymarchVolume)
 
 // Uncomment for easier debugging
@@ -137,14 +140,14 @@ void ARaymarchVolume::PostRegisterAllComponents()
 
 #if WITH_EDITOR
 
-void ARaymarchVolume::OnCurveUpdatedInEditor(UCurveLinearColor* Curve)
+void ARaymarchVolume::OnMHDAssetChangedTF(UCurveLinearColor* Curve)
 {
 	// Remove OnUpdateGradient delegate from old curve (if it exists)
 	bool bChangedCurve = false;
 	if (Curve != CurrentTFCurve)
 	{
 		bChangedCurve = true;
-		CurrentTFCurve->OnUpdateGradient.Remove(CurveGradientUpdateDelegateHandle);
+		CurrentTFCurve->OnUpdateCurve.Remove(CurveGradientUpdateDelegateHandle);
 	}
 
 	SetTFCurve(Curve);
@@ -152,8 +155,13 @@ void ARaymarchVolume::OnCurveUpdatedInEditor(UCurveLinearColor* Curve)
 	// Add gradient update delegate to new curve.
 	if (bChangedCurve)
 	{
-		CurrentTFCurve->OnUpdateGradient.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
+		CurrentTFCurve->OnUpdateCurve.AddUObject(this, &ARaymarchVolume::OnTFColorCurveUpdated);
 	}
+}
+
+void ARaymarchVolume::OnTFColorCurveUpdated(UCurveBase* Curve, EPropertyChangeType::Type ChangeType)
+{
+	SetTFCurve(Cast<UCurveLinearColor>(Curve));
 }
 
 void ARaymarchVolume::OnImageInfoChangedInEditro()
@@ -307,6 +315,9 @@ void ARaymarchVolume::Tick(float DeltaTime)
 	// (No point in recalculating a light volume that's not currently being used anyways).
 	if (bLitRaymarch)
 	{
+		// 		// For testing light calculation shader speed. Comment out when done testing! (otherwise this gets recalculated all
+		// the time for no reason). 		ResetAllLights(); 		return;
+
 		if (bRequestedRecompute)
 		{
 			// If we're requesting recompute or parameters changed,
@@ -349,7 +360,7 @@ void ARaymarchVolume::ResetAllLights()
 	}
 
 	// Clear Light volume to zero.
-	URaymarchUtils::ClearVolumeTexture(RaymarchResources.LightVolumeTextureRef, 0);
+	UVolumeTextureToolkit::ClearVolumeTexture(RaymarchResources.LightVolumeRenderTarget, 0);
 
 	// Add all lights.
 	bool bResetWasSuccessful = true;
@@ -362,7 +373,7 @@ void ARaymarchVolume::ResetAllLights()
 		bool bLightAddWasSuccessful = false;
 
 		URaymarchUtils::AddDirLightToSingleVolume(
-			RaymarchResources, Light->GetCurrentParameters(), true, WorldParameters, bResetWasSuccessful);
+			RaymarchResources, Light->GetCurrentParameters(), true, WorldParameters, bResetWasSuccessful, bFastShader);
 
 		if (!bResetWasSuccessful)
 		{
@@ -406,14 +417,14 @@ bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
 			// from it's color curve change broadcast and also the OnCurve and OnVolumeInfo changed broadcasts.
 			if (OldMHDAsset)
 			{
-				OldMHDAsset->TransferFuncCurve->OnUpdateGradient.Remove(CurveGradientUpdateDelegateHandle);
+				OldMHDAsset->TransferFuncCurve->OnUpdateCurve.Remove(CurveGradientUpdateDelegateHandle);
 				OldMHDAsset->OnCurveChanged.Remove(CurveChangedInMHDDelegateHandle);
 				OldMHDAsset->OnImageInfoChanged.Remove(MHDAssetUpdatedDelegateHandle);
 			}
 			if (InMHDAsset)
 			{
 				CurveChangedInMHDDelegateHandle =
-					InMHDAsset->OnCurveChanged.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
+					InMHDAsset->OnCurveChanged.AddUObject(this, &ARaymarchVolume::OnMHDAssetChangedTF);
 				MHDAssetUpdatedDelegateHandle =
 					InMHDAsset->OnImageInfoChanged.AddUObject(this, &ARaymarchVolume::OnImageInfoChangedInEditro);
 			}
@@ -432,10 +443,10 @@ bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
 
 #if WITH_EDITOR
 		// Bind a listener to the delegate notifying about color curve changes
-		if ((!GetWorld() || !GetWorld()->IsGameWorld()) &&  InMHDAsset != OldMHDAsset)
+		if ((!GetWorld() || !GetWorld()->IsGameWorld()) && InMHDAsset != OldMHDAsset)
 		{
 			CurveGradientUpdateDelegateHandle =
-				CurrentTFCurve->OnUpdateGradient.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
+				CurrentTFCurve->OnUpdateCurve.AddUObject(this, &ARaymarchVolume::OnTFColorCurveUpdated);
 		}
 #endif
 	}
@@ -477,12 +488,15 @@ bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
 	return true;
 }
 
-void ARaymarchVolume::SetTFCurve(UCurveLinearColor*& InTFCurve)
+void ARaymarchVolume::SetTFCurve(UCurveLinearColor* InTFCurve)
 {
 	if (InTFCurve)
 	{
 		CurrentTFCurve = InTFCurve;
 		URaymarchUtils::ColorCurveToTexture(CurrentTFCurve, RaymarchResources.TFTextureRef);
+		// #TODO flushing rendering commands can lead to hitches, maybe figure out a better way to make sure TF is created in time
+		// for the texture parameter to be set. 
+		// e.g. render-thread promise and game-thread future?
 		FlushRenderingCommands();
 		// Set TF Texture in the lit material.
 		LitRaymarchMaterial->SetTextureParameterValue(RaymarchParams::TransferFunction, RaymarchResources.TFTextureRef);
@@ -584,7 +598,7 @@ void ARaymarchVolume::SetMaterialVolumeParameters()
 	if (LitRaymarchMaterial)
 	{
 		LitRaymarchMaterial->SetTextureParameterValue(RaymarchParams::DataVolume, RaymarchResources.DataVolumeTextureRef);
-		LitRaymarchMaterial->SetTextureParameterValue(RaymarchParams::LightVolume, RaymarchResources.LightVolumeTextureRef);
+		LitRaymarchMaterial->SetTextureParameterValue(RaymarchParams::LightVolume, RaymarchResources.LightVolumeRenderTarget);
 	}
 }
 
@@ -731,23 +745,22 @@ void ARaymarchVolume::InitializeRaymarchResources(UVolumeTexture* Volume)
 	// TEXT("LightVolumeTexture"));
 	// 	});
 
-	UVolumeTextureToolkit::CreateVolumeTextureTransient(
-		RaymarchResources.LightVolumeTextureRef, PixelFormat, FIntVector(X, Y, Z), nullptr, true, true);
+	RaymarchResources.LightVolumeRenderTarget = NewObject<UTextureRenderTargetVolume>(this, "Light Volume Render Target");
+	RaymarchResources.LightVolumeRenderTarget->bCanCreateUAV = true;
+	RaymarchResources.LightVolumeRenderTarget->Init(X, Y, Z, PixelFormat);
 
-	// Flush rendering commands so that all textures are definitely initialized with resources.
+	// Flush rendering commands so that all textures are definitely initialized with resources and we can create a UAV ref.
 	FlushRenderingCommands();
 
-	if (!RaymarchResources.LightVolumeTextureRef || !RaymarchResources.LightVolumeTextureRef->Resource ||
-		!RaymarchResources.LightVolumeTextureRef->Resource->TextureRHI)
+	if (!RaymarchResources.LightVolumeRenderTarget || !RaymarchResources.LightVolumeRenderTarget->Resource ||
+		!RaymarchResources.LightVolumeRenderTarget->Resource->TextureRHI)
 	{
 		// Return if anything was not initialized.
 		return;
 	}
 
-	// Create UAV for light volume to be targettable in Compute Shader.
-	check(RaymarchResources.LightVolumeTextureRef->Resource->TextureRHI);
 	RaymarchResources.LightVolumeUAVRef =
-		RHICreateUnorderedAccessView(RaymarchResources.LightVolumeTextureRef->Resource->TextureRHI);
+		RHICreateUnorderedAccessView(RaymarchResources.LightVolumeRenderTarget->Resource->TextureRHI);
 
 	RaymarchResources.bIsInitialized = true;
 }
@@ -755,11 +768,11 @@ void ARaymarchVolume::InitializeRaymarchResources(UVolumeTexture* Volume)
 void ARaymarchVolume::FreeRaymarchResources()
 {
 	RaymarchResources.DataVolumeTextureRef = nullptr;
-	if (RaymarchResources.LightVolumeTextureRef)
+	if (RaymarchResources.LightVolumeRenderTarget)
 	{
-		RaymarchResources.LightVolumeTextureRef->MarkPendingKill();
+		RaymarchResources.LightVolumeRenderTarget->MarkPendingKill();
 	}
-	RaymarchResources.LightVolumeTextureRef = nullptr;
+	RaymarchResources.LightVolumeRenderTarget = nullptr;
 
 	for (OneAxisReadWriteBufferResources& Buffer : RaymarchResources.XYZReadWriteBuffers)
 	{

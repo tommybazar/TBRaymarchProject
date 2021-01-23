@@ -5,7 +5,8 @@
 #include "TextureUtilities.h"
 
 #include "AssetRegistryModule.h"
-#include "ComputeVolumeTexture.h"
+#include "Util/UtilityShaders.h"
+#include <Engine/TextureRenderTargetVolume.h>
 
 DEFINE_LOG_CATEGORY(LogTextureUtils);
 
@@ -73,8 +74,7 @@ void UVolumeTextureToolkit::CreateVolumeTextureMip(
 }
 
 bool UVolumeTextureToolkit::CreateVolumeTextureAsset(UVolumeTexture*& OutTexture, FString AssetName, FString FolderName,
-	EPixelFormat PixelFormat, FIntVector Dimensions, uint8* BulkData, bool IsPersistent, bool ShouldUpdateResource,
-	bool bUAVTargettable)
+	EPixelFormat PixelFormat, FIntVector Dimensions, uint8* BulkData, bool IsPersistent, bool ShouldUpdateResource)
 {
 	if (Dimensions.X == 0 || Dimensions.Y == 0 || Dimensions.Z == 0)
 	{
@@ -82,21 +82,11 @@ bool UVolumeTextureToolkit::CreateVolumeTextureAsset(UVolumeTexture*& OutTexture
 	}
 
 	FString PackageName = MakePackageName(AssetName, FolderName);
-	UPackage* Package = CreatePackage(NULL, *PackageName);
+	UPackage* Package = CreatePackage(*PackageName);
 	Package->FullyLoad();
 
 	UVolumeTexture* VolumeTexture = nullptr;
-
-	if (bUAVTargettable)
-	{
-		VolumeTexture =
-			NewObject<UComputeVolumeTexture>((UObject*) Package, FName(*AssetName), RF_Public | RF_Standalone | RF_MarkAsRootSet);
-	}
-	else
-	{
-		VolumeTexture =
-			NewObject<UVolumeTexture>((UObject*) Package, FName(*AssetName), RF_Public | RF_Standalone | RF_MarkAsRootSet);
-	}
+	VolumeTexture = NewObject<UVolumeTexture>((UObject*) Package, FName(*AssetName), RF_Public | RF_Standalone | RF_MarkAsRootSet);
 
 	// Prevent garbage collection of the texture
 	VolumeTexture->AddToRoot();
@@ -206,22 +196,15 @@ bool UVolumeTextureToolkit::Create2DTextureTransient(UTexture2D*& OutTexture, EP
 	return true;
 }
 
-bool UVolumeTextureToolkit::CreateVolumeTextureTransient(UVolumeTexture*& OutTexture, EPixelFormat PixelFormat,
-	FIntVector Dimensions, uint8* BulkData, bool ShouldUpdateResource, bool bUAVTargettable)
+bool UVolumeTextureToolkit::CreateVolumeTextureTransient(
+	UVolumeTexture*& OutTexture, EPixelFormat PixelFormat, FIntVector Dimensions, uint8* BulkData, bool ShouldUpdateResource)
 {
 	UVolumeTexture* VolumeTexture = nullptr;
-	if (bUAVTargettable)
-	{
-		VolumeTexture = NewObject<UComputeVolumeTexture>(GetTransientPackage(), NAME_None, RF_Transient);
-	}
-	else
-	{
-		VolumeTexture = NewObject<UVolumeTexture>(GetTransientPackage(), NAME_None, RF_Transient);
-	}
+	VolumeTexture = NewObject<UVolumeTexture>(GetTransientPackage(), NAME_None, RF_Transient);
 
 	SetVolumeTextureDetails(VolumeTexture, PixelFormat, Dimensions);
 	CreateVolumeTextureMip(VolumeTexture, PixelFormat, Dimensions, BulkData);
-	
+
 	// Update resource, mark that the folder needs to be rescan and notify editor
 	// about asset creation.
 	if (ShouldUpdateResource)
@@ -419,4 +402,19 @@ void UVolumeTextureToolkit::SetupVolumeTexture(
 	// Actually create the texture MIP.
 	CreateVolumeTextureMip(OutVolumeTexture, PixelFormat, Dimensions, ConvertedArray);
 	CreateVolumeTextureEditorData(OutVolumeTexture, PixelFormat, Dimensions, ConvertedArray, Persistent);
+}
+
+void UVolumeTextureToolkit::ClearVolumeTexture(UTextureRenderTargetVolume* RTVolume, float ClearValue)
+{
+	if (!RTVolume || !RTVolume->Resource || !RTVolume->Resource->TextureRHI)
+	{
+		return;
+	}
+
+	FRHITexture3D* VolumeTextureResource = RTVolume->Resource->TextureRHI->GetTexture3D();
+
+	// Call the actual rendering code on RenderThread.
+	ENQUEUE_RENDER_COMMAND(CaptureCommand)
+	([VolumeTextureResource, ClearValue](
+		 FRHICommandListImmediate& RHICmdList) { ClearVolumeTexture_RenderThread(RHICmdList, VolumeTextureResource, ClearValue); });
 }

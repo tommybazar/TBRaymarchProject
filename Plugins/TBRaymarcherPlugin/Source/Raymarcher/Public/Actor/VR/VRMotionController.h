@@ -5,12 +5,12 @@
 #pragma once
 
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/SphereComponent.h"
+#include "Components/WidgetInteractionComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/PlayerController.h"
 #include "MotionControllerComponent.h"
-#include "Components/SphereComponent.h"
-#include "Components/WidgetInteractionComponent.h"
 
 #include "VRMotionController.generated.h"
 
@@ -31,6 +31,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Collision component to detect overlaps with other scene actors.
 	UPROPERTY(EditAnywhere)
 	USphereComponent* CollisionComponent;
 
@@ -42,16 +43,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MotionController | Component")
 	USkeletalMeshComponent* ControllerSkeletalMeshComponent = nullptr;
 
+	/// Widget interactor which allows interacting with VR UI.
 	UPROPERTY(EditAnywhere)
 	UWidgetInteractionComponent* WidgetInteractor;
+
+	/// Skeletal mesh representing the WidgetInteractor ray.
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* WidgetInteractorVisualizer;
 
 	/// If true, this controller should go into the right hand.
 	UPROPERTY(EditAnywhere)
 	bool bIsInRightHand = true;
-
-	/// Animation used on the skeletal mesh, cast to our custom Animation Instance, to drive
-	/// button animations.
-	UAnimInstance* ControllerAnimation = nullptr;
 
 	/// Sets up this controller's actions to the provided InputComponent.
 	virtual void SetupInput(UInputComponent* InInputComponent);
@@ -79,9 +81,14 @@ public:
 	void OnOverlapEnd(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex);
 
-	/// The actor currently hovered by the sphere collision.
+	UFUNCTION()
+	void OnWidgetInteractorHoverChanged(UWidgetComponent* Old, UWidgetComponent* New);
+
+	/// The actor currently hovered by the sphere collision, if any.
+	/// Could be remade into an array to allow hovering multiple actors at once.
 	AActor* HoveredActor = nullptr;
 
+	/// The currently grabbed actor, if any.
 	AActor* GrabbedActor = nullptr;
 
 	virtual void OnActorHovered();
