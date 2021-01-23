@@ -11,6 +11,7 @@
 #include "Util/RaymarchUtils.h"
 
 #include <Engine/TextureRenderTargetVolume.h>
+#include <Curves/CurveLinearColor.h>
 
 DEFINE_LOG_CATEGORY(LogRaymarchVolume)
 
@@ -139,14 +140,14 @@ void ARaymarchVolume::PostRegisterAllComponents()
 
 #if WITH_EDITOR
 
-void ARaymarchVolume::OnCurveUpdatedInEditor(UCurveLinearColor* Curve)
+void ARaymarchVolume::OnMHDAssetChangedTF(UCurveLinearColor* Curve)
 {
 	// Remove OnUpdateGradient delegate from old curve (if it exists)
 	bool bChangedCurve = false;
 	if (Curve != CurrentTFCurve)
 	{
 		bChangedCurve = true;
-		CurrentTFCurve->OnUpdateGradient.Remove(CurveGradientUpdateDelegateHandle);
+		CurrentTFCurve->OnUpdateCurve.Remove(CurveGradientUpdateDelegateHandle);
 	}
 
 	SetTFCurve(Curve);
@@ -154,8 +155,13 @@ void ARaymarchVolume::OnCurveUpdatedInEditor(UCurveLinearColor* Curve)
 	// Add gradient update delegate to new curve.
 	if (bChangedCurve)
 	{
-		CurrentTFCurve->OnUpdateGradient.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
+		CurrentTFCurve->OnUpdateCurve.AddUObject(this, &ARaymarchVolume::OnTFColorCurveUpdated);
 	}
+}
+
+void ARaymarchVolume::OnTFColorCurveUpdated(UCurveBase* Curve, EPropertyChangeType::Type ChangeType)
+{
+	SetTFCurve(Cast<UCurveLinearColor>(Curve));
 }
 
 void ARaymarchVolume::OnImageInfoChangedInEditro()
@@ -309,9 +315,8 @@ void ARaymarchVolume::Tick(float DeltaTime)
 	// (No point in recalculating a light volume that's not currently being used anyways).
 	if (bLitRaymarch)
 	{
-// 		// For testing light calculation shader speed. Comment out when done testing! (otherwise this gets recalculated all the time for no reason).
-// 		ResetAllLights();
-// 		return;
+		// 		// For testing light calculation shader speed. Comment out when done testing! (otherwise this gets recalculated all
+		// the time for no reason). 		ResetAllLights(); 		return;
 
 		if (bRequestedRecompute)
 		{
@@ -412,14 +417,14 @@ bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
 			// from it's color curve change broadcast and also the OnCurve and OnVolumeInfo changed broadcasts.
 			if (OldMHDAsset)
 			{
-				OldMHDAsset->TransferFuncCurve->OnUpdateGradient.Remove(CurveGradientUpdateDelegateHandle);
+				OldMHDAsset->TransferFuncCurve->OnUpdateCurve.Remove(CurveGradientUpdateDelegateHandle);
 				OldMHDAsset->OnCurveChanged.Remove(CurveChangedInMHDDelegateHandle);
 				OldMHDAsset->OnImageInfoChanged.Remove(MHDAssetUpdatedDelegateHandle);
 			}
 			if (InMHDAsset)
 			{
 				CurveChangedInMHDDelegateHandle =
-					InMHDAsset->OnCurveChanged.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
+					InMHDAsset->OnCurveChanged.AddUObject(this, &ARaymarchVolume::OnMHDAssetChangedTF);
 				MHDAssetUpdatedDelegateHandle =
 					InMHDAsset->OnImageInfoChanged.AddUObject(this, &ARaymarchVolume::OnImageInfoChangedInEditro);
 			}
@@ -441,7 +446,7 @@ bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
 		if ((!GetWorld() || !GetWorld()->IsGameWorld()) && InMHDAsset != OldMHDAsset)
 		{
 			CurveGradientUpdateDelegateHandle =
-				CurrentTFCurve->OnUpdateGradient.AddUObject(this, &ARaymarchVolume::OnCurveUpdatedInEditor);
+				CurrentTFCurve->OnUpdateCurve.AddUObject(this, &ARaymarchVolume::OnTFColorCurveUpdated);
 		}
 #endif
 	}
@@ -483,12 +488,15 @@ bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
 	return true;
 }
 
-void ARaymarchVolume::SetTFCurve(UCurveLinearColor*& InTFCurve)
+void ARaymarchVolume::SetTFCurve(UCurveLinearColor* InTFCurve)
 {
 	if (InTFCurve)
 	{
 		CurrentTFCurve = InTFCurve;
 		URaymarchUtils::ColorCurveToTexture(CurrentTFCurve, RaymarchResources.TFTextureRef);
+		// #TODO flushing rendering commands can lead to hitches, maybe figure out a better way to make sure TF is created in time
+		// for the texture parameter to be set. 
+		// e.g. render-thread promise and game-thread future?
 		FlushRenderingCommands();
 		// Set TF Texture in the lit material.
 		LitRaymarchMaterial->SetTextureParameterValue(RaymarchParams::TransferFunction, RaymarchResources.TFTextureRef);
