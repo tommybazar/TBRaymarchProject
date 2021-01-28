@@ -169,14 +169,15 @@ void MainComputeShader(uint2 PixelLoc : SV_DispatchThreadID)
 
 	// The read/write buffers have always positive values (the alpha of current light being propagated)
         RWLightBuffer[PixelLoc] = CurrentLightAlpha;
-        
+
+    // And also need to wait for everyone to finish writing to the buffer, as otherwise we might read garbage in the next iteration.
+        AllMemoryBarrierWithGroupSync();
+
         // Ignore changes smaller than 0.001 to avoid writes with almost no effect.
         if (abs(CurrentLightAlpha) > 0.001f)
         {
         // If we're removing a light, multiply alpha by -1. (but read/write buffers stay positive)
             ALightVolume[pos] = ALightVolume[pos] + (CurrentLightAlpha * bAdded);
         }
-
-
     }
 }
