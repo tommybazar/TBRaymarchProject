@@ -58,6 +58,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	float MaxValue = 3000;
 
+	bool bIsCompressed = false;
+	int32 CompressedBytes = 0;
+
 	// Returns the number of bytes needed to store this Volume.
 	int64 GetTotalBytes();
 

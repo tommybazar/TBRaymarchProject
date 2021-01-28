@@ -11,6 +11,8 @@ public class VolumeTextureToolkit : ModuleRules
     {
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
+        AddEngineThirdPartyPrivateStaticDependencies(Target, "zlib");
+
         PublicIncludePaths.AddRange(
             new string[] {
 				// ... add public include paths required here ...

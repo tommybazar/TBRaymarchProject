@@ -67,6 +67,9 @@ public:
 	 * of bytes.*/
 	static uint8* LoadRawFileIntoArray(const FString FileName, const int64 BytesToLoad);
 
+	static uint8* LoadCompressedRawFileIntoArray(const FString FileName, const int64 BytesToLoad, const int64 CompressedBytes);
+
+
 	/** Normalizes an array InArray to maximum G16 type. If the InType is 8bit, normalizes to G8. Creates a new array, user is
 	   responsible for deleting that. The type of data going in is determined by a Format name used in .mhd files - e.g.
 	   "MET_SHORT".*/

@@ -53,7 +53,17 @@ UObject* UMHDVolumeTextureFactory::FactoryCreateFile(UClass* InClass, UObject* I
 
 	int64 TotalBytes = MHDAsset->ImageInfo.GetTotalBytes();
 
-	uint8* LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + MHDAsset->DataFileName, TotalBytes);
+	uint8* LoadedArray;
+	
+	if (MHDAsset->ImageInfo.bIsCompressed)
+	{
+		LoadedArray = UVolumeTextureToolkit::LoadCompressedRawFileIntoArray(FilePath + "/" + MHDAsset->DataFileName, TotalBytes, MHDAsset->ImageInfo.CompressedBytes);
+	}
+	else
+	{
+		LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + MHDAsset->DataFileName, TotalBytes);
+	}
+	
 	EPixelFormat PixelFormat = PF_G8;
 
 	if (MHDAsset->ParseSuccessful)
@@ -112,6 +122,12 @@ UObject* UMHDVolumeTextureFactory::FactoryCreateFile(UClass* InClass, UObject* I
 					PixelFormat = PF_R32_FLOAT;
 					FileNamePart = "Transient_" + FileNamePart;
 				}
+				MHDAsset->ImageInfo.bIsNormalized = false;
+			}
+			else
+			{
+				FileNamePart = "Transient_" + FileNamePart;
+				PixelFormat = PF_R32_FLOAT;
 				MHDAsset->ImageInfo.bIsNormalized = false;
 			}
 		}

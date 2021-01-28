@@ -111,8 +111,28 @@ bool UMHDAsset::ParseFromString(const FString FileString)
 			return false;
 		}
 
+		// Check for compressed data size tag.
+
 		// Go back to beginning
 		inStream = std::istringstream(MyStdString);
+		// Skip until we get to ElementType
+		while (inStream.good() && ReadWord != "CompressedDataSize")
+		{
+			inStream >> ReadWord;
+		}
+		// Should be at the "=" after ElementType now.
+		if (inStream.good())
+		{
+			ImageInfo.bIsCompressed = true;
+
+			// Get rid of equal sign.
+			inStream >> ReadWord;
+
+			inStream >> ImageInfo.CompressedBytes;
+		}
+
+			// Go back to beginning
+			inStream = std::istringstream(MyStdString);
 		// Skip until we get to ElementType
 		while (inStream.good() && ReadWord != "ElementDataFile")
 		{
@@ -144,8 +164,9 @@ FString UMHDAsset::ToString() const
 	FString text = "MHD file name " + GetName() + " details:" + "\nDimensions = " + ImageInfo.Dimensions.ToString() +
 				   "\nSpacing : " + ImageInfo.Spacing.ToString() + "\nWorld Size MM : " + ImageInfo.Dimensions.ToString() +
 				   "\nDefault window center : " + FString::SanitizeFloat(ImageInfo.DefaultWindowingParameters.Center) +
-				   "\nDefault window width : " + FString::SanitizeFloat(ImageInfo.DefaultWindowingParameters.Width) + "\nOriginal Range : [" +
-				   FString::SanitizeFloat(ImageInfo.MinValue) + " - " + FString::SanitizeFloat(ImageInfo.MaxValue) + "]";
+				   "\nDefault window width : " + FString::SanitizeFloat(ImageInfo.DefaultWindowingParameters.Width) +
+				   "\nOriginal Range : [" + FString::SanitizeFloat(ImageInfo.MinValue) + " - " +
+				   FString::SanitizeFloat(ImageInfo.MaxValue) + "]";
 	return text;
 }
 
@@ -198,7 +219,8 @@ UMHDAsset* UMHDAsset::CreateAndLoadMHDAsset(
 		UPackage* MHDPackage = CreatePackage(*MHDPackageName);
 		MHDPackage->FullyLoad();
 
-		OutMHDAsset = NewObject<UMHDAsset>(MHDPackage, UMHDAsset::StaticClass(), FName("MHD_" + SaveName), RF_Standalone | RF_Public);
+		OutMHDAsset =
+			NewObject<UMHDAsset>(MHDPackage, UMHDAsset::StaticClass(), FName("MHD_" + SaveName), RF_Standalone | RF_Public);
 		if (OutMHDAsset)
 		{
 			FAssetRegistryModule::AssetCreated(OutMHDAsset);
@@ -218,8 +240,8 @@ UMHDAsset* UMHDAsset::CreateAndLoadMHDAsset(
 	return OutMHDAsset;
 }
 
-void UMHDAsset::CreateAssetFromMhdFileNormalized(const FString Filename, UMHDAsset*& OutMHDAsset,
-		UVolumeTexture*& OutVolumeTexture, bool bIsPersistent, const FString OutFolder)
+void UMHDAsset::CreateAssetFromMhdFileNormalized(
+	const FString Filename, UMHDAsset*& OutMHDAsset, UVolumeTexture*& OutVolumeTexture, bool bIsPersistent, const FString OutFolder)
 {
 	FString FilePath;
 	FString FileNamePart;
@@ -239,7 +261,17 @@ void UMHDAsset::CreateAssetFromMhdFileNormalized(const FString Filename, UMHDAss
 	OutMHDAsset->ImageInfo.bIsNormalized = true;
 
 	int64 TotalBytes = OutMHDAsset->ImageInfo.GetTotalBytes();
-	uint8* LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + OutMHDAsset->DataFileName, TotalBytes);
+	uint8* LoadedArray;
+
+	if (OutMHDAsset->ImageInfo.bIsCompressed)
+	{
+		LoadedArray = UVolumeTextureToolkit::LoadCompressedRawFileIntoArray(
+			FilePath + "/" + OutMHDAsset->DataFileName, TotalBytes, OutMHDAsset->ImageInfo.CompressedBytes);
+	}
+	else
+	{
+		LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + OutMHDAsset->DataFileName, TotalBytes);
+	}
 
 	// We want to normalize and cap at G16, perform that normalization.
 	uint8* ConvertedArray = UVolumeTextureToolkit::NormalizeArrayByFormat(
@@ -298,7 +330,17 @@ void UMHDAsset::CreateAssetFromMhdFileR32F(const FString Filename, UMHDAsset*& O
 	OutMHDAsset->ImageInfo.bIsNormalized = false;
 
 	int64 TotalBytes = OutMHDAsset->ImageInfo.GetTotalBytes();
-	uint8* LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + OutMHDAsset->DataFileName, TotalBytes);
+	uint8* LoadedArray;
+
+	if (OutMHDAsset->ImageInfo.bIsCompressed)
+	{
+		LoadedArray = UVolumeTextureToolkit::LoadCompressedRawFileIntoArray(
+			FilePath + "/" + OutMHDAsset->DataFileName, TotalBytes, OutMHDAsset->ImageInfo.CompressedBytes);
+	}
+	else
+	{
+		LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + OutMHDAsset->DataFileName, TotalBytes);
+	}
 
 	float* ConvertedArray = nullptr;
 	if (!OutMHDAsset->ElementType.Equals("MET_FLOAT"))
@@ -359,8 +401,16 @@ void UMHDAsset::CreateAssetFromMhdFileNoConversion(
 	}
 
 	int64 TotalBytes = OutMHDAsset->ImageInfo.GetTotalBytes();
-	uint8* LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + OutMHDAsset->DataFileName, TotalBytes);
-
+	uint8* LoadedArray;
+	if (OutMHDAsset->ImageInfo.bIsCompressed)
+	{
+		LoadedArray = UVolumeTextureToolkit::LoadCompressedRawFileIntoArray(
+			FilePath + "/" + OutMHDAsset->DataFileName, TotalBytes, OutMHDAsset->ImageInfo.CompressedBytes);
+	}
+	else
+	{
+		LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + OutMHDAsset->DataFileName, TotalBytes);
+	}
 	// We want to convert the whole array to R32_Float. Notice we need to provide the Voxel count, not bytes!
 
 	EPixelFormat PixelFormat = PF_G8;
@@ -392,8 +442,8 @@ void UMHDAsset::CreateAssetFromMhdFileNoConversion(
 	}
 
 	// Initialize it with the details taken from MHD.
-	UVolumeTextureToolkit::SetupVolumeTexture(OutVolumeTexture, PixelFormat, OutMHDAsset->ImageInfo.Dimensions,
-		LoadedArray, OutMHDAsset->ImageInfo.BytesPerVoxel != 4);
+	UVolumeTextureToolkit::SetupVolumeTexture(
+		OutVolumeTexture, PixelFormat, OutMHDAsset->ImageInfo.Dimensions, LoadedArray, OutMHDAsset->ImageInfo.BytesPerVoxel != 4);
 	// Update resource, notify asset registry.
 	OutVolumeTexture->UpdateResource();
 	FAssetRegistryModule::AssetCreated(OutVolumeTexture);
@@ -401,7 +451,6 @@ void UMHDAsset::CreateAssetFromMhdFileNoConversion(
 
 	delete[] LoadedArray;
 }
-
 
 #if WITH_EDITOR
 void UMHDAsset::PostEditChangeChainProperty(struct FPropertyChangedChainEvent& PropertyChangedEvent)

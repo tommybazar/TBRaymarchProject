@@ -7,6 +7,7 @@
 #include "AssetRegistryModule.h"
 #include "Util/UtilityShaders.h"
 #include <Engine/TextureRenderTargetVolume.h>
+#include <Misc/Compression.h>
 
 DEFINE_LOG_CATEGORY(LogTextureUtils);
 
@@ -252,6 +253,48 @@ uint8* UVolumeTextureToolkit::LoadRawFileIntoArray(const FString FileName, const
 	delete FileHandle;
 
 	return LoadedArray;
+}
+
+uint8* UVolumeTextureToolkit::LoadCompressedRawFileIntoArray(
+	const FString FileName, const int64 BytesToLoad, const int64 CompressedBytes)
+{
+	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+	// Try opening as absolute path.
+	IFileHandle* FileHandle = PlatformFile.OpenRead(*FileName);
+
+	// If opening as absolute path failed, open as relative to content directory.
+	if (!FileHandle)
+	{
+		FString FullPath = FPaths::ProjectContentDir() + FileName;
+		FileHandle = PlatformFile.OpenRead(*FullPath);
+	}
+
+	if (!FileHandle)
+	{
+		UE_LOG(LogTextureUtils, Error, TEXT("Raw file could not be opened."));
+		return nullptr;
+	}
+	else if (FileHandle->Size() < CompressedBytes)
+	{
+		UE_LOG(LogTextureUtils, Error, TEXT("Raw file is smaller than expected, cannot read volume."));
+		delete FileHandle;
+		return nullptr;
+	}
+	else if (FileHandle->Size() > CompressedBytes)
+	{
+		UE_LOG(LogTextureUtils, Warning,
+			TEXT("Raw File is larger than expected,	check your dimensions and pixel format. (nonfatal, but the texture will "
+				 "probably be screwed up)"));
+	}
+
+	uint8* LoadedArray = new uint8[CompressedBytes];
+	FileHandle->Read(LoadedArray, CompressedBytes);
+
+	uint8* UncompressedArray = new uint8[BytesToLoad];
+	FCompression::UncompressMemory(NAME_Zlib, UncompressedArray, BytesToLoad, LoadedArray, CompressedBytes);
+
+	delete [] LoadedArray;
+	return UncompressedArray;
 }
 
 uint8* UVolumeTextureToolkit::NormalizeArrayByFormat(
