@@ -11,7 +11,7 @@
 #include "Engine/World.h"
 #include "GlobalShader.h"
 #include "Logging/MessageLog.h"
-#include "MHD/WindowingParameters.h"
+#include "VolumeAsset/WindowingParameters.h"
 #include "PipelineStateCache.h"
 #include "RHIStaticStates.h"
 #include "Rendering/RaymarchTypes.h"

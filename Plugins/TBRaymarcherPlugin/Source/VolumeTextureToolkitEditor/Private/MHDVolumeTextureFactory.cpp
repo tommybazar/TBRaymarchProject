@@ -6,7 +6,7 @@
 
 #include "Containers/UnrealString.h"
 #include "Engine/VolumeTexture.h"
-#include "MHD/MHDAsset.h"
+#include "VolumeAsset/VolumeAsset.h"
 #include "Misc/FileHelper.h"
 #include "Misc/MessageDialog.h"
 #include "Misc/Paths.h"
@@ -43,9 +43,10 @@ UObject* UMHDVolumeTextureFactory::FactoryCreateFile(UClass* InClass, UObject* I
 	// Periods are not cool for package names -> get rid of them.
 	FileNamePart.ReplaceCharInline('.', '_');
 
-	UMHDAsset* MHDAsset = NewObject<UMHDAsset>(InParent, UMHDAsset::StaticClass(), FName("MHD_" + FileNamePart), Flags);
+	UVolumeAsset* MHDAsset =
+		NewObject<UVolumeAsset>(InParent, UVolumeAsset::StaticClass(), FName("MHD_" + FileNamePart), Flags);
 
-	if (!MHDAsset->LoadAndParseMhdFile(Filename))
+	if (!MHDAsset->ParseHeaderToImageInfo(Filename))
 	{
 		// MHD parsing failed -> return null.
 		return nullptr;
@@ -54,87 +55,83 @@ UObject* UMHDVolumeTextureFactory::FactoryCreateFile(UClass* InClass, UObject* I
 	int64 TotalBytes = MHDAsset->ImageInfo.GetTotalBytes();
 
 	uint8* LoadedArray;
-	
+
 	if (MHDAsset->ImageInfo.bIsCompressed)
 	{
-		LoadedArray = UVolumeTextureToolkit::LoadCompressedRawFileIntoArray(FilePath + "/" + MHDAsset->DataFileName, TotalBytes, MHDAsset->ImageInfo.CompressedBytes);
+		LoadedArray = UVolumeTextureToolkit::LoadZLibCompressedRawFileIntoArray(
+			FilePath + "/" + MHDAsset->DataFileName, TotalBytes, MHDAsset->ImageInfo.CompressedBytes);
 	}
 	else
 	{
 		LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + MHDAsset->DataFileName, TotalBytes);
 	}
-	
+
 	EPixelFormat PixelFormat = PF_G8;
 
-	if (MHDAsset->ParseSuccessful)
+	if (!MHDAsset->ParseSuccessful)
 	{
-		EAppReturnType::Type DialogAnswer = FMessageDialog::Open(EAppMsgType::YesNo, EAppReturnType::Yes,
-			NSLOCTEXT("Volumetrics", "Normalize?",
-				"Would you like your volume converted to G8 or G16 and normalized to the whole type range? This will allow it to "
-				"be saved persistently as an asset and make inspecting it with Texture editor easier. Also, rendering with the "
-				"default raymarching material and transfer function will be easier.\nIf your volume already is MET_(U)CHAR or "
-				"MET_(U)SHORT, your volume will be persistent even without conversion."));
+		return nullptr;
+	}
 
-		if (DialogAnswer == EAppReturnType::Yes)
+	EAppReturnType::Type DialogAnswer = FMessageDialog::Open(EAppMsgType::YesNo, EAppReturnType::Yes,
+		NSLOCTEXT("Volumetrics", "Normalize?",
+			"Would you like your volume converted to G8 or G16 and normalized to the whole type range? This will allow it to "
+			"be saved persistently as an asset and make inspecting it with Texture editor easier. Also, rendering with the "
+			"default raymarching material and transfer function will be easier.\nIf your volume already is MET_(U)CHAR or "
+			"MET_(U)SHORT, your volume will be persistent even without conversion, but values might be all over the place."));
+
+	if (DialogAnswer == EAppReturnType::Yes)
+	{
+		// We want to normalize and cap at G16 -> convert
+		uint8* ConvertedArray = UVolumeTextureToolkit::NormalizeArrayByFormat(
+			MHDAsset->ImageInfo.VoxelFormat, LoadedArray, TotalBytes, MHDAsset->ImageInfo.MinValue, MHDAsset->ImageInfo.MaxValue);
+		delete[] LoadedArray;
+		LoadedArray = ConvertedArray;
+		if (MHDAsset->ImageInfo.BytesPerVoxel > 1)
 		{
-			// We want to normalize and cap at G16 -> convert
-			uint8* ConvertedArray = UVolumeTextureToolkit::NormalizeArrayByFormat(
-				MHDAsset->ElementType, LoadedArray, TotalBytes, MHDAsset->ImageInfo.MinValue, MHDAsset->ImageInfo.MaxValue);
+			MHDAsset->ImageInfo.BytesPerVoxel = 2;
+			PixelFormat = PF_G16;
+		}
+		MHDAsset->ImageInfo.bIsNormalized = true;
+	}
+	else if (MHDAsset->ImageInfo.VoxelFormat != EVolumeVoxelFormat::Float)
+	{
+		EAppReturnType::Type DialogAnswer2 = FMessageDialog::Open(EAppMsgType::YesNo, EAppReturnType::Yes,
+			NSLOCTEXT("Volumetrics", "Normalize to R32?",
+				"Should we convert it to R32_FLOAT? This will make sure the materials can read it, but will make the "
+				"texture un-saveable."));
+
+		if (DialogAnswer2 == EAppReturnType::Yes)
+		{
+			const int64 TotalVoxels = MHDAsset->ImageInfo.GetTotalVoxels();
+			float* ConvertedArray =
+				UVolumeTextureToolkit::ConvertArrayToFloat(MHDAsset->ImageInfo.VoxelFormat, LoadedArray, TotalVoxels);
 			delete[] LoadedArray;
-			LoadedArray = ConvertedArray;
-			if (MHDAsset->ImageInfo.BytesPerVoxel > 1)
-			{
-				MHDAsset->ImageInfo.BytesPerVoxel = 2;
-				PixelFormat = PF_G16;
-			}
-			MHDAsset->ImageInfo.bIsNormalized = true;
+			LoadedArray = reinterpret_cast<uint8*>(ConvertedArray);
+			TotalBytes = TotalVoxels * 4;
+			MHDAsset->ImageInfo.BytesPerVoxel = 4;
+			MHDAsset->ImageInfo.VoxelFormat = EVolumeVoxelFormat::Float;
 		}
-		else
+
+		// Leave the texture in the original format and don't normalize.
+		if (MHDAsset->ImageInfo.BytesPerVoxel == 2)
 		{
-			if (!MHDAsset->ElementType.Equals("MET_FLOAT"))
-			{
-				EAppReturnType::Type DialogAnswer2 = FMessageDialog::Open(EAppMsgType::YesNo, EAppReturnType::Yes,
-					NSLOCTEXT("Volumetrics", "Normalize to R32?",
-						"Should we convert it to R32_FLOAT? This will make sure the materials can read it, but will make the "
-						"texture un-saveable."));
-
-				if (DialogAnswer2 == EAppReturnType::Yes)
-				{
-					const int64 TotalVoxels = MHDAsset->ImageInfo.GetTotalVoxels();
-					float* ConvertedArray =
-						UVolumeTextureToolkit::ConvertArrayToFloat(LoadedArray, TotalVoxels, MHDAsset->ElementType);
-					delete[] LoadedArray;
-					LoadedArray = reinterpret_cast<uint8*>(ConvertedArray);
-					TotalBytes = TotalVoxels * 4;
-					MHDAsset->ImageInfo.BytesPerVoxel = 4;
-					MHDAsset->ElementType = "MET_FLOAT";
-				}
-
-				// Leave the texture in the original format and don't normalize.
-				if (MHDAsset->ImageInfo.BytesPerVoxel == 2)
-				{
-					PixelFormat = PF_G16;
-				}
-				else if (MHDAsset->ImageInfo.BytesPerVoxel == 4)
-				{
-					// Cannot be saved natively (unreal only supports G8 and G16 as texture source).
-					// #todo? Guess we could encode this into a RGBA 8bit color and then decode later.
-					PixelFormat = PF_R32_FLOAT;
-					FileNamePart = "Transient_" + FileNamePart;
-				}
-				MHDAsset->ImageInfo.bIsNormalized = false;
-			}
-			else
-			{
-				FileNamePart = "Transient_" + FileNamePart;
-				PixelFormat = PF_R32_FLOAT;
-				MHDAsset->ImageInfo.bIsNormalized = false;
-			}
+			PixelFormat = PF_G16;
 		}
+		else if (MHDAsset->ImageInfo.BytesPerVoxel == 4)
+		{
+			// Cannot be saved natively (unreal only supports G8 and G16 as texture source).
+			// #todo? Guess we could encode this into a RGBA 8bit color and then decode later.
+			PixelFormat = PF_R32_FLOAT;
+			FileNamePart = "Transient_" + FileNamePart;
+		}
+		MHDAsset->ImageInfo.bIsNormalized = false;
 	}
 	else
 	{
-		return nullptr;
+		FileNamePart = "Transient_" + FileNamePart;
+		PixelFormat = PF_R32_FLOAT;
+		MHDAsset->ImageInfo.bIsNormalized = false;
 	}
 
 	// Create the Volume texture.

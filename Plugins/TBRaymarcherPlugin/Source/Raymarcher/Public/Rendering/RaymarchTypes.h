@@ -17,7 +17,7 @@
 #include "SceneInterface.h"
 #include "SceneUtils.h"
 #include "UObject/ObjectMacros.h"
-#include "MHD/WindowingParameters.h"
+#include "VolumeAsset/VolumeInfo.h"
 
 #include <algorithm>	// std::sort
 #include <utility>		// std::pair, std::make_pair

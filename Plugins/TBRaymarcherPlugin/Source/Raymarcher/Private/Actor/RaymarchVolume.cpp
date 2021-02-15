@@ -5,7 +5,7 @@
 #include "Actor/RaymarchVolume.h"
 
 #include "GenericPlatform/GenericPlatformTime.h"
-#include "MHD/MHDAsset.h"
+#include "VolumeAsset/VolumeAsset.h"
 #include "Rendering/RaymarchMaterialParameters.h"
 #include "TextureUtilities.h"
 #include "Util/RaymarchUtils.h"
@@ -401,7 +401,7 @@ void ARaymarchVolume::UpdateSingleLight(ARaymarchLight* UpdatedLight)
 	}
 }
 
-bool ARaymarchVolume::SetMHDAsset(UMHDAsset* InMHDAsset)
+bool ARaymarchVolume::SetMHDAsset(UVolumeAsset* InMHDAsset)
 {
 	if (!InMHDAsset)
 	{
@@ -520,9 +520,9 @@ void ARaymarchVolume::SaveCurrentParamsToMHDAsset()
 
 bool ARaymarchVolume::LoadNewFileIntoVolumeTransientR32F(FString FileName)
 {
-	UMHDAsset* NewInfo;
+	UVolumeAsset* NewInfo;
 	UVolumeTexture* NewTexture;
-	UMHDAsset::CreateAssetFromMhdFileR32F(FileName, NewInfo, NewTexture);
+	UVolumeAsset::CreateAssetFromMhdFileR32F(FileName, NewInfo, NewTexture);
 	if (NewInfo)
 	{
 		return SetMHDAsset(NewInfo);
@@ -535,9 +535,9 @@ bool ARaymarchVolume::LoadNewFileIntoVolumeTransientR32F(FString FileName)
 
 bool ARaymarchVolume::LoadNewFileIntoVolumeNormalized(FString FileName, bool bPersistent, FString OutFolder)
 {
-	UMHDAsset* NewInfo;
+	UVolumeAsset* NewInfo;
 	UVolumeTexture* NewTexture;
-	UMHDAsset::CreateAssetFromMhdFileNormalized(FileName, NewInfo, NewTexture, bPersistent, OutFolder);
+	UVolumeAsset::CreateAssetFromMhdFileNormalized(FileName, NewInfo, NewTexture, bPersistent, OutFolder);
 	if (NewInfo)
 	{
 		return SetMHDAsset(NewInfo);

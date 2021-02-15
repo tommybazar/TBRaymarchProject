@@ -7,7 +7,7 @@
 #include "Actor/RaymarchClipPlane.h"
 #include "Actor/RaymarchLight.h"
 #include "CoreMinimal.h"
-#include "MHD/MHDAsset.h"
+#include "VolumeAsset/VolumeAsset.h"
 #include "Math/IntVector.h"
 #include "UObject/UnrealType.h"
 
@@ -45,7 +45,7 @@ public:
 
 	/** Sets a new MHDAsset and reinitializes the raymarching resources.*/
 	UFUNCTION(BlueprintCallable)
-	bool SetMHDAsset(UMHDAsset* InMHDAsset);
+	bool SetMHDAsset(UVolumeAsset* InMHDAsset);
 
 	/** Use faster shader for light calculation. Leads to instability with more lights.*/
 	UPROPERTY(EditAnywhere)
@@ -104,10 +104,10 @@ public:
 
 	/** The loaded MHD asset belonging to this volume*/
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-	UMHDAsset* MHDAsset = nullptr;
+	UVolumeAsset* MHDAsset = nullptr;
 
 	/** Only kept so that we can compare to it when a user changes the MHDAsset. See SetMHDAsset().*/
-	UMHDAsset* OldMHDAsset = nullptr;
+	UVolumeAsset* OldMHDAsset = nullptr;
 
 	/** The base material for volumetric rendering.*/
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)

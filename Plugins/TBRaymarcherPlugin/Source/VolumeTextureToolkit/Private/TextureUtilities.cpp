@@ -8,6 +8,7 @@
 #include "Util/UtilityShaders.h"
 #include <Engine/TextureRenderTargetVolume.h>
 #include <Misc/Compression.h>
+#include "VolumeAsset/VolumeAsset.h"
 
 DEFINE_LOG_CATEGORY(LogTextureUtils);
 
@@ -255,7 +256,7 @@ uint8* UVolumeTextureToolkit::LoadRawFileIntoArray(const FString FileName, const
 	return LoadedArray;
 }
 
-uint8* UVolumeTextureToolkit::LoadCompressedRawFileIntoArray(
+uint8* UVolumeTextureToolkit::LoadZLibCompressedRawFileIntoArray(
 	const FString FileName, const int64 BytesToLoad, const int64 CompressedBytes)
 {
 	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
@@ -271,19 +272,19 @@ uint8* UVolumeTextureToolkit::LoadCompressedRawFileIntoArray(
 
 	if (!FileHandle)
 	{
-		UE_LOG(LogTextureUtils, Error, TEXT("Raw file could not be opened."));
+		UE_LOG(LogTextureUtils, Error, TEXT("Raw compressed file could not be opened."));
 		return nullptr;
 	}
 	else if (FileHandle->Size() < CompressedBytes)
 	{
-		UE_LOG(LogTextureUtils, Error, TEXT("Raw file is smaller than expected, cannot read volume."));
+		UE_LOG(LogTextureUtils, Error, TEXT("Raw compressed file is smaller than expected, cannot read volume."));
 		delete FileHandle;
 		return nullptr;
 	}
 	else if (FileHandle->Size() > CompressedBytes)
 	{
 		UE_LOG(LogTextureUtils, Warning,
-			TEXT("Raw File is larger than expected,	check your dimensions and pixel format. (nonfatal, but the texture will "
+			TEXT("Raw compressed file is larger than expected, check your dimensions and pixel format. (nonfatal, but the texture will "
 				 "probably be screwed up)"));
 	}
 
@@ -298,75 +299,51 @@ uint8* UVolumeTextureToolkit::LoadCompressedRawFileIntoArray(
 }
 
 uint8* UVolumeTextureToolkit::NormalizeArrayByFormat(
-	const FString FormatName, uint8* InArray, const int64 ByteSize, float& OutInMin, float& OutInMax)
+	const EVolumeVoxelFormat VoxelFormat, uint8* InArray, const int64 ByteSize, float& OutInMin, float& OutInMax)
 {
-	// #TODO maybe figure out a nice way to get the format->C++ type instead of this if/else monstrosity
-	if (FormatName.Equals("MET_CHAR"))
+	switch (VoxelFormat)
 	{
-		return ConvertArrayToNormalizedArray<int8, uint8>(InArray, ByteSize, OutInMin, OutInMax);
-	}
-	else if (FormatName.Equals("MET_UCHAR"))
-	{
-		return ConvertArrayToNormalizedArray<uint8, uint8>(InArray, ByteSize, OutInMin, OutInMax);
-	}
-	else if (FormatName.Equals("MET_SHORT"))
-	{
-		return ConvertArrayToNormalizedArray<int16, uint16>(InArray, ByteSize, OutInMin, OutInMax);
-	}
-	else if (FormatName.Equals("MET_USHORT"))
-	{
-		return ConvertArrayToNormalizedArray<uint16, uint16>(InArray, ByteSize, OutInMin, OutInMax);
-	}
-	else if (FormatName.Equals("MET_INT"))
-	{
-		return ConvertArrayToNormalizedArray<int32, uint16>(InArray, ByteSize, OutInMin, OutInMax);
-	}
-	else if (FormatName.Equals("MET_UINT"))
-	{
-		return ConvertArrayToNormalizedArray<uint32, uint16>(InArray, ByteSize, OutInMin, OutInMax);
-	}
-	else if (FormatName.Equals("MET_FLOAT"))
-	{
-		return ConvertArrayToNormalizedArray<float, uint16>(InArray, ByteSize, OutInMin, OutInMax);
-	}
-	else
-	{
-		ensure(false);
-		return nullptr;
+		case EVolumeVoxelFormat::UnsignedChar:
+			return ConvertArrayToNormalizedArray<uint8, uint8>(InArray, ByteSize, OutInMin, OutInMax);
+		case EVolumeVoxelFormat::SignedChar:
+			return ConvertArrayToNormalizedArray<int8, uint8>(InArray, ByteSize, OutInMin, OutInMax);
+		case EVolumeVoxelFormat::UnsignedShort:
+			return ConvertArrayToNormalizedArray<uint16, uint16>(InArray, ByteSize, OutInMin, OutInMax);
+		case EVolumeVoxelFormat::SignedShort:
+			return ConvertArrayToNormalizedArray<int16, uint16>(InArray, ByteSize, OutInMin, OutInMax);
+		case EVolumeVoxelFormat::UnsignedInt:
+			return ConvertArrayToNormalizedArray<uint32, uint16>(InArray, ByteSize, OutInMin, OutInMax);
+		case EVolumeVoxelFormat::SignedInt:
+			return ConvertArrayToNormalizedArray<int32, uint16>(InArray, ByteSize, OutInMin, OutInMax);
+		case EVolumeVoxelFormat::Float:
+			return ConvertArrayToNormalizedArray<float, uint16>(InArray, ByteSize, OutInMin, OutInMax);
+		default:
+			ensure(false);
+			return nullptr;
 	}
 }
 
-float* UVolumeTextureToolkit::ConvertArrayToFloat(uint8* InArray, uint64 VoxelCount, const FString FormatName)
+float* UVolumeTextureToolkit::ConvertArrayToFloat(
+	const EVolumeVoxelFormat VoxelFormat, uint8* InArray, uint64 VoxelCount)
 {
-	// #TODO maybe figure out a nice way to get the format->C++ type instead of this if/else monstrosity
-	if (FormatName.Equals("MET_CHAR"))
+	switch (VoxelFormat)
 	{
-		return ConvertArrayToFloatTemplated<int8>(InArray, VoxelCount);
-	}
-	else if (FormatName.Equals("MET_UCHAR"))
-	{
-		return ConvertArrayToFloatTemplated<uint8>(InArray, VoxelCount);
-	}
-	else if (FormatName.Equals("MET_SHORT"))
-	{
-		return ConvertArrayToFloatTemplated<int16>(InArray, VoxelCount);
-	}
-	else if (FormatName.Equals("MET_USHORT"))
-	{
-		return ConvertArrayToFloatTemplated<uint16>(InArray, VoxelCount);
-	}
-	else if (FormatName.Equals("MET_INT"))
-	{
-		return ConvertArrayToFloatTemplated<int32>(InArray, VoxelCount);
-	}
-	else if (FormatName.Equals("MET_UINT"))
-	{
-		return ConvertArrayToFloatTemplated<uint32>(InArray, VoxelCount);
-	}
-	else
-	{
-		ensure(false);
-		return nullptr;
+		case EVolumeVoxelFormat::UnsignedChar:
+			return ConvertArrayToFloatTemplated<uint8>(InArray, VoxelCount);
+		case EVolumeVoxelFormat::SignedChar:
+			return ConvertArrayToFloatTemplated<int8>(InArray, VoxelCount);
+		case EVolumeVoxelFormat::UnsignedShort:
+			return ConvertArrayToFloatTemplated<uint16>(InArray, VoxelCount);
+		case EVolumeVoxelFormat::SignedShort:
+			return ConvertArrayToFloatTemplated<int16>(InArray, VoxelCount);
+		case EVolumeVoxelFormat::UnsignedInt:
+			return ConvertArrayToFloatTemplated<uint32>(InArray, VoxelCount);
+		case EVolumeVoxelFormat::SignedInt:
+			return ConvertArrayToFloatTemplated<int32>(InArray, VoxelCount);
+		case EVolumeVoxelFormat::Float: // fall through
+		default:
+			ensure(false);
+			return nullptr;
 	}
 }
 

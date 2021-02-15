@@ -43,7 +43,7 @@ public:
 
 	/// Array of existing MHD Assets that can be set immediately. Will populate the AssetSelection combo box.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<UMHDAsset*> AssetArray;
+	TArray<UVolumeAsset*> AssetArray;
 	
 	/// Called when LoadG16Button is clicked.
 	UFUNCTION()

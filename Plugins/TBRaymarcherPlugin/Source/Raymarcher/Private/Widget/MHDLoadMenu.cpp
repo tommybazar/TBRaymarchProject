@@ -24,7 +24,7 @@ bool UMHDLoadMenu::Initialize()
 	{
 		// Add existing MHD files into box.
 		AssetSelectionComboBox->ClearOptions();
-		for (UMHDAsset* MHDAsset : AssetArray)
+		for (UVolumeAsset* MHDAsset : AssetArray)
 		{
 			AssetSelectionComboBox->AddOption(GetNameSafe(MHDAsset));
 		}
@@ -53,9 +53,9 @@ void UMHDLoadMenu::OnLoadNormalizedClicked()
 		if (FileNames.Num() > 0)
 		{
 			FString Filename = FileNames[0];
-			UMHDAsset* OutAsset;
+			UVolumeAsset* OutAsset;
 			UVolumeTexture* OutTexture;
-			UMHDAsset::CreateAssetFromMhdFileNormalized(Filename, OutAsset, OutTexture, false);
+			UVolumeAsset::CreateAssetFromMhdFileNormalized(Filename, OutAsset, OutTexture, false);
 
 			if (OutAsset)
 			{
@@ -101,9 +101,9 @@ void UMHDLoadMenu::OnLoadF32Clicked()
 		if (FileNames.Num() > 0)
 		{
 			FString Filename = FileNames[0];
-			UMHDAsset* OutAsset;
+			UVolumeAsset* OutAsset;
 			UVolumeTexture* OutTexture;
-			UMHDAsset::CreateAssetFromMhdFileR32F(Filename, OutAsset, OutTexture);
+			UVolumeAsset::CreateAssetFromMhdFileR32F(Filename, OutAsset, OutTexture);
 
 			if (OutAsset)
 			{
@@ -134,8 +134,8 @@ void UMHDLoadMenu::OnLoadF32Clicked()
 
 void UMHDLoadMenu::OnAssetSelected(FString AssetName, ESelectInfo::Type SelectType)
 {
-	UMHDAsset* SelectedAsset = nullptr;
-	for (UMHDAsset* Asset : AssetArray)
+	UVolumeAsset* SelectedAsset = nullptr;
+	for (UVolumeAsset* Asset : AssetArray)
 	{
 		if (AssetName.Equals(GetNameSafe(Asset)))
 		{

@@ -19,6 +19,7 @@
 #include "SceneInterface.h"
 #include "SceneUtils.h"
 #include "UObject/ObjectMacros.h"
+#include "VolumeAsset/VolumeAsset.h"
 
 class UTextureRenderTargetVolume;
 
@@ -67,14 +68,13 @@ public:
 	 * of bytes.*/
 	static uint8* LoadRawFileIntoArray(const FString FileName, const int64 BytesToLoad);
 
-	static uint8* LoadCompressedRawFileIntoArray(const FString FileName, const int64 BytesToLoad, const int64 CompressedBytes);
-
+	static uint8* LoadZLibCompressedRawFileIntoArray(const FString FileName, const int64 BytesToLoad, const int64 CompressedBytes);
 
 	/** Normalizes an array InArray to maximum G16 type. If the InType is 8bit, normalizes to G8. Creates a new array, user is
 	   responsible for deleting that. The type of data going in is determined by a Format name used in .mhd files - e.g.
 	   "MET_SHORT".*/
-	static uint8* NormalizeArrayByFormat(
-		const FString FormatName, uint8* InArray, const int64 ArrayByteSize, float& OutOriginalMin, float& OutOriginalMax);
+	static uint8* NormalizeArrayByFormat(const EVolumeVoxelFormat VoxelFormat, uint8* InArray, const int64 ArrayByteSize,
+		float& OutOriginalMin, float& OutOriginalMax);
 
 	/** Loads a RAW file into a newly created Volume Texture Asset. Will output error log messages
 	 * and return if unsuccessful.
@@ -174,7 +174,7 @@ public:
 		return NewData;
 	};
 
-	static float* ConvertArrayToFloat(uint8* InArray, uint64 VoxelCount, const FString FormatName);
+	static float* ConvertArrayToFloat(const EVolumeVoxelFormat VoxelFormat, uint8* InArray, uint64 VoxelCount);
 
 	/** Tells you which source format to use for a texture's source according to the
 	 * Pixel format. */
@@ -184,7 +184,6 @@ public:
 		SetVolumeTextureDetails, CreateVolumeTextureMip and CreateVolumeTextureEditorData. In this order. */
 	static void SetupVolumeTexture(
 		UVolumeTexture*& OutVolumeTexture, EPixelFormat PixelFormat, FIntVector Dimensions, uint8* InSourceArray, bool Persistent);
-
 
 	/** Clears a Volume Texture. */
 	UFUNCTION(BlueprintCallable, Category = " Volume Texture Utilities")
