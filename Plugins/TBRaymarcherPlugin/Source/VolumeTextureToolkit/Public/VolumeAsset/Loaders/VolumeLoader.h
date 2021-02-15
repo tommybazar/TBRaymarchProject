@@ -15,6 +15,7 @@ class VOLUMETEXTURETOOLKIT_API IVolumeLoader
 {
 	GENERATED_BODY()
 public:
-	virtual FVolumeInfo ParseImageInfoFromHeader() = 0;
+	virtual FVolumeInfo ParseVolumeInfoFromHeader(FString FileName) = 0;
 	
+	virtual UVolumeAsset* ParseFromFile(FString FileName, bool bNormalize = true, bool bConvertToFloat = true) = 0;
 };

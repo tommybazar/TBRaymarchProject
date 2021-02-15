@@ -46,7 +46,8 @@ UObject* UMHDVolumeTextureFactory::FactoryCreateFile(UClass* InClass, UObject* I
 	UVolumeAsset* MHDAsset =
 		NewObject<UVolumeAsset>(InParent, UVolumeAsset::StaticClass(), FName("MHD_" + FileNamePart), Flags);
 
-	if (!MHDAsset->ParseHeaderToImageInfo(Filename))
+	MHDAsset->ImageInfo = UVolumeAsset::ParseHeaderToImageInfo(Filename);
+	if (!MHDAsset->ImageInfo.bParseWasSuccessful)
 	{
 		// MHD parsing failed -> return null.
 		return nullptr;
@@ -59,16 +60,16 @@ UObject* UMHDVolumeTextureFactory::FactoryCreateFile(UClass* InClass, UObject* I
 	if (MHDAsset->ImageInfo.bIsCompressed)
 	{
 		LoadedArray = UVolumeTextureToolkit::LoadZLibCompressedRawFileIntoArray(
-			FilePath + "/" + MHDAsset->DataFileName, TotalBytes, MHDAsset->ImageInfo.CompressedBytes);
+			FilePath + "/" + MHDAsset->ImageInfo.DataFileName, TotalBytes, MHDAsset->ImageInfo.CompressedBytes);
 	}
 	else
 	{
-		LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + MHDAsset->DataFileName, TotalBytes);
+		LoadedArray = UVolumeTextureToolkit::LoadRawFileIntoArray(FilePath + "/" + MHDAsset->ImageInfo.DataFileName, TotalBytes);
 	}
 
 	EPixelFormat PixelFormat = PF_G8;
 
-	if (!MHDAsset->ParseSuccessful)
+	if (!MHDAsset->ImageInfo.bParseWasSuccessful)
 	{
 		return nullptr;
 	}

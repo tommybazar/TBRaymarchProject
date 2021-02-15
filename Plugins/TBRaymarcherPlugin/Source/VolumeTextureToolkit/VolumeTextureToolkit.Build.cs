@@ -22,9 +22,7 @@ public class VolumeTextureToolkit : ModuleRules
 
         PrivateIncludePaths.AddRange(
             new string[] {
-                "VolumeTextureToolkit",
-                "VolumeTextureToolkit/Public/",
-                "VolumeTextureToolkit/Public/MHD"
+                "VolumeTextureToolkit"
                 }
             );
 

@@ -35,13 +35,6 @@ class VOLUMETEXTURETOOLKIT_API UVolumeAsset : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	/// If true, parsing succeeded. If false, this Volume Asset is unusable.
-	bool ParseSuccessful;
-
-	/// Name of the volume file that was loaded, including extension.
-	UPROPERTY(VisibleAnywhere)
-	FString DataFileName;
-
 	/// Volume texture containing the data loaded from the MHD file.
 	UPROPERTY(VisibleAnywhere)
 	UVolumeTexture* AssociatedTexture;
@@ -56,19 +49,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "MHD Asset")
 	/// Loads a string from file specified by FileName and parses it into a UMHDAsset.
-	bool ParseHeaderToImageInfo(const FString FileName);
-
-	UFUNCTION(BlueprintCallable, Category = "MHD Asset")
-	/// Parses a MHD header loaded in a FString into a UMHDAsset.
-	bool ParseFromString(const FString InString);
-
-	/// Returns World Dimensions in mm.
-	UFUNCTION(BlueprintPure)
-	FVector GetWorldDimensions() const;
-
-	/// Outputs a string with info about this MHD file.
-	UFUNCTION(BlueprintPure)
-	FString ToString() const;
+	static FVolumeInfo ParseHeaderToImageInfo(const FString FileName);
 
 	/// Creates a UMHDAsset asset. If bIsTransient is false, SaveFolder and SaveName specify the desired location of the
 	/// persistent asset.

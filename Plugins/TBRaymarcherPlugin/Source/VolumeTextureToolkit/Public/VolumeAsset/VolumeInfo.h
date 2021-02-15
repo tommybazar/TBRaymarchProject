@@ -53,6 +53,13 @@ struct VOLUMETEXTURETOOLKIT_API FVolumeInfo
 {
 	GENERATED_BODY()
 public:
+	/// If true, parsing succeeded. If false, this Volume Info is unusable.
+	bool bParseWasSuccessful;
+
+	/// Name of the volume file that was loaded, including extension.
+	UPROPERTY(VisibleAnywhere)
+	FString DataFileName;
+
 	/// Format of voxels loaded from the volume. Does NOT have to match the actual PixelFormat that the VolumeTexture is stored in!
 	/// e.g. this could be UChar and VolumeTexture is saved as a EPixelFormat::Float - so don't use for calculating sizes!
 	UPROPERTY(VisibleAnywhere)
@@ -101,49 +108,22 @@ public:
 
 	// Normalizes an input value from the range [MinValue, MaxValue] to [0,1]. Note that values can be outside of the range,
 	// e.g. MinValue - (MaxValue - MinValue) will be normalized to -1.
-	float NormalizeValue(float InValue)
-	{
-		if (!bIsNormalized)
-		{
-			return InValue;
-		}
-		// Normalize on the range of [Min, Max]
-		return ((InValue - MinValue) / (MaxValue - MinValue));
-	}
+	float NormalizeValue(float InValue);
 
 	/// Converts a [0,1] normalized value to [Min, Max] range.
-	float DenormalizeValue(float InValue)
-	{
-		if (!bIsNormalized)
-		{
-			return InValue;
-		}
-		return ((InValue * (MaxValue - MinValue)) + MinValue);
-	}
+	float DenormalizeValue(float InValue);
 
 	/// Normalizes a range to 0-1 depending on the size of the original data.
-	float NormalizeRange(float InRange)
-	{
-		if (!bIsNormalized)
-		{
-			return InRange;
-		}
-		// Normalize the range from [Max - Min] to 1
-		return ((InRange) / (MaxValue - MinValue));
-	}
+	float NormalizeRange(float InRange);
 
 	/// Converts a [0,1] normalized range to the range of the original data (e.g. 1 will get converted to (MaxValue - MinValue))
-	float DenormalizeRange(float InRange)
-	{
-		if (!bIsNormalized)
-		{
-			return InRange;
-		}
-		// Normalize the range from [Max - Min] to 1
-		return (InRange * (MaxValue - MinValue));
-	}
+	float DenormalizeRange(float InRange);
 
 	static int32 VoxelFormatByteSize(EVolumeVoxelFormat InFormat);
 
 	static bool IsVoxelFormatSigned(EVolumeVoxelFormat InFormat);
+
+	FString ToString() const;
+
+	static FVolumeInfo ParseFromString(const FString InString);
 };
