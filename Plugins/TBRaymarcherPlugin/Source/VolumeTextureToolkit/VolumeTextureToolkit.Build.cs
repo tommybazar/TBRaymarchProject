@@ -13,6 +13,8 @@ public class VolumeTextureToolkit : ModuleRules
 
         AddEngineThirdPartyPrivateStaticDependencies(Target, "zlib");
 
+        CppStandard = CppStandardVersion.Cpp17;
+
         PublicIncludePaths.AddRange(
             new string[] {
 				// ... add public include paths required here ...

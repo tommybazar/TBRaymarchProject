@@ -184,6 +184,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool LoadNewFileIntoVolumeNormalized(FString FileName, bool bPersistent, FString OutFolder);
 
+// 	UFUNCTION(BlueprintCallable)
+// 	void TestReadDICOM(FString FileName);
+
 	/** Sets all material parameters to the raymarching materials. Usually called only after loading a new volume.**/
 	void SetAllMaterialParameters();
 

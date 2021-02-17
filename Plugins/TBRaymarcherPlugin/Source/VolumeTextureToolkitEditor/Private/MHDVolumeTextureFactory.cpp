@@ -33,7 +33,7 @@ UObject* UMHDVolumeTextureFactory::FactoryCreateFile(UClass* InClass, UObject* I
 	const FString& Filename, const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled)
 {
 	UVolumeTexture* VolumeTexture = nullptr;
-
+	
 	FString FilePath;
 	FString FileNamePart;
 	FString ExtensionPart;

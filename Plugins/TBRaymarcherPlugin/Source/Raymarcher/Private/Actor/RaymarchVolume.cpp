@@ -5,18 +5,19 @@
 #include "Actor/RaymarchVolume.h"
 
 #include "GenericPlatform/GenericPlatformTime.h"
-#include "VolumeAsset/VolumeAsset.h"
 #include "Rendering/RaymarchMaterialParameters.h"
 #include "TextureUtilities.h"
 #include "Util/RaymarchUtils.h"
+#include "VolumeAsset/VolumeAsset.h"
 
-#include <Engine/TextureRenderTargetVolume.h>
 #include <Curves/CurveLinearColor.h>
+#include <Engine/TextureRenderTargetVolume.h>
 
 DEFINE_LOG_CATEGORY(LogRaymarchVolume)
 
-// Uncomment for easier debugging
-// #pragma optimize("", off)
+#if !UE_BUILD_SHIPPING
+#pragma optimize("", off)
+#endif
 
 // Sets default values
 ARaymarchVolume::ARaymarchVolume() : AActor()
@@ -130,11 +131,7 @@ void ARaymarchVolume::PostRegisterAllComponents()
 
 	if (MHDAsset)
 	{
-		bool bLoadWasSuccessful = SetMHDAsset(MHDAsset);
-		if (bLoadWasSuccessful)
-		{
-			bRequestedRecompute = true;
-		}
+		SetMHDAsset(MHDAsset);
 	}
 }
 
@@ -315,8 +312,10 @@ void ARaymarchVolume::Tick(float DeltaTime)
 	// (No point in recalculating a light volume that's not currently being used anyways).
 	if (bLitRaymarch)
 	{
-		// 		// For testing light calculation shader speed. Comment out when done testing! (otherwise this gets recalculated all
-		// the time for no reason). 		ResetAllLights(); 		return;
+		// For testing light calculation shader speed - comment out when not testing! (otherwise lights get recalculated every tick
+		// for no reason).
+		// 		ResetAllLights();
+		// 		return;
 
 		if (bRequestedRecompute)
 		{
@@ -475,7 +474,7 @@ bool ARaymarchVolume::SetMHDAsset(UVolumeAsset* InMHDAsset)
 
 	RaymarchResources.WindowingParameters = MHDAsset->ImageInfo.DefaultWindowingParameters;
 
-	// TODO make this more reasonable?
+	// Unreal units = cm, MHD and Dicoms both have sizes in mm -> divide by 10.
 	StaticMeshComponent->SetRelativeScale3D(InMHDAsset->ImageInfo.WorldDimensions / 10);
 
 	// Update world, set all parameters and request recompute.
@@ -495,7 +494,7 @@ void ARaymarchVolume::SetTFCurve(UCurveLinearColor* InTFCurve)
 		CurrentTFCurve = InTFCurve;
 		URaymarchUtils::ColorCurveToTexture(CurrentTFCurve, RaymarchResources.TFTextureRef);
 		// #TODO flushing rendering commands can lead to hitches, maybe figure out a better way to make sure TF is created in time
-		// for the texture parameter to be set. 
+		// for the texture parameter to be set.
 		// e.g. render-thread promise and game-thread future?
 		FlushRenderingCommands();
 		// Set TF Texture in the lit material.
@@ -782,5 +781,6 @@ void ARaymarchVolume::FreeRaymarchResources()
 	RaymarchResources.bIsInitialized = false;
 }
 
-// Uncomment for easier debugging
-// #pragma optimize("", on)
+#if !UE_BUILD_SHIPPING
+#pragma optimize("", on)
+#endif
