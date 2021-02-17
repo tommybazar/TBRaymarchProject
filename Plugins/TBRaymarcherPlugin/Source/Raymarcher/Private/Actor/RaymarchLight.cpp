@@ -15,7 +15,7 @@ ARaymarchLight::ARaymarchLight()
 	PrimaryActorTick.TickGroup = TG_PostUpdateWork;
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Light Static Mesh Componenet"));
-	StaticMeshComponent->SetupAttachment(RootComponent);
+	SetRootComponent(StaticMeshComponent);
 }
 
 void ARaymarchLight::Tick(float DeltaSeconds)

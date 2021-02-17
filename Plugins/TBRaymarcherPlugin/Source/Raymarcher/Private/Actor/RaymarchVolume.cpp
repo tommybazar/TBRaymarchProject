@@ -704,6 +704,13 @@ void ARaymarchVolume::InitializeRaymarchResources(UVolumeTexture* Volume)
 		UE_LOG(LogRaymarchVolume, Error, TEXT("Tried to initialize Raymarch resources with no data volume!"));
 		return;
 	}
+	else if (!Volume->PlatformData || Volume->GetSizeX() == 0 || Volume->GetSizeY() == 0 || Volume->GetSizeY() == 0)
+	{
+		// Happens in cooking stage where per-platform data isn't initalized. Return.
+ 		UE_LOG(LogRaymarchVolume, Warning,
+ 			TEXT("Following is safe to ignore during cooking :\nTried to initialize Raymarch resources with an unitialized data volume with size 0!\nRaymarch volume name = %s, VolumeTexture name = %s"), *(GetName()), *(Volume->GetName()));
+		return;
+	};
 
 	RaymarchResources.DataVolumeTextureRef = Volume;
 
@@ -732,17 +739,6 @@ void ARaymarchVolume::InitializeRaymarchResources(UVolumeTexture* Volume)
 	URaymarchUtils::CreateBufferTextures(XBufferSize, PixelFormat, RaymarchResources.XYZReadWriteBuffers[0]);
 	URaymarchUtils::CreateBufferTextures(YBufferSize, PixelFormat, RaymarchResources.XYZReadWriteBuffers[1]);
 	URaymarchUtils::CreateBufferTextures(ZBufferSize, PixelFormat, RaymarchResources.XYZReadWriteBuffers[2]);
-
-	// Keeping this here for future reference (shows how to make low-level render-targets)
-	//
-	// 	ENQUEUE_RENDER_COMMAND(CaptureCommand)
-	// 	([&](FRHICommandListImmediate& RHICmdList) {
-	// 		FPooledRenderTargetDesc LightVolumeDesc(FPooledRenderTargetDesc::CreateVolumeDesc(
-	// 			X, Y, Z, PF_G8, FClearValueBinding::None, 0, TexCreate_ShaderResource | TexCreate_UAV, false, 1));
-	//
-	// 		GRenderTargetPool.FindFreeElement(RHICmdList, LightVolumeDesc, RaymarchResources.LightVolumeRT,
-	// TEXT("LightVolumeTexture"));
-	// 	});
 
 	RaymarchResources.LightVolumeRenderTarget = NewObject<UTextureRenderTargetVolume>(this, "Light Volume Render Target");
 	RaymarchResources.LightVolumeRenderTarget->bCanCreateUAV = true;
