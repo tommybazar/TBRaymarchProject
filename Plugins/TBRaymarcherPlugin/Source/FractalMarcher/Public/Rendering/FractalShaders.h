@@ -15,6 +15,7 @@
 #include "ShaderParameterUtils.h"
 #include "ShaderParameters.h"
 #include "RHIResources.h"
+#include "Engine/VolumeTexture.h"
 
 #include "FractalShaders.generated.h"
 
