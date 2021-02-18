@@ -4,21 +4,21 @@
 
 #pragma once
 
-#include "Components/SkeletalMeshComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/WidgetInteractionComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/PlayerController.h"
 #include "MotionControllerComponent.h"
+#include "Grabbable.h"
 
 #include "VRMotionController.generated.h"
 
 class UMotionControllerComponent;
-class USkeletalMeshComponent;
 
 /**
- * Base class for motion controllers in BodyMap.
+ * Base class for motion controllers.
  */
 UCLASS(Abstract)
 class AVRMotionController : public AActor
@@ -41,7 +41,7 @@ public:
 
 	/// Skeletal mesh of the controller.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MotionController | Component")
-	USkeletalMeshComponent* ControllerSkeletalMeshComponent = nullptr;
+	UStaticMeshComponent* ControllerStaticMeshComponent = nullptr;
 
 	/// Widget interactor which allows interacting with VR UI.
 	UPROPERTY(EditAnywhere)
@@ -60,8 +60,6 @@ public:
 
 	/// True if the controller grip is pressed.
 	bool bIsGripPressed = false;
-
-	/// IMotionControllerHandler interface begin :
 
 	virtual void OnGripPressed();
 
@@ -86,17 +84,8 @@ public:
 
 	/// The actor currently hovered by the sphere collision, if any.
 	/// Could be remade into an array to allow hovering multiple actors at once.
-	AActor* HoveredActor = nullptr;
+	IGrabbable* HoveredActor = nullptr;
 
 	/// The currently grabbed actor, if any.
-	AActor* GrabbedActor = nullptr;
-
-	virtual void OnActorHovered();
-
-protected:
-	// A weak pointer to the owning player controller.
-	TWeakObjectPtr<APlayerController> PlayerControllerWeakPtr;
-
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	IGrabbable* GrabbedActor = nullptr;
 };

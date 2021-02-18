@@ -37,7 +37,7 @@ void URaymarchUtils::AddDirLightToSingleVolume(const FBasicRaymarchRenderingReso
 	if (!Resources.DataVolumeTextureRef || !Resources.DataVolumeTextureRef->Resource || !Resources.TFTextureRef->Resource ||
 		!Resources.LightVolumeRenderTarget->Resource || !Resources.DataVolumeTextureRef->Resource->TextureRHI ||
 		!Resources.TFTextureRef->Resource->TextureRHI || !Resources.LightVolumeRenderTarget->Resource->TextureRHI)
-	{	 //|| !Resources.ALightVolumeUAVRef) {
+	{
 		LightAdded = false;
 		return;
 	}

@@ -5,6 +5,7 @@
 #include "Actor/VR/VRMotionController.h"
 #include "XRMotionControllerBase.h"
 #include "Components/WidgetInteractionComponent.h"
+#include "Actor/VR/Grabbable.h"
 
 AVRMotionController::AVRMotionController()
 {
@@ -16,17 +17,22 @@ AVRMotionController::AVRMotionController()
 	MotionControllerComponent->SetupAttachment(RootComponent);
 	MotionControllerComponent->SetRelativeLocation(FVector(0, 0, 0));
 
-	ControllerSkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("ControllerMesh"));
-	ControllerSkeletalMeshComponent->SetupAttachment(MotionControllerComponent);
-	ControllerSkeletalMeshComponent->SetCanEverAffectNavigation(false);
-	ControllerSkeletalMeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	ControllerStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ControllerMesh"));
+	ControllerStaticMeshComponent->SetupAttachment(MotionControllerComponent);
+	ControllerStaticMeshComponent->SetCanEverAffectNavigation(false);
+	ControllerStaticMeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	WidgetInteractor = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("WidgetInteractor"));
-	WidgetInteractor->SetupAttachment(RootComponent);
+	WidgetInteractor->SetupAttachment(ControllerStaticMeshComponent);
 	WidgetInteractor->OnHoveredWidgetChanged.AddDynamic(this, &AVRMotionController::OnWidgetInteractorHoverChanged);
 
+	WidgetInteractorVisualizer = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WidgetInteractorVisualizer"));
+	WidgetInteractorVisualizer->SetupAttachment(ControllerStaticMeshComponent);
+	WidgetInteractorVisualizer->SetVisibility(false);
+	WidgetInteractorVisualizer->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
 	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Collision"));
-	CollisionComponent->SetupAttachment(ControllerSkeletalMeshComponent);
+	CollisionComponent->SetupAttachment(ControllerStaticMeshComponent);
 	CollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	CollisionComponent->SetCollisionProfileName("WorldDynamic");
 	CollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AVRMotionController::OnOverlapBegin);
@@ -67,7 +73,7 @@ void AVRMotionController::OnGripPressed()
 {
 	if (HoveredActor)
 	{
-		HoveredActor->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
+		HoveredActor->OnGrabbed(ControllerStaticMeshComponent);
 		GrabbedActor = HoveredActor;
 		HoveredActor = nullptr;
 	}
@@ -77,7 +83,7 @@ void AVRMotionController::OnGripReleased()
 {
 	if (GrabbedActor)
 	{
-		GrabbedActor->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+		GrabbedActor->OnReleased();
 		HoveredActor = GrabbedActor;
 		GrabbedActor = nullptr;
 	}
@@ -92,7 +98,7 @@ void AVRMotionController::OnTriggerPressed()
 {
 	if (WidgetInteractor)
 	{
-		WidgetInteractor->PressPointerKey(EKeys::LeftMouseButton);
+		WidgetInteractor->PressAndReleaseKey(EKeys::LeftMouseButton);
 	}
 }
 
@@ -104,13 +110,16 @@ void AVRMotionController::OnGripAxis(float Axis)
 void AVRMotionController::OnOverlapBegin(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	HoveredActor = OtherActor;
+	if (Cast<IGrabbable>(OtherActor))
+	{
+		HoveredActor = Cast<IGrabbable>(OtherActor);
+	}
 }
 
 void AVRMotionController::OnOverlapEnd(
 	class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (HoveredActor == OtherActor)
+	if (HoveredActor == Cast<IGrabbable>(OtherActor))
 	{
 		HoveredActor = nullptr;
 	}
@@ -118,14 +127,13 @@ void AVRMotionController::OnOverlapEnd(
 
 void AVRMotionController::OnWidgetInteractorHoverChanged(UWidgetComponent* Old, UWidgetComponent* New)
 {
-
-}
-
-void AVRMotionController::OnActorHovered()
-{
-	
-}
-
-void AVRMotionController::BeginPlay()
-{
+	// Hide the WidgetInteractorVisualizer when not pointing at a menu.
+	if (New)
+	{
+		WidgetInteractorVisualizer->SetVisibility(false);
+	}
+	else if (Old)
+	{
+		WidgetInteractorVisualizer->SetVisibility(true);
+	}
 }

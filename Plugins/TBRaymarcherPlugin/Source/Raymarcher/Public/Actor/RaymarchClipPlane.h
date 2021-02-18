@@ -5,13 +5,14 @@
 #pragma once
 
 #include "Rendering/RaymarchTypes.h"
+#include "VR/Grabbable.h"
 
 #include "RaymarchClipPlane.generated.h"
 
 class ARaymarchVolume;
 
 UCLASS()
-class RAYMARCHER_API ARaymarchClipPlane : public AActor
+class RAYMARCHER_API ARaymarchClipPlane : public AActor, public IGrabbable
 {
 	GENERATED_BODY()
 

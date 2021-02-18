@@ -19,8 +19,8 @@ class IGrabbable
 public:
 
 	// Called when the actor is grabbed by another actor. Provides the SceneComponent this will be attached to.
-	virtual void OnGrabbed(USceneComponent* Grabber) = 0;
+	virtual void OnGrabbed(USceneComponent* Grabber);
 
 	// Called when the actor is released.
-	virtual void OnReleased() = 0;
+	virtual void OnReleased();
 };

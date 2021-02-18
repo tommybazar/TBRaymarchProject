@@ -561,13 +561,13 @@ void ChangeDirLightInSingleLightVolume_RenderThread(FRHICommandListImmediate& RH
 
 	// If lights have different major axes, do a separate removal and addition.
 	// (Change dir light only works if it runs on the same major axes).
-	if (RemovedLocalMajorAxes.FaceWeight[0].first != AddedLocalMajorAxes.FaceWeight[0].first ||
-		RemovedLocalMajorAxes.FaceWeight[1].first != AddedLocalMajorAxes.FaceWeight[1].first)
-	{
+ 	if (RemovedLocalMajorAxes.FaceWeight[0].first != AddedLocalMajorAxes.FaceWeight[0].first ||
+ 		RemovedLocalMajorAxes.FaceWeight[1].first != AddedLocalMajorAxes.FaceWeight[1].first)
+ 	{
 		AddDirLightToSingleLightVolume_RenderThread(RHICmdList, Resources, RemovedLightParameters, false, WorldParameters);
 		AddDirLightToSingleLightVolume_RenderThread(RHICmdList, Resources, AddedLightParameters, true, WorldParameters);
-		return;
-	}
+ 		return;
+ 	}
 
 	FClippingPlaneParameters LocalClippingParameters = GetLocalClippingParameters(WorldParameters);
 

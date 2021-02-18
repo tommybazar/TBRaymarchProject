@@ -10,6 +10,7 @@
 #include "VolumeAsset/VolumeAsset.h"
 #include "Math/IntVector.h"
 #include "UObject/UnrealType.h"
+#include "VR/Grabbable.h"
 
 #include "RaymarchVolume.generated.h"
 
@@ -18,7 +19,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogRaymarchVolume, Log, All);
 DECLARE_DYNAMIC_DELEGATE(FOnVolumeLoaded);
 
 UCLASS()
-class RAYMARCHER_API ARaymarchVolume : public AActor
+class RAYMARCHER_API ARaymarchVolume : public AActor, public IGrabbable
 {
 	GENERATED_BODY()
 
@@ -28,7 +29,9 @@ public:
 
 	/** Called after the actor is loaded from disk in editor or when spawned in game.
 		This is the last action that is performed before BeginPlay.*/
-	void PostRegisterAllComponents();
+	virtual void PostRegisterAllComponents() override;
+
+	virtual void OnConstruction(const FTransform& Transform) override;
 
 	/** Updates a single provided light affecting the LightVolume. */
 	void UpdateSingleLight(ARaymarchLight* UpdatedLight);
@@ -50,6 +53,10 @@ public:
 	/** Use faster shader for light calculation. Leads to instability with more lights.*/
 	UPROPERTY(EditAnywhere)
 	bool bFastShader = true;
+
+	/// Map for storing previous ticks parameters per-light. Used to detect changes.
+	UPROPERTY(Transient)
+	TMap<ARaymarchLight*, FDirLightParameters> LightParametersMap;
 
 protected:
 	/** Initializes the Raymarch Resources to work with the provided Data Volume Texture.**/

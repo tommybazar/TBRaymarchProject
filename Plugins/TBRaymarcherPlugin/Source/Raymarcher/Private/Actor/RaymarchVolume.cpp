@@ -135,6 +135,20 @@ void ARaymarchVolume::PostRegisterAllComponents()
 	}
 }
 
+void ARaymarchVolume::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+
+	LightParametersMap.Empty();
+	for (ARaymarchLight* Light : LightsArray)
+	{
+		if (Light)
+		{
+			LightParametersMap.Add(Light, Light->GetCurrentParameters());
+		}
+	}
+}
+
 #if WITH_EDITOR
 
 void ARaymarchVolume::OnMHDAssetChangedTF(UCurveLinearColor* Curve)
@@ -328,7 +342,12 @@ void ARaymarchVolume::Tick(float DeltaTime)
 			TArray<ARaymarchLight*> LightsToUpdate;
 			for (ARaymarchLight* Light : LightsArray)
 			{
-				if (Light && Light->GetCurrentParameters() != Light->PreviousTickParameters)
+				if (!LightParametersMap.Contains(Light))
+				{
+					LightParametersMap.Add(Light, FDirLightParameters());
+				}
+
+				if (Light && Light->GetCurrentParameters() != LightParametersMap[Light])
 				{
 					LightsToUpdate.Add(Light);
 				}
@@ -345,6 +364,7 @@ void ARaymarchVolume::Tick(float DeltaTime)
 				for (ARaymarchLight* UpdatedLight : LightsToUpdate)
 				{
 					UpdateSingleLight(UpdatedLight);
+					LightParametersMap[UpdatedLight] = UpdatedLight->GetCurrentParameters();
 				}
 			}
 		}
@@ -390,7 +410,7 @@ void ARaymarchVolume::UpdateSingleLight(ARaymarchLight* UpdatedLight)
 {
 	bool bLightAddWasSuccessful = false;
 
-	URaymarchUtils::ChangeDirLightInSingleVolume(RaymarchResources, UpdatedLight->PreviousTickParameters,
+	URaymarchUtils::ChangeDirLightInSingleVolume(RaymarchResources, LightParametersMap[UpdatedLight],
 		UpdatedLight->GetCurrentParameters(), WorldParameters, bLightAddWasSuccessful);
 
 	if (!bLightAddWasSuccessful)
@@ -707,8 +727,10 @@ void ARaymarchVolume::InitializeRaymarchResources(UVolumeTexture* Volume)
 	else if (!Volume->PlatformData || Volume->GetSizeX() == 0 || Volume->GetSizeY() == 0 || Volume->GetSizeY() == 0)
 	{
 		// Happens in cooking stage where per-platform data isn't initalized. Return.
- 		UE_LOG(LogRaymarchVolume, Warning,
- 			TEXT("Following is safe to ignore during cooking :\nTried to initialize Raymarch resources with an unitialized data volume with size 0!\nRaymarch volume name = %s, VolumeTexture name = %s"), *(GetName()), *(Volume->GetName()));
+		UE_LOG(LogRaymarchVolume, Warning,
+			TEXT("Following is safe to ignore during cooking :\nTried to initialize Raymarch resources with an unitialized data "
+				 "volume with size 0!\nRaymarch volume name = %s, VolumeTexture name = %s"),
+			*(GetName()), *(Volume->GetName()));
 		return;
 	};
 

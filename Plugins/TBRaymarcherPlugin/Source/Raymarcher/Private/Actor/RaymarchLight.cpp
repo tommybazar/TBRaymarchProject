@@ -12,7 +12,7 @@ ARaymarchLight::ARaymarchLight()
 	PrimaryActorTick.bStartWithTickEnabled = true;
 
 	// Tick at the end of frame, so that previous parameters don't get overwritten until then.
-	PrimaryActorTick.TickGroup = TG_PostUpdateWork;
+	PrimaryActorTick.TickGroup = TG_LastDemotable;
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Light Static Mesh Componenet"));
 	SetRootComponent(StaticMeshComponent);

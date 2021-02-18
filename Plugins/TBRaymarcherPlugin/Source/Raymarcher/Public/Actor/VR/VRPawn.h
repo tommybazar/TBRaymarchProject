@@ -16,7 +16,6 @@ enum class EVRPlatform
 {
 	Oculus = 0,
 	Vive = 1,
-
 	Default,
 };
 
@@ -34,6 +33,9 @@ struct FControllerPlatformClasses
 	TSubclassOf<AVRMotionController> RightControllerClass;
 };
 
+/**
+ * VR pawn for handling volumetric volumes.
+ */
 UCLASS() class AVRPawn : public APawn
 {
 	GENERATED_BODY()
@@ -50,12 +52,15 @@ public:
 	UCameraComponent* VRCamera;
 
 	/// Contains the classes of controllers to be spawned per each platform.
+	UPROPERTY(EditAnywhere)
 	TMap<EVRPlatform, FControllerPlatformClasses> PerPlatformControllers;
 
 	/// Controller spawned for the left hand.
+	UPROPERTY(VisibleAnywhere)
 	AVRMotionController* LeftController;
 
 	/// Controller spawned for the right hand.
+	UPROPERTY(VisibleAnywhere)
 	AVRMotionController* RightController;
 
 	// Called when the game starts or when spawned.
