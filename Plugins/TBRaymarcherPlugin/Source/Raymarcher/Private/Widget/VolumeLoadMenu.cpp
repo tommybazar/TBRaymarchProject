@@ -1,23 +1,23 @@
-#include "Widget/MHDLoadMenu.h"
+#include "Widget/VolumeLoadMenu.h"
 
 #include <DesktopPlatform/Public/DesktopPlatformModule.h>
 #include <DesktopPlatform/Public/IDesktopPlatform.h>
 
-DEFINE_LOG_CATEGORY(MHDLoadMenu)
+DEFINE_LOG_CATEGORY(VolumeLoadMenu)
 
-bool UMHDLoadMenu::Initialize()
+bool UVolumeLoadMenu::Initialize()
 {
 	Super::Initialize();
 	if (LoadG16Button)
 	{
 		LoadG16Button->OnClicked.Clear();
-		LoadG16Button->OnClicked.AddDynamic(this, &UMHDLoadMenu::OnLoadNormalizedClicked);
+		LoadG16Button->OnClicked.AddDynamic(this, &UVolumeLoadMenu::OnLoadNormalizedClicked);
 	}
 
 	if (LoadF32Button)
 	{
 		LoadF32Button->OnClicked.Clear();
-		LoadF32Button->OnClicked.AddDynamic(this, &UMHDLoadMenu::OnLoadF32Clicked);
+		LoadF32Button->OnClicked.AddDynamic(this, &UVolumeLoadMenu::OnLoadF32Clicked);
 	}
 
 	if (AssetSelectionComboBox)
@@ -30,15 +30,15 @@ bool UMHDLoadMenu::Initialize()
 		}
 
 		AssetSelectionComboBox->OnSelectionChanged.Clear();
-		AssetSelectionComboBox->OnSelectionChanged.AddDynamic(this, &UMHDLoadMenu::OnAssetSelected);
+		AssetSelectionComboBox->OnSelectionChanged.AddDynamic(this, &UVolumeLoadMenu::OnAssetSelected);
 	}
 
 	return true;
 }
 
-void UMHDLoadMenu::OnLoadNormalizedClicked()
+void UVolumeLoadMenu::OnLoadNormalizedClicked()
 {
-	if (AssociatedVolume)
+	if (ListenerVolumes.Num() > 0)
 	{
 		// Get best window for file picker dialog.
 		TSharedPtr<SWindow> ParentWindow = FSlateApplication::Get().FindBestParentWindowForDialogs(TSharedPtr<SWindow>());
@@ -59,34 +59,36 @@ void UMHDLoadMenu::OnLoadNormalizedClicked()
 
 			if (OutAsset)
 			{
-				UE_LOG(MHDLoadMenu, Display,
-					TEXT("Creating MHD asset from filename %s succeeded, seting MHD asset into volume %s."), *Filename,
-					*AssociatedVolume->GetName());
+				UE_LOG(VolumeLoadMenu, Display,
+					TEXT("Creating MHD asset from filename %s succeeded, seting MHD asset into associated listener volumes."),
+					*Filename);
 
-				// Add the asset to list of already loaded assets and select it through the combobox.
+
+				// Add the asset to list of already loaded assets and select it through the combobox. This will call
+				// OnAssetSelected().
 				AssetArray.Add(OutAsset);
 				AssetSelectionComboBox->AddOption(GetNameSafe(OutAsset));
 				AssetSelectionComboBox->SetSelectedOption(GetNameSafe(OutAsset));
 			}
 			else
 			{
-				UE_LOG(MHDLoadMenu, Warning, TEXT("Creating MHD asset from filename %s failed."), *Filename);
+				UE_LOG(VolumeLoadMenu, Warning, TEXT("Creating MHD asset from filename %s failed."), *Filename);
 			}
 		}
 		else
 		{
-			UE_LOG(MHDLoadMenu, Warning, TEXT("Loading of MHD file cancelled. Dialog creation failed or no file was selected."));
+			UE_LOG(VolumeLoadMenu, Warning, TEXT("Loading of MHD file cancelled. Dialog creation failed or no file was selected."));
 		}
 	}
 	else
 	{
-		UE_LOG(MHDLoadMenu, Warning, TEXT("Attempted to load MHD file with no Raymarched Volume associated with menu, exiting."));
+		UE_LOG(VolumeLoadMenu, Warning, TEXT("Attempted to load MHD file with no Raymarched Volume associated with menu, exiting."));
 	}
 }
 
-void UMHDLoadMenu::OnLoadF32Clicked()
+void UVolumeLoadMenu::OnLoadF32Clicked()
 {
-	if (AssociatedVolume)
+	if (ListenerVolumes.Num() > 0)
 	{
 		// Get best window for file picker dialog.
 		TSharedPtr<SWindow> ParentWindow = FSlateApplication::Get().FindBestParentWindowForDialogs(TSharedPtr<SWindow>());
@@ -107,32 +109,32 @@ void UMHDLoadMenu::OnLoadF32Clicked()
 
 			if (OutAsset)
 			{
-				UE_LOG(MHDLoadMenu, Display,
-					TEXT("Creating MHD asset from filename %s succeeded, seting MHD asset into volume %s."),
-					*Filename, *AssociatedVolume->GetName());
+				UE_LOG(VolumeLoadMenu, Display,
+					TEXT("Creating MHD asset from filename %s succeeded, seting MHD asset into associated listener volumes."),
+					*Filename);
 
-				// Add the asset to list of already loaded assets and select it through the combobox.
+				// Add the asset to list of already loaded assets and select it through the combobox. This will call OnAssetSelected().
 				AssetArray.Add(OutAsset);
 				AssetSelectionComboBox->AddOption(GetNameSafe(OutAsset));
 				AssetSelectionComboBox->SetSelectedOption(GetNameSafe(OutAsset));
 			}
 			else
 			{
-				UE_LOG(MHDLoadMenu, Warning, TEXT("Creating MHD asset from filename %s failed."), *Filename);
+				UE_LOG(VolumeLoadMenu, Warning, TEXT("Creating MHD asset from filename %s failed."), *Filename);
 			}
 		}
 		else
 		{
-			UE_LOG(MHDLoadMenu, Warning, TEXT("Loading of MHD file cancelled. Dialog creation failed or no file was selected."));
+			UE_LOG(VolumeLoadMenu, Warning, TEXT("Loading of MHD file cancelled. Dialog creation failed or no file was selected."));
 		}
 	}
 	else
 	{
-		UE_LOG(MHDLoadMenu, Warning, TEXT("Attempted to load MHD file with no Raymarched Volume associated with menu, exiting."));
+		UE_LOG(VolumeLoadMenu, Warning, TEXT("Attempted to load MHD file with no Raymarched Volume associated with menu, exiting."));
 	}
 }
 
-void UMHDLoadMenu::OnAssetSelected(FString AssetName, ESelectInfo::Type SelectType)
+void UVolumeLoadMenu::OnAssetSelected(FString AssetName, ESelectInfo::Type SelectType)
 {
 	UVolumeAsset* SelectedAsset = nullptr;
 	for (UVolumeAsset* Asset : AssetArray)
@@ -143,15 +145,28 @@ void UMHDLoadMenu::OnAssetSelected(FString AssetName, ESelectInfo::Type SelectTy
 			break;
 		}
 	}
-
-	// Set Curve in Raymarch volume
-	if (AssociatedVolume && SelectedAsset)
+	if (!SelectedAsset)
 	{
-		AssociatedVolume->SetMHDAsset(SelectedAsset);
+		return;
+	}
+
+	// Set Volume Asset to all listeners.
+	for (ARaymarchVolume* ListenerVolume : ListenerVolumes)
+	{
+		ListenerVolume->SetMHDAsset(SelectedAsset);
 	}
 }
 
-void UMHDLoadMenu::SetVolume(ARaymarchVolume* NewRaymarchVolume)
+void UVolumeLoadMenu::RemoveListenerVolume(ARaymarchVolume* RemovedRaymarchVolume)
 {
-	AssociatedVolume = NewRaymarchVolume;
+	ListenerVolumes.Remove(RemovedRaymarchVolume);
+}
+
+void UVolumeLoadMenu::AddListenerVolume(ARaymarchVolume* NewRaymarchVolume)
+{
+	if (ListenerVolumes.Contains(NewRaymarchVolume))
+	{
+		return;
+	}
+	ListenerVolumes.Add(NewRaymarchVolume);
 }

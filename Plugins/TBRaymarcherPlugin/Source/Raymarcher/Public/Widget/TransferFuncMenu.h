@@ -4,12 +4,12 @@
 
 #pragma once
 
+#include "Actor/RaymarchVolume.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
+#include "Components/ComboBoxString.h"
 #include "CoreMinimal.h"
 #include "Widget/SliderAndValueBox.h"
-#include "Components/ComboBoxString.h"
-#include "Actor/RaymarchVolume.h"
 
 #include "TransferFuncMenu.generated.h"
 
@@ -80,12 +80,25 @@ public:
 	UFUNCTION()
 	void OnNewVolumeLoaded();
 
-	/// The volume this menu is affecting.
-	/// #TODO do not touch the volume directly and expose delegates instead? 	
+	/// When this volume loads a new new VolumeAsset loaded, it will provide this menu with the new reasonable ranges to set sliders
+	/// to.
 	UPROPERTY(EditAnywhere)
-	ARaymarchVolume* AssociatedVolume;
+	ARaymarchVolume* RangeProviderVolume;
 
-	/// Sets a new volume to be affected by this menu.
+	/// This array holds all volumes affected by the changes to the values in this menu. Allows multiple volumes to receive updates
+	/// from one TF menu.
+	UPROPERTY(EditAnywhere)
+	TArray<ARaymarchVolume*> ListenerVolumes;
+
+	/// Sets a new volume to be this menu's sliders range provider.
 	UFUNCTION(BlueprintCallable)
-	void SetVolume(ARaymarchVolume* NewRaymarchVolume);
+	void SetRangeProviderVolume(ARaymarchVolume* NewRaymarchVolume);
+
+	/// Adds a volume into the array of volumes affected by changes to this menu's sliders.
+	UFUNCTION(BlueprintCallable)
+	void AddListenerVolume(ARaymarchVolume* NewListenerVolume);
+
+	/// Removes a volume from the array of volumes affected by changes to this menu's sliders.
+	UFUNCTION(BlueprintCallable)
+	void RemoveListenerVolume(ARaymarchVolume* RemovedListenerVolume);
 };

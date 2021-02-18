@@ -53,42 +53,42 @@ bool UTransferFuncMenu::Initialize()
 
 void UTransferFuncMenu::OnSaveClicked()
 {
-	if (AssociatedVolume)
+	for (ARaymarchVolume* ListenerVolume : ListenerVolumes)
 	{
-		AssociatedVolume->SaveCurrentParamsToMHDAsset();
+		ListenerVolume->SaveCurrentParamsToMHDAsset();
 	}
 }
 
 void UTransferFuncMenu::OnCenterChanged(float Value)
 {
 	// Set Center in Raymarch volume
-	if (AssociatedVolume)
+	for (ARaymarchVolume* ListenerVolume : ListenerVolumes)
 	{
-		AssociatedVolume->SetWindowCenter(AssociatedVolume->MHDAsset->ImageInfo.NormalizeValue(Value));
+		ListenerVolume->SetWindowCenter(ListenerVolume->MHDAsset->ImageInfo.NormalizeValue(Value));
 	}
 }
 
 void UTransferFuncMenu::OnWidthChanged(float Value)
 {
-	if (AssociatedVolume)
+	for (ARaymarchVolume* ListenerVolume : ListenerVolumes)
 	{
-		AssociatedVolume->SetWindowWidth(AssociatedVolume->MHDAsset->ImageInfo.NormalizeRange(Value));
+		ListenerVolume->SetWindowWidth(ListenerVolume->MHDAsset->ImageInfo.NormalizeRange(Value));
 	}
 }
 
 void UTransferFuncMenu::OnLowCutoffToggled(bool bToggledOn)
 {
-	if (AssociatedVolume)
+	for (ARaymarchVolume* ListenerVolume : ListenerVolumes)
 	{
-		AssociatedVolume->SetLowCutoff(bToggledOn);
+		ListenerVolume->SetLowCutoff(bToggledOn);
 	}
 }
 
 void UTransferFuncMenu::OnHighCutoffToggled(bool bToggledOn)
 {
-	if (AssociatedVolume)
+	for (ARaymarchVolume* ListenerVolume : ListenerVolumes)
 	{
-		AssociatedVolume->SetHighCutoff(bToggledOn);
+		ListenerVolume->SetHighCutoff(bToggledOn);
 	}
 }
 
@@ -105,25 +105,28 @@ void UTransferFuncMenu::OnTFCurveChanged(FString CurveName, ESelectInfo::Type Se
 	}
 
 	// Set Curve in Raymarch volume
-	if (AssociatedVolume && SelectedCurve)
+	if (ListenerVolumes.Num() > 0 && SelectedCurve)
 	{
-		if (AssociatedVolume->CurrentTFCurve != SelectedCurve)
+		for (ARaymarchVolume* ListenerVolume : ListenerVolumes)
 		{
-			AssociatedVolume->SetTFCurve(SelectedCurve);
+			if (ListenerVolume->CurrentTFCurve != SelectedCurve)
+			{
+				ListenerVolume->SetTFCurve(SelectedCurve);
+			}
 		}
 	}
 }
 
 void UTransferFuncMenu::OnNewVolumeLoaded()
 {
-	if (AssociatedVolume)
+	if (RangeProviderVolume)
 	{
-		FWindowingParameters DefaultParameters = AssociatedVolume->MHDAsset->ImageInfo.DefaultWindowingParameters;
+		FWindowingParameters DefaultParameters = RangeProviderVolume->MHDAsset->ImageInfo.DefaultWindowingParameters;
 		if (WindowCenterBox)
 		{
 			WindowCenterBox->MinMax =
-				FVector2D(AssociatedVolume->MHDAsset->ImageInfo.MinValue, AssociatedVolume->MHDAsset->ImageInfo.MaxValue);
-			WindowCenterBox->SetValue(AssociatedVolume->MHDAsset->ImageInfo.DenormalizeValue(DefaultParameters.Center));
+				FVector2D(RangeProviderVolume->MHDAsset->ImageInfo.MinValue, RangeProviderVolume->MHDAsset->ImageInfo.MaxValue);
+			WindowCenterBox->SetValue(RangeProviderVolume->MHDAsset->ImageInfo.DenormalizeValue(DefaultParameters.Center));
 
 			WindowCenterBox->SetAllLabelsFromSlider();
 		}
@@ -131,7 +134,7 @@ void UTransferFuncMenu::OnNewVolumeLoaded()
 		if (WindowWidthBox)
 		{
 			WindowWidthBox->MinMax = FVector2D(0, 4000);
-			WindowWidthBox->SetValue(AssociatedVolume->MHDAsset->ImageInfo.DenormalizeRange(DefaultParameters.Width));
+			WindowWidthBox->SetValue(RangeProviderVolume->MHDAsset->ImageInfo.DenormalizeRange(DefaultParameters.Width));
 			WindowWidthBox->SetAllLabelsFromSlider();
 		}
 
@@ -147,25 +150,45 @@ void UTransferFuncMenu::OnNewVolumeLoaded()
 
 		if (TFSelectionComboBox)
 		{
-			int32 OptionIndex = TFSelectionComboBox->FindOptionIndex(GetNameSafe(AssociatedVolume->CurrentTFCurve));
+			int32 OptionIndex = TFSelectionComboBox->FindOptionIndex(GetNameSafe(RangeProviderVolume->CurrentTFCurve));
 			if (OptionIndex == -1)
 			{
-				TFArray.Add(AssociatedVolume->CurrentTFCurve);
-				TFSelectionComboBox->AddOption(GetNameSafe(AssociatedVolume->CurrentTFCurve));
+				TFArray.Add(RangeProviderVolume->CurrentTFCurve);
+				TFSelectionComboBox->AddOption(GetNameSafe(RangeProviderVolume->CurrentTFCurve));
 			}
 
-			TFSelectionComboBox->SetSelectedOption(GetNameSafe(AssociatedVolume->CurrentTFCurve));
+			TFSelectionComboBox->SetSelectedOption(GetNameSafe(RangeProviderVolume->CurrentTFCurve));
 		}
 	}
 }
 
-void UTransferFuncMenu::SetVolume(ARaymarchVolume* NewRaymarchVolume)
+void UTransferFuncMenu::SetRangeProviderVolume(ARaymarchVolume* NewRangeProviderVolume)
 {
-	if (NewRaymarchVolume)
+	if (NewRangeProviderVolume)
 	{
-		AssociatedVolume = NewRaymarchVolume;
+		if (RangeProviderVolume)
+		{
+			// Clear OnVolumeLoaded delegate from old provider volume.
+			RangeProviderVolume->OnVolumeLoaded.Clear();
+		}
+
+		RangeProviderVolume = NewRangeProviderVolume;
 		// Bind to a delegate to get notified when the Raymarch Volume loads a new volume.
-		AssociatedVolume->OnVolumeLoaded.BindDynamic(this, &UTransferFuncMenu::OnNewVolumeLoaded);
+		RangeProviderVolume->OnVolumeLoaded.BindDynamic(this, &UTransferFuncMenu::OnNewVolumeLoaded);
 		OnNewVolumeLoaded();
 	}
+}
+
+void UTransferFuncMenu::AddListenerVolume(ARaymarchVolume* NewListenerVolume)
+{
+	if (ListenerVolumes.Contains(NewListenerVolume))
+	{
+		return;
+	}
+	ListenerVolumes.Add(NewListenerVolume);
+}
+
+void UTransferFuncMenu::RemoveListenerVolume(ARaymarchVolume* RemovedListenerVolume)
+{
+	ListenerVolumes.Remove(RemovedListenerVolume);
 }

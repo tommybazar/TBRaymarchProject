@@ -11,17 +11,17 @@
 #include "Widget/SliderAndValueBox.h"
 #include <Components/ComboBoxString.h>
 
-#include "MHDLoadMenu.generated.h"
+#include "VolumeLoadMenu.generated.h"
 
 class ARaymarchVolume;
 
-DECLARE_LOG_CATEGORY_EXTERN(MHDLoadMenu, All, All)
+DECLARE_LOG_CATEGORY_EXTERN(VolumeLoadMenu, All, All)
 
 /**
  * A menu that lets a user load new MHD files into a RaymarchVolume
  */
 UCLASS()
-class RAYMARCHER_API UMHDLoadMenu : public UUserWidget
+class RAYMARCHER_API UVolumeLoadMenu : public UUserWidget
 {
 	GENERATED_BODY()
 
@@ -60,9 +60,13 @@ public:
 	/// The volume this menu is affecting.
 	/// #TODO do not touch the volume directly and expose delegates instead?
 	UPROPERTY(EditAnywhere)
-	ARaymarchVolume* AssociatedVolume;
+	TArray<ARaymarchVolume*> ListenerVolumes;
 
 	/// Sets a new volume to be affected by this menu.
 	UFUNCTION(BlueprintCallable)
-	void SetVolume(ARaymarchVolume* NewRaymarchVolume);
+	void AddListenerVolume(ARaymarchVolume* NewRaymarchVolume);
+
+	/// Sets a new volume to be affected by this menu.
+	UFUNCTION(BlueprintCallable)
+	void RemoveListenerVolume(ARaymarchVolume* RemovedRaymarchVolume);
 };
