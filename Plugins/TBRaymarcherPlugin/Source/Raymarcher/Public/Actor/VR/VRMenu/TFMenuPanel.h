@@ -22,6 +22,8 @@ public:
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UTransferFuncMenu> TransferFuncMenuClass;
 

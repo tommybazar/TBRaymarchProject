@@ -19,6 +19,9 @@ Both of these renders are using the same CT scan, only difference is windowing a
 # Video showcase / deep-dive tutorials
 Part1 - Showcase & Intro : https://youtu.be/-HDVXehPolM
 
+# Discord
+If you want to ask me anything or (potentially) talk to other people using this plugin, here's a discord server for it : https://discord.gg/zKutZpmFXh
+
 # Features
  * Works out of the box with binary UE 4.26 (there is also a branch for 4.25)
  * Volume raymarching for arbitrary `UVolumeTexture` textures

@@ -13,6 +13,7 @@ void ATFMenuPanel::OnConstruction(const FTransform& Transform)
 	Super::OnConstruction(Transform);
 	if (TransferFuncMenuClass && WidgetComponent)
 	{
+		// Force initialization of widget on WidgetComponent.
 		WidgetComponent->SetWidgetClass(TransferFuncMenuClass);
 		TransferFuncMenu = Cast<UTransferFuncMenu>(WidgetComponent->GetUserWidgetObject());
 		if (!TransferFuncMenu)
@@ -24,13 +25,38 @@ void ATFMenuPanel::OnConstruction(const FTransform& Transform)
 				return;
 			}
 		}
+	}
+}
 
-		TransferFuncMenu->ListenerVolumes.Empty();
-
-		TransferFuncMenu->SetRangeProviderVolume(ProviderVolume);
-		for (ARaymarchVolume* Volume : ListenerVolumes)
+void ATFMenuPanel::BeginPlay()
+{
+	Super::BeginPlay();
+	if (TransferFuncMenuClass && WidgetComponent)
+	{
+		// Force initialization of widget on WidgetComponent.
+		WidgetComponent->SetWidgetClass(TransferFuncMenuClass);
+		TransferFuncMenu = Cast<UTransferFuncMenu>(WidgetComponent->GetUserWidgetObject());
+		if (!TransferFuncMenu)
 		{
-			TransferFuncMenu->AddListenerVolume(Volume);
+			WidgetComponent->InitWidget();
+			TransferFuncMenu = Cast<UTransferFuncMenu>(WidgetComponent->GetUserWidgetObject());
+			if (!TransferFuncMenu)
+			{
+				return;
+			}
 		}
+	}
+
+	if (!TransferFuncMenu)
+	{
+		return;
+	}
+
+	// Set volumes to the underlying menu.
+	TransferFuncMenu->ListenerVolumes.Empty();
+	TransferFuncMenu->SetRangeProviderVolume(ProviderVolume);
+	for (ARaymarchVolume* Volume : ListenerVolumes)
+	{
+		TransferFuncMenu->AddListenerVolume(Volume);
 	}
 }

@@ -1,5 +1,10 @@
+21/2/19
+- finalized VR map
+- created discord server and linked it in docs
+
 21/2/18
 - added this changelog :)
 - volume load and transfer function menu now support multiple volumes being assigned as listeners at once
 - improved default map 
 	- both volumes have their own clip plane, ordered stuff into folders
+- almost finalized VR map

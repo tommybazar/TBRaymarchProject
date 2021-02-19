@@ -26,11 +26,20 @@ void ALoaderMenuPanel::OnConstruction(const FTransform& Transform)
 				return;
 			}
 		}
+	}
+}
 
-		LoaderMenu->ListenerVolumes.Empty();
-		for (ARaymarchVolume* Volume : ListenerVolumes)
-		{
-			LoaderMenu->AddListenerVolume(Volume);
-		}
+void ALoaderMenuPanel::BeginPlay()
+{
+	Super::BeginPlay();
+	if (!LoaderMenu)
+	{
+		return;
+	}
+
+	LoaderMenu->ListenerVolumes.Empty();
+	for (ARaymarchVolume* Volume : ListenerVolumes)
+	{
+		LoaderMenu->AddListenerVolume(Volume);
 	}
 }

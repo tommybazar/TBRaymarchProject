@@ -52,6 +52,7 @@ void AVRMotionController::SetupInput(UInputComponent* InInputComponent)
 		InInputComponent->BindAction("Right_Grip", IE_Pressed, this, &AVRMotionController::OnGripPressed);
 		InInputComponent->BindAction("Right_Grip", IE_Released, this, &AVRMotionController::OnGripReleased);
 		InInputComponent->BindAction("Right_Trigger", IE_Pressed, this, &AVRMotionController::OnTriggerPressed);
+		InInputComponent->BindAction("Right_Trigger", IE_Released, this, &AVRMotionController::OnTriggerReleased);
 
 		InInputComponent->BindAxis("Right_Grip_Axis",  this, &AVRMotionController::OnGripAxis);
 		InInputComponent->BindAxis("Right_Trigger_Axis",  this, &AVRMotionController::OnTriggerAxis);
@@ -63,6 +64,7 @@ void AVRMotionController::SetupInput(UInputComponent* InInputComponent)
 		InInputComponent->BindAction("Left_Grip", IE_Pressed, this, &AVRMotionController::OnGripPressed);
 		InInputComponent->BindAction("Left_Grip", IE_Released, this, &AVRMotionController::OnGripReleased);
 		InInputComponent->BindAction("Left_Trigger", IE_Pressed, this, &AVRMotionController::OnTriggerPressed);
+		InInputComponent->BindAction("Left_Trigger", IE_Released, this, &AVRMotionController::OnTriggerReleased);
 
 		InInputComponent->BindAxis("Left_Grip_Axis", this, &AVRMotionController::OnGripAxis);
 		InInputComponent->BindAxis("Left_Trigger_Axis", this, &AVRMotionController::OnTriggerAxis);
@@ -98,7 +100,15 @@ void AVRMotionController::OnTriggerPressed()
 {
 	if (WidgetInteractor)
 	{
-		WidgetInteractor->PressAndReleaseKey(EKeys::LeftMouseButton);
+		WidgetInteractor->PressPointerKey(EKeys::LeftMouseButton);
+	}
+}
+
+void AVRMotionController::OnTriggerReleased()
+{
+	if (WidgetInteractor)
+	{
+		WidgetInteractor->ReleasePointerKey(EKeys::LeftMouseButton);
 	}
 }
 

@@ -18,7 +18,7 @@
 class UMotionControllerComponent;
 
 /**
- * Base class for motion controllers.
+ * A class for motion controller actors.
  */
 UCLASS(Abstract)
 class AVRMotionController : public AActor
@@ -68,6 +68,8 @@ public:
 	virtual void OnTriggerAxis(float Axis);
 
 	virtual void OnTriggerPressed();
+
+	virtual void OnTriggerReleased();
 
 	virtual void OnGripAxis(float Axis);
 
