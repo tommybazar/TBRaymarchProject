@@ -143,7 +143,7 @@ If you have raw Volume Texture data saved on disk and you already know the dimen
 ### Actual raymarching
 
 We tried to be generous with comments, so see `TBRaymarcherPlugin/Shaders/Private/RaymarchMaterialCommon.usf`, `TBRaymarching/Shaders/Private/WindowedSampling.usf` and `TBRaymarching/Shaders/Private/WindowedRaymarchMaterials.usf` for the actual code and explanation. 
-The `WindowedSampling.usf` and `WindowedRaymarchMaterials.usf` and  actually contain the code that is used in the final materials, as the other implementations don't support windowing. They are included for legacy reasons (they are slightly less complicated too, if you don't need the windowing option).
+The `WindowedSampling.usf` and `WindowedRaymarchMaterials.usf` actually contain the code that is used in the final materials, as the other implementations don't support windowing. They are included for legacy reasons (they are slightly less complicated too, if you don't need the windowing option).
 
 I heartily recommend using "HLSL Tools for Visual Studio" or other plugins for syntax highlighting of the .usf files.
 
@@ -157,7 +157,7 @@ We implemented 4 raymarch materials in this plugin.
  * The following is not implemented in this project yet, I have the code in the old project but didn't have time to clean it yet.
 For both of these, there is also a "labeled" version, which also samples a label volume and mixes the colors from the label volume with the colors sampled from the Data volume.
 The labels aren't lit, don't cast a shadow and they're not affected by the cutting plane.
-See `PerformLitRaymarchLabeled()` and `PerformIntensityRaymarchLabeled()`. We discuss labeling in detail in the Labeling section below.
+See `PerformLitRaymarchLabeled()` and `PerformIntensityRaymarchLabeled()`.
 
  * Supported (and tested) formats for the textures raymarched are G8, G16 and R32F textures.
 
@@ -184,6 +184,9 @@ The .usf files containing the actual HLSL code of the shaders is in `/Shaders/Pr
 It's important to note that a single invocation of the shader only affects one slice of the light volume. The shaders both need to be invoked as many times as there are layers in the current propagation axis. This is because we didn't find a way to synchronize within the whole propagation layer (as compute shaders can only be synchronized within one thread group and the whole slice of the texture doesn't fit in one group). Read the paper for more info on how we use the read/write buffers and propagate the light per-layer.
 
 We implemented the AddDirLight shader and a ChangeDirLight shader. The difference being that the ChangeDirLight shader takes `OldLightParameters` and `NewLightParameters` to change a light in a single pass.
+
+There is a "fast" shader option, implemented in FAddDirLightShader_GPUSync, which does synchronization within the shader, so it's only invoked once per axis, but it still has some synchronization issues and the results are unstable and keep flickering.
+You can enable that by toggling the "Fast Shader" toggle on a RaymarchVolume.
 
 A (kind of a) sequence diagram here shows the interplay of blueprints, game thread, render thread and RHI thread.
 
@@ -263,7 +266,7 @@ Vulkan crashes on startup immediately and since UE support for it isn't mature y
 # Credits
 Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks (original raymarching code).
 
-I'd also like to appreciate my alma mater: [Technical University of Munich](https://www.tum.de/en), [Chair of Computer Aided Medical Procedures](http://campar.in.tum.de/WebHome), where I created most of the original code as my master's thesis, before performing a massive clean-up, reorganization and improvements throughout the last year.
+I'd also like to appreciate my alma mater: [Technical University of Munich](https://www.tum.de/en), [Chair of Computer Aided Medical Procedures](http://campar.in.tum.de/WebHome), where I created most of the original code as my master's thesis, before performing a massive clean-up, reorganization and improvements throughout 2020.
 
 Check out their study programmes and apply, tuition is free for everybody, they have great connections to research and industry and it is one of the leading universities in Europe, as far as Computer Science is concerned.
 
