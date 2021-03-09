@@ -1,5 +1,6 @@
 #include "CoreMinimal.h"
 #include "VolumeAsset/VolumeInfo.h"
+#include "VolumeAsset/VolumeAsset.h"
 
 #include "VolumeLoader.generated.h"
 
