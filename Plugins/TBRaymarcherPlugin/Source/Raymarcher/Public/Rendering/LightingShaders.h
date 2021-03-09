@@ -1,6 +1,7 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #pragma once
 
@@ -11,7 +12,6 @@
 #include "Engine/World.h"
 #include "GlobalShader.h"
 #include "Logging/MessageLog.h"
-#include "VolumeAsset/WindowingParameters.h"
 #include "PipelineStateCache.h"
 #include "RHIStaticStates.h"
 #include "Rendering/RaymarchTypes.h"
@@ -20,6 +20,7 @@
 #include "Shader.h"
 #include "ShaderParameterUtils.h"
 #include "ShaderParameters.h"
+#include "VolumeAsset/WindowingParameters.h"
 
 /// Creates a SamplerState RHI with "Border" handling of outside-of-UV reads.
 /// The color read from outside the buffer is specified by the BorderColorInt.
@@ -301,7 +302,8 @@ public:
 		return IsFeatureLevelSupported(Parameters.Platform, ERHIFeatureLevel::SM5);
 	}
 
-	void SetReadWriteBuffer(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, FTexture2DRHIRef pTexture, FRHIUnorderedAccessView* pRWBuffer)
+	void SetReadWriteBuffer(FRHICommandListImmediate& RHICmdList, FRHIComputeShader* ShaderRHI, FTexture2DRHIRef pTexture,
+		FRHIUnorderedAccessView* pRWBuffer)
 	{
 		LightBuffer.SetTexture(RHICmdList, ShaderRHI, pTexture, pRWBuffer);
 	}

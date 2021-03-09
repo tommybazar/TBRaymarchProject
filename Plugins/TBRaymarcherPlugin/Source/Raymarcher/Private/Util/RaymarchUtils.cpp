@@ -1,6 +1,7 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #include "Util/RaymarchUtils.h"
 
@@ -19,8 +20,9 @@
 #include "ShaderParameterUtils.h"
 #include "VolumeTextureToolkit/Public/TextureUtilities.h"
 
-#include <cstdio>
 #include <Engine/TextureRenderTargetVolume.h>
+
+#include <cstdio>
 
 #define LOCTEXT_NAMESPACE "RaymarchPlugin"
 
@@ -170,8 +172,8 @@ void URaymarchUtils::CreateBufferTextures(FIntPoint Size, EPixelFormat PixelForm
 	FRHIResourceCreateInfo CreateInfo(FClearValueBinding::Transparent);
 	for (int i = 0; i < 4; i++)
 	{
-		RWBuffers.Buffers[i] = RHICreateTexture2D(Size.X, Size.Y, PixelFormat, 1, 1,
-			TexCreate_ShaderResource | TexCreate_UAV, CreateInfo);
+		RWBuffers.Buffers[i] =
+			RHICreateTexture2D(Size.X, Size.Y, PixelFormat, 1, 1, TexCreate_ShaderResource | TexCreate_UAV, CreateInfo);
 		RWBuffers.UAVs[i] = RHICreateUnorderedAccessView(RWBuffers.Buffers[i]);
 	}
 }

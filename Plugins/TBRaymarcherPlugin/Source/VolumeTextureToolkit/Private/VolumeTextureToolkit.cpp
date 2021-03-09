@@ -1,6 +1,7 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #include "VolumeTextureToolkit.h"
 
@@ -20,9 +21,8 @@ void FVolumeTextureToolkitModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
-	
 }
 
 #undef LOCTEXT_NAMESPACE
-	
+
 IMPLEMENT_MODULE(FVolumeTextureToolkitModule, VolumeTextureToolkit)

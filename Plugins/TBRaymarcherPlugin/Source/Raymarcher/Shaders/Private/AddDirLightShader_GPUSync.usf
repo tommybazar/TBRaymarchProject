@@ -1,3 +1,8 @@
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
+
 //
 // This shader propagates adding (or removing) a light in a single slice of a volume texture.
 // (Has to be invoked per-slice to propagate through whole volume).

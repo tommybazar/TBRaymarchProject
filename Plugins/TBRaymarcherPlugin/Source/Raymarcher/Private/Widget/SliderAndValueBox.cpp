@@ -1,6 +1,7 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #include "Widget/SliderAndValueBox.h"
 
@@ -32,16 +33,16 @@ void USliderAndValueBox::SetValue(float Value)
 {
 	if (ValueSlider)
 	{
-		if (Value >= ValueSlider->MinValue && Value <= ValueSlider->MaxValue) // Value within current range
+		if (Value >= ValueSlider->MinValue && Value <= ValueSlider->MaxValue)	 // Value within current range
 		{
 			ValueSlider->SetValue(Value);
 		}
-		else if (Value >= MinMax.X && Value <= MinMax.Y) // Value within MinMax, but not current range.
+		else if (Value >= MinMax.X && Value <= MinMax.Y)	// Value within MinMax, but not current range.
 		{
 			OnFineTuningChanged(false);
 			ValueSlider->SetValue(Value);
 		}
-		else // Value isn't within range at all -> extend MinMax slider range
+		else	// Value isn't within range at all -> extend MinMax slider range
 		{
 			if (Value > MinMax.Y)
 			{
@@ -118,7 +119,7 @@ void USliderAndValueBox::OnFineTuningChanged(bool bFineTuning)
 		}
 
 		// Set the value to force slider to redraw the bar.
-		//ValueSlider->SetValue(ValueSlider->Value);
+		// ValueSlider->SetValue(ValueSlider->Value);
 		SetMinMaxLabelsFromSlider();
 	}
 }

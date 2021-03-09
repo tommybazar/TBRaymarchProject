@@ -1,7 +1,12 @@
-#include "Actor/VR/VRPawn.h"
-#include "HeadMountedDisplayFunctionLibrary.h"
-#include "Actor/VR/VRMotionController.h"
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
+#include "Actor/VR/VRPawn.h"
+
+#include "Actor/VR/VRMotionController.h"
+#include "HeadMountedDisplayFunctionLibrary.h"
 
 AVRPawn::AVRPawn()
 {
@@ -19,14 +24,14 @@ void AVRPawn::BeginPlay()
 	Super::BeginPlay();
 
 	UHeadMountedDisplayFunctionLibrary::SetTrackingOrigin(EHMDTrackingOrigin::Floor);
-		
+
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	SpawnParams.Owner = this;
 
 	EVRPlatform VRPlatformType = EVRPlatform::Default;
 	FControllerPlatformClasses PlatformClasses;
-	
+
 	if (PerPlatformControllers.Contains(VRPlatformType))
 	{
 		PlatformClasses = PerPlatformControllers[VRPlatformType];
@@ -39,7 +44,7 @@ void AVRPawn::BeginPlay()
 
 		RightController->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 		LeftController->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	
+
 		RightController->SetupInput(InputComponent);
 		LeftController->SetupInput(InputComponent);
 	}

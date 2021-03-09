@@ -1,6 +1,7 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #pragma once
 
@@ -10,9 +11,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "RHI.h"
 #include "RHIResources.h"
-#include "Rendering/RaymarchTypes.h"
 #include "Rendering/LightingShaders.h"
-
+#include "Rendering/RaymarchTypes.h"
 #include "UObject/ObjectMacros.h"
 
 #include "RaymarchUtils.generated.h"
@@ -58,7 +58,6 @@ public:
 	/** Will create a 1D texture asset from a ColorCurve. */
 	UFUNCTION(BlueprintCallable, Category = "Raymarcher")
 	static RAYMARCHER_API void ColorCurveToTexture(UCurveLinearColor* Curve, UTexture2D*& OutTexture);
-
 
 	//
 	//

@@ -1,3 +1,8 @@
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
+
 // This file contains functions used for raymarching in in-game materials, not for precomputing. 
 
 // Beware, modifications to this file will not be detected by the material shaders and they will not

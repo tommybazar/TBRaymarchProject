@@ -1,3 +1,7 @@
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #include "RaymarchMaterialCommon.usf"
 #include "WindowedSampling.usf"
@@ -39,7 +43,7 @@ float4 PerformWindowedLitRaymarch(Texture3D DataVolume, // Data Volume
                               FMaterialPixelParameters MaterialParameters) // Material Parameters provided by UE.
 {
     // StepSize in UVW is inverse to StepCount.
-    float StepSize = 1/StepCount;
+    float StepSize = 1 / StepCount;
     // Actual number of steps to take to march through the full thickness of the cube at the ray position.
     float FloatActualSteps = StepCount * Thickness;
     // Number of full steps to take.

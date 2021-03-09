@@ -1,17 +1,18 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #pragma once
 
-#include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "Components/WidgetInteractionComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/PlayerController.h"
-#include "MotionControllerComponent.h"
 #include "Grabbable.h"
+#include "MotionControllerComponent.h"
 
 #include "VRMotionController.generated.h"
 

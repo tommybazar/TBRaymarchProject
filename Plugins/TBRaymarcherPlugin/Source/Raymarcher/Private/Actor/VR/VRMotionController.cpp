@@ -1,11 +1,13 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #include "Actor/VR/VRMotionController.h"
-#include "XRMotionControllerBase.h"
-#include "Components/WidgetInteractionComponent.h"
+
 #include "Actor/VR/Grabbable.h"
+#include "Components/WidgetInteractionComponent.h"
+#include "XRMotionControllerBase.h"
 
 AVRMotionController::AVRMotionController()
 {
@@ -54,8 +56,8 @@ void AVRMotionController::SetupInput(UInputComponent* InInputComponent)
 		InInputComponent->BindAction("Right_Trigger", IE_Pressed, this, &AVRMotionController::OnTriggerPressed);
 		InInputComponent->BindAction("Right_Trigger", IE_Released, this, &AVRMotionController::OnTriggerReleased);
 
-		InInputComponent->BindAxis("Right_Grip_Axis",  this, &AVRMotionController::OnGripAxis);
-		InInputComponent->BindAxis("Right_Trigger_Axis",  this, &AVRMotionController::OnTriggerAxis);
+		InInputComponent->BindAxis("Right_Grip_Axis", this, &AVRMotionController::OnGripAxis);
+		InInputComponent->BindAxis("Right_Trigger_Axis", this, &AVRMotionController::OnTriggerAxis);
 	}
 	else
 	{

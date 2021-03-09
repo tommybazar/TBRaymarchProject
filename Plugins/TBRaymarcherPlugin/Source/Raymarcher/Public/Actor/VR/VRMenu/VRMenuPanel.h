@@ -1,12 +1,13 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #pragma once
 
-#include "EngineMinimal.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/WidgetComponent.h"
+#include "EngineMinimal.h"
 
 #include "VRMenuPanel.generated.h"
 
@@ -20,7 +21,7 @@ class AVRMenuPanel : public AActor
 public:
 	// Sets default values for this actor's properties
 	AVRMenuPanel();
-	
+
 	/// Mesh serving as a menu backgrounds.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* StaticMeshComponent;

@@ -1,3 +1,8 @@
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
+
 // This file contains both files used by ligt propagation shaders and material shaders used in-editor.
 // After changing anything in this, the shaders in-editor need to be recompiled manually! (no file change detection there)
 //#include "WindowedHelpers.usf"

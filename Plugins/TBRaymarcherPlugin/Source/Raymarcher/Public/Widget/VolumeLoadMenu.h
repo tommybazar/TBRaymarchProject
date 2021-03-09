@@ -1,14 +1,16 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Actor/RaymarchVolume.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
+#include "CoreMinimal.h"
 #include "Widget/SliderAndValueBox.h"
+
 #include <Components/ComboBoxString.h>
 
 #include "VolumeLoadMenu.generated.h"
@@ -44,7 +46,7 @@ public:
 	/// Array of existing MHD Assets that can be set immediately. Will populate the AssetSelection combo box.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<UVolumeAsset*> AssetArray;
-	
+
 	/// Called when LoadG16Button is clicked.
 	UFUNCTION()
 	void OnLoadNormalizedClicked();

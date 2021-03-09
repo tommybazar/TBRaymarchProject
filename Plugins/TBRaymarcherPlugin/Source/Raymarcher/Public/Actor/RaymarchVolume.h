@@ -1,16 +1,17 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #pragma once
 
 #include "Actor/RaymarchClipPlane.h"
 #include "Actor/RaymarchLight.h"
 #include "CoreMinimal.h"
-#include "VolumeAsset/VolumeAsset.h"
 #include "Math/IntVector.h"
 #include "UObject/UnrealType.h"
 #include "VR/Grabbable.h"
+#include "VolumeAsset/VolumeAsset.h"
 
 #include "RaymarchVolume.generated.h"
 
@@ -191,8 +192,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool LoadNewFileIntoVolumeNormalized(FString FileName, bool bPersistent, FString OutFolder);
 
-// 	UFUNCTION(BlueprintCallable)
-// 	void TestReadDICOM(FString FileName);
+	// 	UFUNCTION(BlueprintCallable)
+	// 	void TestReadDICOM(FString FileName);
 
 	/** Sets all material parameters to the raymarching materials. Usually called only after loading a new volume.**/
 	void SetAllMaterialParameters();

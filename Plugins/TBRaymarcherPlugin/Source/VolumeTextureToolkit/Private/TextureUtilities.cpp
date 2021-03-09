@@ -1,14 +1,16 @@
-// Created by Tommy Bazar. No rights reserved :)
-// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision)
-// and Ryan Brucks (original raymarching code).
+// Copyright 2021 Tomas Bartipan and Technical University of Munich.
+// Licensed under MIT license - See License.txt for details.
+// Special credits go to : Temaran (compute shader tutorial), TheHugeManatee (original concept, supervision) and Ryan Brucks
+// (original raymarching code).
 
 #include "TextureUtilities.h"
 
 #include "AssetRegistryModule.h"
 #include "Util/UtilityShaders.h"
+#include "VolumeAsset/VolumeAsset.h"
+
 #include <Engine/TextureRenderTargetVolume.h>
 #include <Misc/Compression.h>
-#include "VolumeAsset/VolumeAsset.h"
 
 DEFINE_LOG_CATEGORY(LogTextureUtils);
 
@@ -284,7 +286,8 @@ uint8* UVolumeTextureToolkit::LoadZLibCompressedRawFileIntoArray(
 	else if (FileHandle->Size() > CompressedBytes)
 	{
 		UE_LOG(LogTextureUtils, Warning,
-			TEXT("Raw compressed file is larger than expected, check your dimensions and pixel format. (nonfatal, but the texture will "
+			TEXT("Raw compressed file is larger than expected, check your dimensions and pixel format. (nonfatal, but the texture "
+				 "will "
 				 "probably be screwed up)"));
 	}
 
@@ -294,7 +297,7 @@ uint8* UVolumeTextureToolkit::LoadZLibCompressedRawFileIntoArray(
 	uint8* UncompressedArray = new uint8[BytesToLoad];
 	FCompression::UncompressMemory(NAME_Zlib, UncompressedArray, BytesToLoad, LoadedArray, CompressedBytes);
 
-	delete [] LoadedArray;
+	delete[] LoadedArray;
 	return UncompressedArray;
 }
 
@@ -323,8 +326,7 @@ uint8* UVolumeTextureToolkit::NormalizeArrayByFormat(
 	}
 }
 
-float* UVolumeTextureToolkit::ConvertArrayToFloat(
-	const EVolumeVoxelFormat VoxelFormat, uint8* InArray, uint64 VoxelCount)
+float* UVolumeTextureToolkit::ConvertArrayToFloat(const EVolumeVoxelFormat VoxelFormat, uint8* InArray, uint64 VoxelCount)
 {
 	switch (VoxelFormat)
 	{
@@ -340,7 +342,7 @@ float* UVolumeTextureToolkit::ConvertArrayToFloat(
 			return ConvertArrayToFloatTemplated<uint32>(InArray, VoxelCount);
 		case EVolumeVoxelFormat::SignedInt:
 			return ConvertArrayToFloatTemplated<int32>(InArray, VoxelCount);
-		case EVolumeVoxelFormat::Float: // fall through
+		case EVolumeVoxelFormat::Float:	   // fall through
 		default:
 			ensure(false);
 			return nullptr;
