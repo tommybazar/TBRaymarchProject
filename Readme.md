@@ -28,7 +28,6 @@ Part1 - Showcase & Intro : https://youtu.be/-HDVXehPolM
  * Fully integrated and functional within UE editor viewport.
  * Windowing support (google DICOM Window center / Window Width or watch my youtube description for an explanation)
  * Basic menus for manipulating the volume
- * Basic VR support and example map (coming very soon - mid-November 2020).
 
 # Limitations
  * Raymarched volume doesn't cast or receive shadows info to/from the scene, it only self-shadows
@@ -270,6 +269,15 @@ I'd also like to appreciate my alma mater: [Technical University of Munich](http
 Check out their study programmes and apply, tuition is free for everybody, they have great connections to research and industry and it is one of the leading universities in Europe, as far as Computer Science is concerned.
 
 Our old project can be found at [my supervisor's github](https://github.com/TheHugeManatee/UE4_VolumeRaymarching). Feel free to check out his other UE plugins.
+
+# License 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Licensed under MIT license.
+
+Both me and Technical University of Munich are copyright holders, as major parts of this software were written as part of my thesis and/or working-student employment for TUM.
+
+See LICENSE file for full license text.
 
 ## Example MHDAsset files
 In `TBRaymarcherPlugin/Content/DefaultResources/` are MHDAssets and volume textures created by importing data from Subset0 of [LUNA2016 grand challenge](https://luna16.grand-challenge.org/download/).
