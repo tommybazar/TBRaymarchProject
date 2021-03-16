@@ -8,13 +8,13 @@ This repo should mostly just show you the Default(Engine/Game/Input).ini that wi
 ## Submodules
 To clone this repo with the plugin included, use this command:
 
-'git clone --recurse-submodules https://github.com/tommybazar/TBRaymarchProject.git'
+`$ git clone --recurse-submodules https://github.com/tommybazar/TBRaymarchProject.git`
 
 Or after a regular clone, perform a 
 
-'git submodule init'
+`$ git submodule init`
 
-'git submodule update'
+`$ git submodule update`
 
 ## Updated for UE 4.26
 For 4.25 version, checkout the "4.25" branch and then update your git submodules.
@@ -41,7 +41,7 @@ If you want to ask me anything or (potentially) talk to other people using the p
 
 # Example
  * The project works out-of-the-box with everything being included in the TBRaymarcherPlugin. There is an example map for Mouse and Keyboard and
- an example map for VR. Both are included within the plugin.
+ an example map for VR, input bindings are only setup for Oculus, go into Project settings -> Input if you're using a different headset. Both are included within the plugin.
 
 # License 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
