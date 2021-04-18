@@ -1,5 +1,5 @@
 # Volume Rendering (Raymarching) Plugin Showcase Project for Unreal Engine
-Allows volume rendering of .MHD data with Unreal Engine.
+Allows volumetric rendering of DICOM and .MHD data with Unreal Engine.
 
 Uses https://github.com/tommybazar/TBRaymarcherPlugin as a submodule providing all the functionality.
 
@@ -51,3 +51,5 @@ Licensed under MIT license.
 Both me and Technical University of Munich are copyright holders, as major parts of this software were written as part of my thesis and/or working-student employment for TUM.
 
 See LICENSE file for full license text.
+
+DICOM loading is utilizing a modified version of VTK DicomParser, made by Matt Turek. See  License.txt in /Source/VolumeTextureToolkit/Public/VolumeAsset/DICOMParser/License.txt for full license text.
