@@ -16,8 +16,9 @@ Or after a regular clone, perform a
 
 `$ git submodule update`
 
-## Updated for UE 4.26
-For 4.25 version, checkout the "4.25" branch and then update your git submodules.
+## UE Version
+I will try to make the project compatible with the latest version (Currently 4.27.2).
+For older versions of the engine, go to the branch with the appropriate name. Older version are not be updated with new functionality.
 
 ## Readme
 For a full readme, go the submodule's repo :
