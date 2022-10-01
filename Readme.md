@@ -20,6 +20,8 @@ Or after a regular clone, perform a
 I will try to make the project compatible with the latest version (Currently 4.27.2).
 For older versions of the engine, go to the branch with the appropriate name. Older version are not be updated with new functionality.
 
+There is also a branch called "ue5" that works with Unreal Engine 5.0 (after some cleanup of the code, this will be merged into master and work will continue only on UE5).
+
 ## Readme
 For a full readme, go the submodule's repo :
 
