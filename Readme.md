@@ -17,10 +17,14 @@ Or after a regular clone, perform a
 `$ git submodule update`
 
 ## UE Version
-I will try to make the project compatible with the latest version (Currently 4.27.2).
-For older versions of the engine, go to the branch with the appropriate name. Older version are not be updated with new functionality.
+I will try to make the project compatible with the latest version (currently 5.1).
 
-There is also a branch called "ue5" that works with Unreal Engine 5.0 (after some cleanup of the code, this will be merged into master and work will continue only on UE5).
+For older versions of the engine, go to the branch with the appropriate name. Older versions are not be updated with new functionality.
+
+If switching UE versions, don't forget to update both the project (`git checkout 4.27`) and plugin (`git submodule update`)
+
+## Content visibility
+In Unreal editor, don't forget to toggle "Show Plugin Content" in the Content Drawer Settings to see all the maps, blueprints and everything else from the plugin's content. 
 
 ## Readme
 For a full readme, go the submodule's repo :
