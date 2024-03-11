@@ -41,6 +41,8 @@ def get_all_folders(path):
 
 # Main function
 def main():
+
+    print(os.getcwd())
     # Indexes
     AvgFrameTimeIndex = 2
     MaxFrameTimeIndex = 3
