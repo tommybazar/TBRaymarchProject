@@ -1,5 +1,6 @@
 # Rider-specific files
 .idea/
+*.DotSettings
 
 # Visual Studio 2015 user specific files
 .vs/
