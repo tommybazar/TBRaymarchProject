@@ -7,10 +7,7 @@
 		{
 			"Name": "TBRaymarchProject",
 			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"FunctionalTesting"
-			]
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
@@ -62,7 +59,8 @@
 		},
 		{
 			"Name": "FunctionalTestingEditor",
-			"Enabled": true
+			"Enabled": true,
+			"Type": "Editor"
 		}
 	]
 }
