@@ -1,6 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 import os
+import sys
 
 # Function to parse CSV file
 def parse_csv(filename):
@@ -42,6 +43,12 @@ def get_all_folders(path):
 # Main function
 def main():
 
+    if (len(sys.argv) < 2):
+        print("Pass the name of the test as an argument please.")
+        return 
+
+    test_name = sys.argv[1]
+
     print(os.getcwd())
     # Indexes
     AvgFrameTimeIndex = 2
@@ -75,7 +82,7 @@ def main():
     max_gpu = []    
 
   #  print(get_all_folders(os.getcwd() + "/Profiling/PerformanceTest01/"))
-    folders = get_all_folders(os.getcwd() + "/Profiling/PerformanceTest01/")
+    folders = get_all_folders(os.getcwd() + "/Profiling/" + test_name + "/")
     paths = []
     for folder in folders:
         for file in find_files(folder):
