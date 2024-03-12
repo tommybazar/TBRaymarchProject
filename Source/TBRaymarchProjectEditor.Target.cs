@@ -10,6 +10,9 @@ public class TBRaymarchProjectEditorTarget : TargetRules
 	public TBRaymarchProjectEditorTarget( TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
+		// TODO update to these after stuff works on 5.3
+		// DefaultBuildSettings = BuildSettingsVersion.V4;
+		// IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		ExtraModuleNames.AddRange( new string[] { "TBRaymarchProject" } );
 	}
