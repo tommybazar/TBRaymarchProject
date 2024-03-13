@@ -91,6 +91,8 @@ def main():
     
     # Sort the files by time they were created.
     paths.sort(key=lambda x: os.path.getctime(x))
+    
+    paths = paths[-10:] if len(paths) > 10 else paths
 
     xRange = [x for x in range(0, len(paths))]
     for path in paths:
