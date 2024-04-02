@@ -82,7 +82,7 @@ def main():
     max_gpu = []    
 
   #  print(get_all_folders(os.getcwd() + "/Profiling/PerformanceTest01/"))
-    folders = get_all_folders(os.getcwd() + "/Profiling/" + test_name + "/")
+    folders = get_all_folders(os.getcwd() + "/Saved/Profiling/" + test_name + "/")
     paths = []
     for folder in folders:
         for file in find_files(folder):
