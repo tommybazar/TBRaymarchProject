@@ -19,7 +19,7 @@ Or after a regular clone, perform a
 ## UE Version
 I will try to make the project compatible with the latest version (currently 5.3).
 
-For a bleeding-edge version, checkout the `develop` branch.
+For a bleeding-edge version, checkout the `master` branch.
 
 For older versions of the engine, go to the branch with the appropriate name. Older versions are not be updated with new functionality.
 
