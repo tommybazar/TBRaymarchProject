@@ -56,10 +56,6 @@
 				"Mac",
 				"Linux"
 			]
-		},
-		{
-			"Name": "XRBase",
-			"Enabled": true
 		}
 	]
 }
