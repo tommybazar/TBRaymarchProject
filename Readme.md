@@ -42,7 +42,7 @@ https://github.com/tommybazar/TBRaymarcherPlugin
 
 Both of these renders are using the same CT scan, only difference is windowing and used transfer function.
 
-# Video showcase / deep-dive tutorials
+# Video showcase / deep-dive tutorials (very outdated now)
 Part1 - Showcase & Intro : https://youtu.be/-HDVXehPolM
 
 # Discord
@@ -61,4 +61,6 @@ Both me and Technical University of Munich are copyright holders, as major parts
 
 See LICENSE file for full license text.
 
-DICOM loading is utilizing a modified version of VTK DicomParser, made by Matt Turek. See  License.txt in /Source/VolumeTextureToolkit/Public/VolumeAsset/DICOMParser/License.txt for full license text.
+
+## DICOM loading
+DICOM loading is using a binary version of DCMTK library, you can find their full license at their [github](https://github.com/DCMTK/dcmtk/blob/master/COPYRIGHT)
