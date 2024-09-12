@@ -17,7 +17,7 @@ Or after a regular clone, perform a
 `$ git submodule update`
 
 ## UE Version
-I will try to make the project compatible with the latest version (currently 5.3.2).
+I will try to make the project compatible with the latest version (currently 5.4.4).
 
 For a bleeding-edge version, checkout the `master` branch.
 
@@ -29,7 +29,7 @@ If switching UE versions, don't forget to update both the project (`git checkout
 In Unreal editor, don't forget to toggle "Show Plugin Content" in the Content Drawer Settings to see all the maps, blueprints and everything else from the plugin's content. 
 
 ## Readme
-For a full readme, go the submodule's repo :
+For a full readme, go to the submodule's repo :
 
 https://github.com/tommybazar/TBRaymarcherPlugin
 
