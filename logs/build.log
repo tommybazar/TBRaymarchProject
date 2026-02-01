@@ -1,0 +1,629 @@
+Setting up bundled DotNet SDK
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll TBRaymarchProjectEditor Linux Development -Project=/home/ruby/Unreal Projects/TBRaymarchProject/TBRaymarchProject.uproject
+Log file: /home/ruby/.config/Epic/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/home/ruby/Unreal Projects/TBRaymarchProject).
+Creating makefile for TBRaymarchProjectEditor (no existing makefile)
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/oficonv.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/ofstd.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/oflog.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/dcmdata.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/ijg8.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/ijg12.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/ijg16.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/dcmimgle.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/dcmimage.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/dcmjpeg.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/dcmtkcharls.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Library '/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/dcmjpls.lib' was not resolvable to a file when used in Module 'VolumeTextureToolkit', assuming it is a filename and will search library paths for it. This is slow and dependency checking will not work for it. Please update reference to be fully qualified alternatively use PublicSystemLibraryPaths if you do intended to use this slow path to suppress this warning. 
+Parsing headers for TBRaymarchProjectEditor
+  Running Internal UnrealHeaderTool "/home/ruby/Unreal Projects/TBRaymarchProject/TBRaymarchProject.uproject" "/home/ruby/Unreal Projects/TBRaymarchProject/Intermediate/Build/Linux/TBRaymarchProjectEditor/Development/TBRaymarchProjectEditor.uhtmanifest" -WarningsAsErrors -installed
+Total of 72 written
+Reflection code generated for TBRaymarchProjectEditor in 1.2993688 seconds
+------- Build details --------
+Using toolchain located at '/opt/unreal-engine-5.4.0/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu'.
+Using clang (/opt/unreal-engine-5.4.0/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++) version 'clang version 16.0.6 (github.com/llvm/llvm-project 7cbf1a2591520c2491aa35339f227775f4d3adf6)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /opt/unreal-engine-5.4.0/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin' (string), 16 (major), 0 (minor), 6 (patch)
+Using bundled libc++ standard C++ library.
+Using lld linker
+Using llvm-ar (/opt/unreal-engine-5.4.0/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/llvm-ar) version 'LLVM (http://llvm.org/):
+  LLVM version 16.0.6
+  Optimized build. (string)'
+Using fast way to relink  circularly dependent libraries (no FixDeps).
+Targeted minimum CPU architecture: None
+------------------------------
+Building TBRaymarchProjectEditor...
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using Parallel executor to run 20 action(s)
+------ Building 20 action(s) started ------
+[1/20] Compile SharedPCH.Engine.Project.ValApi.Cpp20.h
+[2/20] Compile SharedPCH.Engine.Project.ValApi.Cpp17.h
+[3/20] Compile Module.Tests.cpp
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Tests/Module.Tests.cpp:2:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Tests/UHT/PerformanceTest1.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Tests/Public/Actor/PerformanceTest1.h:6:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Actor/RaymarchVolume.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/VolumeAsset/VolumeAsset.h:13:10: fatal error: 'VolumeAsset.Generated.h' file not found
+#include "VolumeAsset.Generated.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+[4/20] Compile TBRaymarchProjectGameModeBase.cpp
+[5/20] Compile TBRaymarchProject.cpp
+[6/20] Compile TBRaymarchProject.init.gen.cpp
+[7/20] Compile TBRaymarchProjectGameModeBase.gen.cpp
+[8/20] Link (lld) libUnrealEditor-TBRaymarchProject.so
+[9/20] Compile Module.RayUtils.cpp
+[10/20] Link (lld) libUnrealEditor-RayUtils.so
+[11/20] Compile Module.VolumeTextureToolkitEditor.cpp
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkitEditor/Module.VolumeTextureToolkitEditor.cpp:4:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkitEditor/Private/VolumeAssetFactory.cpp:13:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/VolumeAsset/Loaders/DCMTKLoader.h:5:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/VolumeAsset/Loaders/VolumeLoader.h:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/VolumeAsset/VolumeAsset.h:13:10: fatal error: 'VolumeAsset.Generated.h' file not found
+#include "VolumeAsset.Generated.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+[12/20] Compile Module.VolumeTextureToolkit.cpp
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:2:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/VolumeTextureToolkit/UHT/DCMTKLoader.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/VolumeAsset/Loaders/DCMTKLoader.h:5:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/VolumeAsset/Loaders/VolumeLoader.h:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/VolumeAsset/VolumeAsset.h:13:10: fatal error: 'VolumeAsset.Generated.h' file not found
+#include "VolumeAsset.Generated.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+[13/20] Compile Module.Raymarcher.cpp
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:73:3: warning: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, bAdded, bLightAdded ? 1 : -1);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:100:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, LocalClippingCenter, FVector3f(LocalClippingParams.Center));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:101:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, LocalClippingDirection, FVector3f(LocalClippingParams.Direction));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:102:3: warning: 'SetShaderValue<FRHIComputeShader *, FLinearColor, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, WindowingParameters, pWindowingParameters);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, FLinearColor, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:109:3: warning: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, StepSize, pStepSize);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:118:3: warning: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, Loop, loopIndex);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:120:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, WriteBuffer, pWriteBuffer);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:128:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, ALightVolume, pALightVolume);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:133:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TMatrix<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, PermutationMatrix, FMatrix44f(PermMatrix));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TMatrix<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:138:3: warning: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' is deprecated: SetTextureParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetTextureParameter(RHICmdList, ShaderRHI, Volume, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:515:1: note: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetTextureParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:139:3: warning: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' is deprecated: SetTextureParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetTextureParameter(RHICmdList, ShaderRHI, TransferFunc, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:515:1: note: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetTextureParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:146:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, ALightVolume, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:147:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, WriteBuffer, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:148:3: warning: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' is deprecated: SetTextureParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetTextureParameter(RHICmdList, ShaderRHI, ReadBuffer, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:515:1: note: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetTextureParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:154:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector2<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, PrevPixelOffset, fPixelOffset);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector2<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:160:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, UVWOffset, fUVWOffset);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:258:3: warning: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, Loop, loopIndex);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:260:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, WriteBuffer, pWriteBuffer);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:273:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, RemovedWriteBuffer, pRemovedWriteBuffer);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:284:3: warning: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, Loop, loopIndex);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:286:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, WriteBuffer, pWriteBuffer);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:294:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, ALightVolume, pALightVolume);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:299:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TMatrix<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, PermutationMatrix, FMatrix44f(PermMatrix));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TMatrix<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:305:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector2<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, PrevPixelOffset, FVector2f(AddedPixelOffset));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector2<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:306:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector2<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, RemovedPrevPixelOffset, FVector2f(RemovedPixelOffset));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector2<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:312:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, UVWOffset, FVector3f(pAddedUVWOffset));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:313:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, RemovedUVWOffset, FVector3f(pRemovedUVWOffset));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:319:3: warning: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, StepSize, pAddedStepSize);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:320:3: warning: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, RemovedStepSize, pRemovedStepSize);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:325:3: warning: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' is deprecated: SetTextureParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetTextureParameter(RHICmdList, ShaderRHI, Volume, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:515:1: note: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetTextureParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:326:3: warning: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' is deprecated: SetTextureParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetTextureParameter(RHICmdList, ShaderRHI, TransferFunc, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:515:1: note: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetTextureParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:333:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, ALightVolume, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:334:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, WriteBuffer, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:335:3: warning: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' is deprecated: SetTextureParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetTextureParameter(RHICmdList, ShaderRHI, ReadBuffer, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:515:1: note: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetTextureParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:342:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, RemovedWriteBuffer, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:343:3: warning: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' is deprecated: SetTextureParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetTextureParameter(RHICmdList, ShaderRHI, RemovedReadBuffer, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:515:1: note: 'SetTextureParameter<FRHIComputeShader, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetTextureParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:370:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, LocalClippingCenter, FVector3f(LocalClippingParams.Center));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:371:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, LocalClippingDirection, FVector3f(LocalClippingParams.Direction));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:372:3: warning: 'SetShaderValue<FRHIComputeShader *, FLinearColor, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, WindowingParameters, pWindowingParameters);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, FLinearColor, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:9:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchUtils.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Util/RaymarchUtils.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Rendering/LightingShaders.h:379:3: warning: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, StepSize, pStepSize);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/Raymarcher/Module.Raymarcher.cpp:10:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/Raymarcher/UHT/RaymarchVolume.gen.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/Raymarcher/Public/Actor/RaymarchVolume.h:14:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/VolumeAsset/VolumeAsset.h:13:10: fatal error: 'VolumeAsset.Generated.h' file not found
+#include "VolumeAsset.Generated.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~
+40 warnings and 1 error generated.
+[14/20] Compile Module.FractalMarcher.cpp
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/FractalMarcher/Module.FractalMarcher.cpp:4:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/FractalMarcher/UHT/FractalShaders.gen.cpp:8:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/FractalMarcher/Public/Rendering/FractalShaders.h:83:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, MandelbulbVolumeUAV, Parameters.MandelbulbVolumeUAVRef);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/FractalMarcher/Module.FractalMarcher.cpp:4:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/FractalMarcher/UHT/FractalShaders.gen.cpp:8:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/FractalMarcher/Public/Rendering/FractalShaders.h:84:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, MandelbulbVolumeDimensions, FVector3f(Parameters.MandelbulbVolumeDimensions));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/FractalMarcher/Module.FractalMarcher.cpp:4:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/FractalMarcher/UHT/FractalShaders.gen.cpp:8:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/FractalMarcher/Public/Rendering/FractalShaders.h:86:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, Center, FVector3f(Parameters.Center));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/FractalMarcher/Module.FractalMarcher.cpp:4:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/FractalMarcher/UHT/FractalShaders.gen.cpp:8:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/FractalMarcher/Public/Rendering/FractalShaders.h:87:3: warning: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, Extent, FVector3f(Parameters.Extent));
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, UE::Math::TVector<float>, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/FractalMarcher/Module.FractalMarcher.cpp:4:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/UnrealEditor/Inc/FractalMarcher/UHT/FractalShaders.gen.cpp:8:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/FractalMarcher/Public/Rendering/FractalShaders.h:88:3: warning: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, Power, Parameters.Power);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/FractalMarcher/Module.FractalMarcher.cpp:10:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/FractalMarcher/Private/Actor/FractalVolume.cpp:8:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/TextureUtilities.h:22:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/VolumeAsset/VolumeAsset.h:13:10: fatal error: 'VolumeAsset.Generated.h' file not found
+#include "VolumeAsset.Generated.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~
+5 warnings and 1 error generated.
+Total time in Parallel executor: 20.55 seconds
+Total execution time: 24.84 seconds
