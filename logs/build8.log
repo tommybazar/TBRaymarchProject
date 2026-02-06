@@ -1,0 +1,250 @@
+Setting up bundled DotNet SDK
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll TBRaymarchProjectEditor Linux Development -Project=/home/ruby/Unreal Projects/TBRaymarchProject/TBRaymarchProject.uproject
+Log file: /home/ruby/.config/Epic/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/home/ruby/Unreal Projects/TBRaymarchProject).
+Building TBRaymarchProjectEditor...
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using Parallel executor to run 7 action(s)
+------ Building 7 action(s) started ------
+[1/7] Compile Module.VolumeTextureToolkit.cpp
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:44:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), ClearTexture2DRW, TextureRW);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:45:3: warning: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandList>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, RHICmdList.GetBoundComputeShader(), ClearValue, Value);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandList>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:50:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), ClearTexture2DRW, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:104:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, Volume, VolumeRef);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:105:3: warning: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, ClearValue, clearColor);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:106:3: warning: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, ZSize, ZSizeParam);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:111:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), Volume, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+7 warnings generated.
+[2/7] Link (lld) libUnrealEditor-VolumeTextureToolkit.so
+ld.lld: error: undefined symbol: std::basic_ostream<char, std::char_traits<char>>& std::__ostream_insert<char, std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>>&, char const*, long)
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decode(DcmRepresentationParameter const*, DcmPixelSequence*, DcmPolymorphOBOW&, DcmCodecParameter const*, DcmStack const&, bool&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decode(DcmRepresentationParameter const*, DcmPixelSequence*, DcmPolymorphOBOW&, DcmCodecParameter const*, DcmStack const&, bool&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmPixelSequence*, DJLSCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, int, unsigned short, unsigned short, unsigned short, unsigned short)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced 1271 more times
+ld.lld: error: undefined symbol: std::__cxx11::basic_ostringstream<char, std::char_traits<char>, std::allocator<char>>::str() const
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decode(DcmRepresentationParameter const*, DcmPixelSequence*, DcmPolymorphOBOW&, DcmCodecParameter const*, DcmStack const&, bool&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decode(DcmRepresentationParameter const*, DcmPixelSequence*, DcmPolymorphOBOW&, DcmCodecParameter const*, DcmStack const&, bool&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decode(DcmRepresentationParameter const*, DcmPixelSequence*, DcmPolymorphOBOW&, DcmCodecParameter const*, DcmStack const&, bool&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced 408 more times
+ld.lld: error: undefined symbol: std::ostream::operator<<(int)
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decode(DcmRepresentationParameter const*, DcmPixelSequence*, DcmPolymorphOBOW&, DcmCodecParameter const*, DcmStack const&, bool&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmPixelSequence*, DJLSCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, int, unsigned short, unsigned short, unsigned short, unsigned short)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJCodecDecoder::scanJpegDataForBitDepth(unsigned char const*, unsigned int)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpeg.a
+>>> referenced 65 more times
+ld.lld: error: undefined symbol: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>::_M_assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>> const&)
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmPixelSequence*, DJLSCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, int, unsigned short, unsigned short, unsigned short, unsigned short)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmPixelSequence*, DJLSCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, int, unsigned short, unsigned short, unsigned short, unsigned short)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmPixelSequence*, DJLSCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, int, unsigned short, unsigned short, unsigned short, unsigned short)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced 317 more times
+ld.lld: error: undefined symbol: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>::_M_replace(unsigned long, unsigned long, char const*, unsigned long)
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmPixelSequence*, DJLSCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, int, unsigned short, unsigned short, unsigned short, unsigned short)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmPixelSequence*, DJLSCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, int, unsigned short, unsigned short, unsigned short, unsigned short)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmPixelSequence*, DJLSCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, int, unsigned short, unsigned short, unsigned short, unsigned short)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced 321 more times
+ld.lld: error: undefined symbol: std::ostream& std::ostream::_M_insert<unsigned long>(unsigned long)
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmRepresentationParameter const*, DcmPixelSequence*, DcmCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, OFString&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::decodeFrame(DcmRepresentationParameter const*, DcmPixelSequence*, DcmCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, OFString&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by ofuuid.cc
+>>>               ofuuid.cc.o:(OFUUID::printHex(std::ostream&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 123 more times
+ld.lld: error: undefined symbol: std::basic_ios<char, std::char_traits<char>>::clear(std::_Ios_Iostate)
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJLSDecoderBase::determineDecompressedColorModel(DcmRepresentationParameter const*, DcmPixelSequence*, DcmCodecParameter const*, DcmItem*, OFString&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpls.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJCodecDecoder::decodeFrame(DcmRepresentationParameter const*, DcmPixelSequence*, DcmCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, OFString&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpeg.a
+>>> referenced by ofconapp.cc
+>>>               ofconapp.cc.o:(OFConsoleApplication::printError(char const*, int)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 96 more times
+ld.lld: error: undefined symbol: std::ostream& std::ostream::_M_insert<double>(double)
+>>> referenced by oftimer.cc
+>>>               oftimer.cc.o:(operator<<(std::ostream&, OFTimer const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by oftimer.cc
+>>>               oftimer.cc.o:(operator<<(std::ostream&, OFTimer const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by oftimer.cc
+>>>               oftimer.cc.o:(operator<<(std::ostream&, OFTimer const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 5 more times
+ld.lld: error: undefined symbol: std::__cxx11::basic_ostringstream<char, std::char_traits<char>, std::allocator<char>>::basic_ostringstream()
+>>> referenced by ofuuid.cc
+>>>               ofuuid.cc.o:(OFUUID::toString(OFString&, OFUUID::E_Representation) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by threads.cc
+>>>               threads.cc.o:(dcmtk::log4cplus::thread::getCurrentThreadName()) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/liboflog.a
+>>> referenced by syncprims.cc
+>>>               syncprims.cc.o:(dcmtk::log4cplus::thread::impl::syncprims_throw_exception(char const*, char const*, int)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/liboflog.a
+>>> referenced 31 more times
+ld.lld: error: undefined symbol: strlcpy
+>>> referenced by ofstring.cc
+>>>               ofstring.cc.o:(OFString::OFString(char const*)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::combineDirAndFilename(OFFilename&, OFFilename const&, OFFilename const&, bool)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::removeRootDirFromPathname(OFFilename&, OFFilename const&, OFFilename const&, bool)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 33 more times
+ld.lld: error: undefined symbol: std::basic_ostream<char, std::char_traits<char>>& std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>>&, char const*)
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJCodecDecoder::decodeFrame(DcmRepresentationParameter const*, DcmPixelSequence*, DcmCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, OFString&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpeg.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJCodecDecoder::decodeFrame(DcmRepresentationParameter const*, DcmPixelSequence*, DcmCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, OFString&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpeg.a
+>>> referenced by djcodecd.cc
+>>>               djcodecd.cc.o:(DJCodecDecoder::decodeFrame(DcmRepresentationParameter const*, DcmPixelSequence*, DcmCodecParameter const*, DcmItem*, unsigned int, unsigned int&, void*, unsigned int, OFString&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libdcmjpeg.a
+>>> referenced 91 more times
+ld.lld: error: undefined symbol: __isoc23_sscanf
+>>> referenced by oftime.cc
+>>>               oftime.cc.o:(OFTime::setISOFormattedTime(OFString const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by oftime.cc
+>>>               oftime.cc.o:(OFTime::setISOFormattedTime(OFString const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by oftime.cc
+>>>               oftime.cc.o:(OFTime::setISOFormattedTime(OFString const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 35 more times
+ld.lld: error: undefined symbol: VTT for std::__cxx11::basic_ostringstream<char, std::char_traits<char>, std::allocator<char>>
+>>> referenced by ofuuid.cc
+>>>               ofuuid.cc.o:(OFUUID::toString(OFString&, OFUUID::E_Representation) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by syncprims.cc
+>>>               syncprims.cc.o:(dcmtk::log4cplus::thread::impl::syncprims_throw_exception(char const*, char const*, int)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/liboflog.a
+>>> referenced by threads.cc
+>>>               threads.cc.o:(dcmtk::log4cplus::thread::getCurrentThreadName()) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/liboflog.a
+>>> referenced 19 more times
+ld.lld: error: undefined symbol: vtable for std::__cxx11::basic_stringbuf<char, std::char_traits<char>, std::allocator<char>>
+>>> referenced by ofuuid.cc
+>>>               ofuuid.cc.o:(OFUUID::toString(OFString&, OFUUID::E_Representation) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::convertToMarkupString(OFString const&, OFString&, bool, OFStandard::E_MarkupMode, bool, unsigned long)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::convertToOctalString(OFString const&, OFString&, unsigned long)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 28 more times
+>>> the vtable symbol may be undefined because the class is missing its key function (see https://lld.llvm.org/missingkeyfunction)
+ld.lld: error: undefined symbol: strlcat
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::combineDirAndFilename(OFFilename&, OFFilename const&, OFFilename const&, bool)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by oftime.cc
+>>>               oftime.cc.o:(OFTime::getISOFormattedTime(OFString&, bool, bool, bool, bool, OFString const&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by oftime.cc
+>>>               oftime.cc.o:(OFTime::getISOFormattedTime(OFString&, bool, bool, bool, bool, OFString const&) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 5 more times
+ld.lld: error: undefined symbol: vtable for std::basic_streambuf<char, std::char_traits<char>>
+>>> referenced by ofuuid.cc
+>>>               ofuuid.cc.o:(OFUUID::toString(OFString&, OFUUID::E_Representation) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::convertToMarkupString(OFString const&, OFString&, bool, OFStandard::E_MarkupMode, bool, unsigned long)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::convertToOctalString(OFString const&, OFString&, unsigned long)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 28 more times
+>>> the vtable symbol may be undefined because the class is missing its key function (see https://lld.llvm.org/missingkeyfunction)
+ld.lld: error: undefined symbol: std::ostream::write(char const*, long)
+>>> referenced by ofstring.cc
+>>>               ofstring.cc.o:(operator<<(std::ostream&, OFString const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+ld.lld: error: undefined symbol: std::locale::~locale()
+>>> referenced by ofuuid.cc
+>>>               ofuuid.cc.o:(OFUUID::toString(OFString&, OFUUID::E_Representation) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::convertToMarkupString(OFString const&, OFString&, bool, OFStandard::E_MarkupMode, bool, unsigned long)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::convertToOctalString(OFString const&, OFString&, unsigned long)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 35 more times
+ld.lld: error: undefined symbol: std::ios_base::~ios_base()
+>>> referenced by ofuuid.cc
+>>>               ofuuid.cc.o:(OFUUID::toString(OFString&, OFUUID::E_Representation) const) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::convertToMarkupString(OFString const&, OFString&, bool, OFStandard::E_MarkupMode, bool, unsigned long)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstd.cc
+>>>               ofstd.cc.o:(OFStandard::convertToOctalString(OFString const&, OFString&, unsigned long)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 32 more times
+ld.lld: error: undefined symbol: std::istream::get(char&)
+>>> referenced by ofstring.cc
+>>>               ofstring.cc.o:(operator>>(std::istream&, OFString&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstring.cc
+>>>               ofstring.cc.o:(operator>>(std::istream&, OFString&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by ofstring.cc
+>>>               ofstring.cc.o:(operator>>(std::istream&, OFString&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 1 more times
+ld.lld: error: too many errors emitted, stopping now (use --error-limit=0 to see all errors)
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+Total time in Parallel executor: 5.73 seconds
+Total execution time: 6.39 seconds

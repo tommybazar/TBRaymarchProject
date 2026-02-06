@@ -1,0 +1,108 @@
+Setting up bundled DotNet SDK
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll TBRaymarchProjectEditor Linux Development -Project=/home/ruby/Unreal Projects/TBRaymarchProject/TBRaymarchProject.uproject
+Log file: /home/ruby/.config/Epic/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/home/ruby/Unreal Projects/TBRaymarchProject).
+Building TBRaymarchProjectEditor...
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using Parallel executor to run 7 action(s)
+------ Building 7 action(s) started ------
+[1/7] Compile Module.VolumeTextureToolkit.cpp
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:44:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), ClearTexture2DRW, TextureRW);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:45:3: warning: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandList>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, RHICmdList.GetBoundComputeShader(), ClearValue, Value);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandList>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:50:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), ClearTexture2DRW, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:104:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, ShaderRHI, Volume, VolumeRef);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:105:3: warning: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, ClearValue, clearColor);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, float, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:106:3: warning: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' is deprecated: SetShaderValue with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetShaderValue(RHICmdList, ShaderRHI, ZSize, ZSizeParam);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:419:1: note: 'SetShaderValue<FRHIComputeShader *, int, FRHICommandListImmediate>' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetShaderValue with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Intermediate/Build/Linux/x64/UnrealEditor/Development/VolumeTextureToolkit/Module.VolumeTextureToolkit.cpp:11:
+In file included from /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Private/TextureUtilities.cpp:9:
+/home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/Public/Util/UtilityShaders.h:111:3: warning: 'SetUAVParameter' is deprecated: SetUAVParameter with FRHIBatchedShaderParameters should be used. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+                SetUAVParameter(RHICmdList, RHICmdList.GetBoundComputeShader(), Volume, nullptr);
+                ^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/RenderCore/Public/ShaderParameterUtils.h:589:1: note: 'SetUAVParameter' has been explicitly marked deprecated here
+UE_DEPRECATED(5.3, "SetUAVParameter with FRHIBatchedShaderParameters should be used.")
+^
+/opt/unreal-engine-5.4.0/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:274:43: note: expanded from macro 'UE_DEPRECATED'
+#define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+                                          ^
+7 warnings generated.
+[2/7] Link (lld) libUnrealEditor-VolumeTextureToolkit.so
+ld.lld: error: undefined symbol: __isoc23_sscanf
+>>> referenced by oftime.cc
+>>>               oftime.cc.o:(OFTime::setISOFormattedTime(OFString const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by oftime.cc
+>>>               oftime.cc.o:(OFTime::setISOFormattedTime(OFString const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced by oftime.cc
+>>>               oftime.cc.o:(OFTime::setISOFormattedTime(OFString const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/libofstd.a
+>>> referenced 35 more times
+ld.lld: error: undefined symbol: __isoc23_strtol
+>>> referenced by patlay.cc
+>>>               patlay.cc.o:(dcmtk::log4cplus::pattern::PatternParser::extractPrecisionOption()) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/liboflog.a
+>>> referenced by patlay.cc
+>>>               patlay.cc.o:(dcmtk::log4cplus::pattern::PatternParser::finalizeConverter(char)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/liboflog.a
+>>> referenced by fileap.cc
+>>>               fileap.cc.o:(dcmtk::log4cplus::RollingFileAppender::RollingFileAppender(dcmtk::log4cplus::helpers::Properties const&)) in archive /home/ruby/Unreal Projects/TBRaymarchProject/Plugins/TBRaymarcherPlugin/Source/VolumeTextureToolkit/ThirdParty/dcmtk/lib/Linux/liboflog.a
+>>> referenced 1 more times
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+Total time in Parallel executor: 15.40 seconds
+Total execution time: 17.00 seconds
