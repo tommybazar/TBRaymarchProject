@@ -1,0 +1,36 @@
+Setting up bundled DotNet SDK
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll TBRaymarchProjectEditor Linux Development -Project=/home/ruby/Unreal Projects/TBRaymarchProject/TBRaymarchProject.uproject
+Log file: /home/ruby/.config/Epic/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/home/ruby/Unreal Projects/TBRaymarchProject).
+Invalidating makefile for TBRaymarchProjectEditor (VolumeTextureToolkit.Build.cs modified)
+Parsing headers for TBRaymarchProjectEditor
+  Running Internal UnrealHeaderTool "/home/ruby/Unreal Projects/TBRaymarchProject/TBRaymarchProject.uproject" "/home/ruby/Unreal Projects/TBRaymarchProject/Intermediate/Build/Linux/TBRaymarchProjectEditor/Development/TBRaymarchProjectEditor.uhtmanifest" -WarningsAsErrors -installed
+Total of 0 written
+Reflection code generated for TBRaymarchProjectEditor in 3.0776684 seconds
+------- Build details --------
+Using toolchain located at '/opt/unreal-engine-5.4.0/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu'.
+Using clang (/opt/unreal-engine-5.4.0/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++) version 'clang version 16.0.6 (github.com/llvm/llvm-project 7cbf1a2591520c2491aa35339f227775f4d3adf6)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /opt/unreal-engine-5.4.0/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin' (string), 16 (major), 0 (minor), 6 (patch)
+Using bundled libc++ standard C++ library.
+Using lld linker
+Using llvm-ar (/opt/unreal-engine-5.4.0/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/llvm-ar) version 'LLVM (http://llvm.org/):
+  LLVM version 16.0.6
+  Optimized build. (string)'
+Using fast way to relink  circularly dependent libraries (no FixDeps).
+Targeted minimum CPU architecture: None
+------------------------------
+Building TBRaymarchProjectEditor...
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using Parallel executor to run 6 action(s)
+------ Building 6 action(s) started ------
+[1/6] Link (lld) libUnrealEditor-VolumeTextureToolkit.so
+[2/6] Link (lld) libUnrealEditor-FractalMarcher.so
+[3/6] Link (lld) libUnrealEditor-Raymarcher.so
+[4/6] Link (lld) libUnrealEditor-VolumeTextureToolkitEditor.so
+[5/6] Link (lld) libUnrealEditor-Tests.so
+[6/6] WriteMetadata TBRaymarchProjectEditor.target
+Total time in Parallel executor: 0.84 seconds
+Total execution time: 9.70 seconds
