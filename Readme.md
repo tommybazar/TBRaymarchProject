@@ -17,7 +17,7 @@ Or after a regular clone, perform a
 `$ git submodule update`
 
 ## UE Version
-I will try to make the project compatible with the latest version (currently 5.4.4).
+I will try to make the project compatible with the latest version (currently 5.5.4).
 
 For a bleeding-edge version, checkout the `master` branch.
 
