@@ -17,7 +17,9 @@ Or after a regular clone, perform a
 `$ git submodule update`
 
 ## UE Version
-I will try to make the project compatible with the latest version (currently 5.6.1).
+I will try to make the project compatible with the latest version (currently 5.7.4).
+
+(This branch is targetting 5.6 but just changing the engine version to 5.7 in TBRaymarchProject.uproject and TBRaymarcherPlugin.uplugin works fine, so it doesn't deserve a new branch for 5.7).
 
 For a bleeding-edge version, checkout the `master` branch.
 
